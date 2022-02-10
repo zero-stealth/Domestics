@@ -1,14 +1,17 @@
-import 'package:domestics/screens/Register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Login extends StatefulWidget {
+import 'Login.dart';
+
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
+
   @override
-  _LoginState createState() => _LoginState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   _loginModal(context) {
     showModalBottomSheet(
       backgroundColor: const Color(0xFFfdfbfa),
@@ -89,7 +92,7 @@ class _LoginState extends State<Login> {
                 child: CupertinoButton(
                   color: const Color(0xffda4b2e),
                   child: const Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -130,7 +133,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 50.0),
                 const Text(
-                  'Welcome back',
+                  'Welcome',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 26.0,
@@ -140,7 +143,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 4.0),
                 const Text(
-                  'Its been a while.',
+                  'Lets get you set up.',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 16.0,
@@ -185,6 +188,25 @@ class _LoginState extends State<Login> {
                   placeholder: 'Password',
                   placeholderStyle: const TextStyle(color: Colors.white54),
                 ),
+                const SizedBox(height: 30.0),
+                CupertinoTextField(
+                  obscureText: true,
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  onSubmitted: (value) {},
+                  decoration: const BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(width: 1.0, color: Colors.white70),
+                  )),
+                  maxLines: 1,
+                  padding: const EdgeInsets.only(
+                    bottom: 10.0,
+                  ),
+                  placeholder: 'Confirm password',
+                  placeholderStyle: const TextStyle(color: Colors.white54),
+                ),
                 const SizedBox(height: 25.0),
                 Container(
                   width: double.infinity,
@@ -196,18 +218,13 @@ class _LoginState extends State<Login> {
                   child: CupertinoButton(
                     color: Colors.white,
                     child: const Text(
-                      'Login',
+                      'Register',
                       style: TextStyle(
                           color: Color(0xffda4b2e),
                           fontSize: 16.0,
                           fontFamily: 'SFD-Bold'),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
+                    onPressed: () {},
                   ),
                 ),
                 const SizedBox(height: 10.0),
@@ -222,7 +239,7 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(width: 10.0),
                     const Text(
-                      'or login with',
+                      'or register with',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 14.0,
@@ -284,12 +301,12 @@ class _LoginState extends State<Login> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Register()),
+                      MaterialPageRoute(builder: (context) => Login()),
                     );
                   },
                   child: const Center(
                     child: Text(
-                      'Don\'t have an account? Register',
+                      'Already have an account? Log in',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                     ),
