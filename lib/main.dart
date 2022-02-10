@@ -1,4 +1,5 @@
 import 'package:domestics/screens/SplashScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,10 +16,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SplashScreen(),
+          cupertinoOverrideTheme:
+              const CupertinoThemeData(brightness: Brightness.dark)),
+      home: const SplashScreen(),
     );
   }
 }
-
