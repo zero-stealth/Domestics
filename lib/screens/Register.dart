@@ -1,3 +1,4 @@
+import 'package:domestics/screens/Selections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -224,7 +225,12 @@ class _RegisterState extends State<Register> {
                           fontSize: 16.0,
                           fontFamily: 'SFD-Bold'),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Selections()),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 10.0),
