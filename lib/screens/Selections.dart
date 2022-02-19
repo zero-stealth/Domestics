@@ -9,6 +9,79 @@ class Selections extends StatefulWidget {
 class _SelectionsState extends State<Selections> {
   @override
   Widget build(BuildContext context) {
+    List tags = [
+      // 'Someone to talk to',
+      // 'Baby sitter',
+      // 'Doctor',
+      // 'Repair man',
+      // 'Tutor',
+      // 'Painter',
+      // 'Cleaner',
+      // 'IT support',
+      // 'Pet sitter',
+      // 'Cook'
+      {
+        "text": 'Someone to talk to',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Baby sitter',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Doctor',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Repair man',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Tutor',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Painter',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Cleaner',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'IT support',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Pet sitter',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+      {
+        "text": 'Cook',
+        "textcolor": const Color(0xffffffff),
+        "backgroundColor": const Color(0xffcf3f23),
+        "highlighted": false
+      },
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xffda4b2e),
       body: SafeArea(
@@ -57,21 +130,32 @@ class _SelectionsState extends State<Selections> {
                     Wrap(
                       direction: Axis.horizontal,
                       alignment: WrapAlignment.start,
-                      // runAlignment: WrapAlignment.start,
-                      // crossAxisAlignment: WrapCrossAlignment.start,
                       runSpacing: 20.0,
                       spacing: 20.0,
                       children: [
-                        Tab(text: 'Someone to talk to'),
-                        Tab(text: 'Baby sitter'),
-                        Tab(text: 'Doctor'),
-                        Tab(text: 'Repair man'),
-                        Tab(text: 'Tutor'),
-                        Tab(text: 'Painter'),
-                        Tab(text: 'Cleaner'),
-                        Tab(text: 'IT support'),
-                        Tab(text: 'Pet sitter'),
-                        Tab(text: 'Cook'),
+                        for (var i in tags)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (i['highlighted'] == false) {
+                                  i['highlighted'] = true;
+                                  i['textcolor'] = const Color(0xffcf3f23);
+                                  i['backgroundColor'] =
+                                      const Color(0xffffffff);
+                                } else {
+                                  i['highlighted'] = false;
+                                  i['textcolor'] = const Color(0xffffffff);
+                                  i['backgroundColor'] =
+                                      const Color(0xffcf3f23);
+                                }
+                              });
+                            },
+                            child: Tab(
+                              text: i['text'],
+                              textcolor: i['textcolor'],
+                              backgroundColor: i['backgroundColor'],
+                            ),
+                          ),
                       ],
                     ),
                   ],
@@ -110,52 +194,42 @@ class _SelectionsState extends State<Selections> {
 
 class Tab extends StatefulWidget {
   final String text;
+  final Color textcolor;
+  final Color backgroundColor;
 
-  Tab({required this.text});
+  Tab(
+      {required this.text,
+      required this.textcolor,
+      required this.backgroundColor});
 
   @override
   State<Tab> createState() => _TabState();
 }
 
 class _TabState extends State<Tab> {
-  Color highback = const Color(0xffcf3f23);
-  Color hightext = Colors.white;
-  bool highlighted = false;
+  // Color highback = const Color(0xffcf3f23);
+  // Color hightext = Colors.white;
+  // bool highlighted = false;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (highlighted == false) {
-            highlighted = true;
-            highback = Colors.white;
-            hightext = const Color(0xffcf3f23);
-          } else {
-            highlighted = false;
-            highback = const Color(0xffcf3f23);
-            hightext = Colors.white;
-          }
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          bottom: 8.0,
-          left: 30.0,
-          right: 30.0,
-        ),
-        decoration: BoxDecoration(
-          color: highback,
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-        child: Text(
-          widget.text,
-          style: TextStyle(
-            color: hightext,
-            fontSize: 16.0,
-            fontFamily: 'SFT-Regular',
-          ),
+    return Container(
+      padding: const EdgeInsets.only(
+        top: 8.0,
+        bottom: 8.0,
+        left: 30.0,
+        right: 30.0,
+      ),
+      decoration: BoxDecoration(
+        color: widget.backgroundColor,
+        borderRadius: BorderRadius.circular(50.0),
+      ),
+      child: Text(
+        widget.text,
+        style: TextStyle(
+          color: widget.textcolor,
+          fontSize: 16.0,
+          fontFamily: 'SFT-Regular',
         ),
       ),
     );
