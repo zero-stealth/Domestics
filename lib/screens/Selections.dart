@@ -26,6 +26,18 @@ class _SelectionsState extends State<Selections> {
                     color: const Color(0xffcf3f23),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width - 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 const Text(
@@ -38,35 +50,29 @@ class _SelectionsState extends State<Selections> {
                   ),
                 ),
                 const SizedBox(height: 30.0),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Tab(text: 'Baby sitter'),
-                    const SizedBox(width: 20.0),
-                    Tab(text: 'Cook'),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Tab(text: 'Repair man'),
-                    const SizedBox(width: 20.0),
-                    Tab(
-                      text: 'Tutor',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Tab(
-                      text: 'Painter',
-                    ),
-                    const SizedBox(width: 20.0),
-                    Tab(
-                      text: 'Cleaner',
+                    Wrap(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.start,
+                      // runAlignment: WrapAlignment.start,
+                      // crossAxisAlignment: WrapCrossAlignment.start,
+                      runSpacing: 20.0,
+                      spacing: 20.0,
+                      children: [
+                        Tab(text: 'Someone to talk to'),
+                        Tab(text: 'Baby sitter'),
+                        Tab(text: 'Doctor'),
+                        Tab(text: 'Repair man'),
+                        Tab(text: 'Tutor'),
+                        Tab(text: 'Painter'),
+                        Tab(text: 'Cleaner'),
+                        Tab(text: 'IT support'),
+                        Tab(text: 'Pet sitter'),
+                        Tab(text: 'Cook'),
+                      ],
                     ),
                   ],
                 ),
