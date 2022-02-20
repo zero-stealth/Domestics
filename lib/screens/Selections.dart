@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,71 +9,72 @@ class Selections extends StatefulWidget {
 }
 
 class _SelectionsState extends State<Selections> {
+  // Contains values of all selected tabs
+  List selected = [];
+  // width of top progress bar
+  var barWidth;
+  // 25% of the total width of the barWidth at max width
+  var value;
+
+  // Adds and removes values inside the selected list
+  selectedHandler(text, status) {
+    if (status == false) {
+      for (var i = 0; i < selected.length; i++) {
+        if (selected[i] == text) {
+          selected.removeAt(i);
+        }
+      }
+
+      setState(() {
+        if (selected.length < 4) {
+          value = ((MediaQuery.of(context).size.width - 40) * 25) / 100;
+          barWidth = barWidth - value;
+        }
+      });
+    } else {
+      selected.add(text);
+
+      // calculate bar width when an element is added to the selected list
+      // MediaQuery.of(context).size.width - 40; is the maximum width of the bar
+      setState(() {
+        if (selected.length >= 4) {
+          barWidth = MediaQuery.of(context).size.width - 40;
+        } else {
+          barWidth =
+              ((MediaQuery.of(context).size.width - 40) * getPercentage()) /
+                  100;
+        }
+      });
+    }
+  }
+
+  // returns the percentage length of the bar
+  // based on how many items are in the 
+  // selected list
+  getPercentage() {
+    switch (selected.length) {
+      case 1:
+        return 25;
+        break;
+
+      case 2:
+        return 50;
+        break;
+
+      case 3:
+        return 75;
+        break;
+
+      case 4:
+        return 100;
+        break;
+      default:
+        return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List tags = [
-      {
-        "text": 'Someone to talk to',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Baby sitter',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Doctor',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Repair man',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Tutor',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Painter',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Cleaner',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'IT support',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Pet sitter',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-      {
-        "text": 'Cook',
-        "textcolor": const Color(0xffffffff),
-        "backgroundColor": const Color(0xffcf3f23),
-        "highlighted": false
-      },
-    ];
-
     return Scaffold(
       backgroundColor: const Color(0xffda4b2e),
       body: SafeArea(
@@ -93,7 +96,7 @@ class _SelectionsState extends State<Selections> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width - 100,
+                        width: barWidth,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20.0),
@@ -120,32 +123,72 @@ class _SelectionsState extends State<Selections> {
                     Wrap(
                       direction: Axis.horizontal,
                       alignment: WrapAlignment.start,
+                      // runAlignment: WrapAlignment.start,
+                      // crossAxisAlignment: WrapCrossAlignment.start,
                       runSpacing: 20.0,
                       spacing: 20.0,
                       children: [
-                        for (var i in tags)
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (i['highlighted'] == false) {
-                                  i['highlighted'] = true;
-                                  i['textcolor'] = const Color(0xffcf3f23);
-                                  i['backgroundColor'] =
-                                      const Color(0xffffffff);
-                                } else {
-                                  i['highlighted'] = false;
-                                  i['textcolor'] = const Color(0xffffffff);
-                                  i['backgroundColor'] =
-                                      const Color(0xffcf3f23);
-                                }
-                              });
-                            },
-                            child: Tab(
-                              text: i['text'],
-                              textcolor: i['textcolor'],
-                              backgroundColor: i['backgroundColor'],
-                            ),
-                          ),
+                        Tab(
+                          text: 'Someone to talk to',
+                          onSelect: (selectedStatus) {
+                            selectedHandler(
+                                'Someone to talk to', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Baby sitter',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Baby sitter', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Doctor',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Doctor', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Repair man',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Repair man', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Tutor',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Tutor', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Painter',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Painter', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Cleaner',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Cleaner', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'IT support',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('IT support', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Pet sitter',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Pet sitter', selectedStatus);
+                          },
+                        ),
+                        Tab(
+                          text: 'Cook',
+                          onSelect: (selectedStatus) {
+                            selectedHandler('Cook', selectedStatus);
+                          },
+                        ),
                       ],
                     ),
                   ],
@@ -169,10 +212,13 @@ class _SelectionsState extends State<Selections> {
                     fontFamily: 'SFD-Bold'),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Selections()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Selections()),
+                // );
+                for (var m in selected) {
+                  log(m);
+                }
               },
             ),
           ),
@@ -184,42 +230,55 @@ class _SelectionsState extends State<Selections> {
 
 class Tab extends StatefulWidget {
   final String text;
-  final Color textcolor;
-  final Color backgroundColor;
+  final Function(bool) onSelect;
 
-  Tab(
-      {required this.text,
-      required this.textcolor,
-      required this.backgroundColor});
+  Tab({required this.text, required this.onSelect});
 
   @override
   State<Tab> createState() => _TabState();
 }
 
 class _TabState extends State<Tab> {
-  // Color highback = const Color(0xffcf3f23);
-  // Color hightext = Colors.white;
-  // bool highlighted = false;
+  Color highback = const Color(0xffcf3f23);
+  Color hightext = Colors.white;
+  bool highlighted = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(
-        top: 8.0,
-        bottom: 8.0,
-        left: 30.0,
-        right: 30.0,
-      ),
-      decoration: BoxDecoration(
-        color: widget.backgroundColor,
-        borderRadius: BorderRadius.circular(50.0),
-      ),
-      child: Text(
-        widget.text,
-        style: TextStyle(
-          color: widget.textcolor,
-          fontSize: 16.0,
-          fontFamily: 'SFT-Regular',
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (highlighted == false) {
+            highlighted = true;
+            widget.onSelect(true);
+            highback = Colors.white;
+            hightext = const Color(0xffcf3f23);
+          } else {
+            highlighted = false;
+            widget.onSelect(false);
+            highback = const Color(0xffcf3f23);
+            hightext = Colors.white;
+          }
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.only(
+          top: 8.0,
+          bottom: 8.0,
+          left: 30.0,
+          right: 30.0,
+        ),
+        decoration: BoxDecoration(
+          color: highback,
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        child: Text(
+          widget.text,
+          style: TextStyle(
+            color: hightext,
+            fontSize: 16.0,
+            fontFamily: 'SFT-Regular',
+          ),
         ),
       ),
     );
