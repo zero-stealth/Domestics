@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +48,7 @@ class _SelectionsState extends State<Selections> {
   }
 
   // returns the percentage length of the bar
-  // based on how many items are in the 
+  // based on how many items are in the
   // selected list
   getPercentage() {
     switch (selected.length) {
@@ -223,7 +222,86 @@ class _SelectionsState extends State<Selections> {
             ),
           ),
         ),
+        //Dialog(),
       ])),
+    );
+  }
+}
+
+class Dialog extends StatelessWidget {
+  const Dialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: const Color(0xffda4b2e).withOpacity(0.6),
+      ),
+      child: Center(
+        child: Wrap(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width - 40,
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Tags',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontFamily: 'SFD-Bold',
+                      color: Color(0xff2b2c2e),
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  const Text(
+                    'You must select atleast 4 tags to continue.',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontFamily: 'SFT-Regular',
+                      color: Color(0xff2b2c2e),
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width - 80,
+                        child: CupertinoButton(
+                          padding: const EdgeInsets.all(10.0),
+                          color: const Color(0xffda4b2e).withOpacity(0.1),
+                          child: const Text(
+                            'Got it',
+                            style: TextStyle(
+                              color: Color(0xffda4b2e),
+                              fontSize: 16.0,
+                              fontFamily: 'SFT-Regular',
+                            ),
+                          ),
+                          onPressed: () {
+                            
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
