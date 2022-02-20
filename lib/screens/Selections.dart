@@ -10,16 +10,6 @@ class _SelectionsState extends State<Selections> {
   @override
   Widget build(BuildContext context) {
     List tags = [
-      // 'Someone to talk to',
-      // 'Baby sitter',
-      // 'Doctor',
-      // 'Repair man',
-      // 'Tutor',
-      // 'Painter',
-      // 'Cleaner',
-      // 'IT support',
-      // 'Pet sitter',
-      // 'Cook'
       {
         "text": 'Someone to talk to',
         "textcolor": const Color(0xffffffff),
