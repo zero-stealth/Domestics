@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:domestics/screens/Dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -81,23 +82,23 @@ class _SelectionsState extends State<Selections> {
             title: 'Tags',
             content: 'You must select atleast 4 tags to continue',
             continueWidget: Container(
-                      width: MediaQuery.of(context).size.width - 80,
-                      child: CupertinoButton(
-                        padding: const EdgeInsets.all(10.0),
-                        color: const Color(0xffda4b2e).withOpacity(0.1),
-                        child: const Text(
-                          'Got it',
-                          style: TextStyle(
-                            color: Color(0xffda4b2e),
-                            fontSize: 16.0,
-                            fontFamily: 'SFT-Regular',
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
+              width: MediaQuery.of(context).size.width - 80,
+              child: CupertinoButton(
+                padding: const EdgeInsets.all(10.0),
+                color: const Color(0xffda4b2e).withOpacity(0.1),
+                child: const Text(
+                  'Got it',
+                  style: TextStyle(
+                    color: Color(0xffda4b2e),
+                    fontSize: 16.0,
+                    fontFamily: 'SFT-Regular',
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
           );
         });
   }
@@ -241,16 +242,17 @@ class _SelectionsState extends State<Selections> {
                     fontFamily: 'SFD-Bold'),
               ),
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Selections()),
-                // );
                 for (var m in selected) {
                   log(m);
                 }
 
                 if (selected.length < 4) {
                   _popup();
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                  );
                 }
               },
             ),
@@ -268,12 +270,12 @@ class Dialog extends StatelessWidget {
   // final Widget cancelWidget;
   final Widget continueWidget;
 
-  Dialog({ 
-    required this.title, 
+  Dialog({
+    required this.title,
     required this.content,
     // required this.cancelWidget,
     required this.continueWidget,
-    });
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -284,8 +286,7 @@ class Dialog extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 40,
             padding: EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.white),
+                borderRadius: BorderRadius.circular(10.0), color: Colors.white),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -314,9 +315,7 @@ class Dialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
                 Row(
-                  children: [
-                    continueWidget
-                  ],
+                  children: [continueWidget],
                 ),
               ],
             ),
