@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:domestics/widgets/DashboardItem.dart';
+import 'package:domestics/widgets/PopularCard.dart';
 import 'package:domestics/widgets/Star.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -74,14 +75,22 @@ class _DashboardState extends State<Dashboard> {
             centerTitle: false,
             automaticallyImplyLeading: false,
             actions: [
-              const Icon(
-                CupertinoIcons.bell,
-                color: Color(0xff262626),
-                size: 25.0,
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10.0,
+                ),
+                child: const Icon(
+                  CupertinoIcons.bell,
+                  color: Color(0xff262626),
+                  size: 25.0,
+                ),
               ),
               const SizedBox(width: 28.0),
               Padding(
-                padding: EdgeInsets.only(right: 20.0),
+                padding: EdgeInsets.only(
+                  top: 10.0,
+                  right: 20.0,
+                ),
                 child: const Icon(
                   CupertinoIcons.settings_solid,
                   color: Color(0xff262626),
@@ -91,6 +100,7 @@ class _DashboardState extends State<Dashboard> {
             ],
             title: Padding(
               padding: const EdgeInsets.only(
+                top: 10.0,
                 left: 5.0,
               ),
               child: const Text(
@@ -109,20 +119,64 @@ class _DashboardState extends State<Dashboard> {
           ),
           SliverList(
             delegate: SliverChildListDelegate([
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    for (var i in posts)
-                      DashboardItem(
-                        tag: i['tag'],
-                        fname: i['fname'],
-                        minutesAway: i['minutesAway'],
-                        url: i['url'],
-                        stars: i['stars']
-                      ),
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // for (var i in posts)
+                  //   DashboardItem(
+                  //     tag: i['tag'],
+                  //     fname: i['fname'],
+                  //     minutesAway: i['minutesAway'],
+                  //     url: i['url'],
+                  //     stars: i['stars']
+                  //   ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 15.0,
+                      left: 20.0,
+                      right: 20.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Popular Nearby',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontFamily: 'SFD-Bold',
+                            color: Color(0xff262626),
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Icon(
+                          CupertinoIcons.arrow_right,
+                          size: 20.0,
+                          color: Color(0xff262626),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 26.0),
+                  SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (var i in posts)
+                          PopularCard(
+                            tag: i['tag'],
+                            url: i['url'],
+                            fname: i['fname'],
+                            minutesAway: i['minutesAway'],
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ]),
           ),
@@ -131,9 +185,6 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
-
-
-
 
 
 // #968f8e
