@@ -1,4 +1,4 @@
-import 'package:domestics/widgets/Star.dart';
+import 'package:domestics/widgets/Dashboard/Star.dart';
 import 'package:flutter/material.dart';
 
 class DashboardItem extends StatelessWidget {

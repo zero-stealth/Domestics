@@ -1,9 +1,7 @@
 import 'dart:ui';
-
-import 'package:domestics/widgets/DashboardItem.dart';
-import 'package:domestics/widgets/PopularCard.dart';
-import 'package:domestics/widgets/Star.dart';
-import 'package:domestics/widgets/UserTab.dart';
+import 'package:domestics/screens/Settings.dart';
+import 'package:domestics/widgets/Dashboard/PopularCard.dart';
+import 'package:domestics/widgets/Dashboard/UserTab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +81,7 @@ class _DashboardState extends State<Dashboard> {
                 child: const Icon(
                   CupertinoIcons.bell,
                   color: Color(0xff262626),
-                  size: 25.0,
+                  size: 23.0,
                 ),
               ),
               const SizedBox(width: 28.0),
@@ -92,10 +90,18 @@ class _DashboardState extends State<Dashboard> {
                   top: 10.0,
                   right: 20.0,
                 ),
-                child: const Icon(
-                  CupertinoIcons.settings_solid,
-                  color: Color(0xff262626),
-                  size: 25.0,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Settings()),
+                      );
+                  },
+                  child: const Icon(
+                    CupertinoIcons.settings_solid,
+                    color: Color(0xff262626),
+                    size: 23.0,
+                  ),
                 ),
               )
             ],
@@ -219,8 +225,6 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
-
-
 
 // #968f8e
 
