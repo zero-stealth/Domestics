@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:domestics/widgets/DashboardItem.dart';
 import 'package:domestics/widgets/PopularCard.dart';
 import 'package:domestics/widgets/Star.dart';
+import 'package:domestics/widgets/UserTab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -66,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfffafafa),
+      backgroundColor: const Color(0xffefefef),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -112,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
-            backgroundColor: Color(0xfffafafa),
+            backgroundColor: const Color(0xffefefef),
             // expandedHeight: 100.0,
             floating: true,
             pinned: true,
@@ -176,6 +177,39 @@ class _DashboardState extends State<Dashboard> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 30.0),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Recommended',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontFamily: 'SFD-Bold',
+                            color: Color(0xff262626),
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Icon(
+                          CupertinoIcons.arrow_right,
+                          size: 20.0,
+                          color: Color(0xff262626),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 26.0),
+                  for (var i in posts)
+                    UserTab(
+                      fname: i['fname'],
+                      tag: i['tag'],
+                      url: i['url'],
+                    ),
                 ],
               ),
             ]),
@@ -185,6 +219,7 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
+
 
 
 // #968f8e
