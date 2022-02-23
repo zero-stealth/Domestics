@@ -56,10 +56,15 @@ class _SettingsState extends State<Settings> {
                   left: 5.0,
                   top: 10.0,
                 ),
-                child: Icon(
-                  CupertinoIcons.arrow_left,
-                  size: 20.0,
-                  color: Color(0xff262626),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    CupertinoIcons.arrow_left,
+                    size: 20.0,
+                    color: Color(0xff262626),
+                  ),
                 ),
               ),
               title: Padding(
@@ -99,40 +104,34 @@ class _SettingsState extends State<Settings> {
                         child: Column(
                           children: [
                             SettingsItem(
-                              icon: CupertinoIcons.person,
-                              color: Color(0xff262626),
-                              name: 'Edit Profile'
-                            ),
+                                icon: CupertinoIcons.person,
+                                color: Color(0xff262626),
+                                name: 'Edit Profile'),
                             MyDivider(),
                             SettingsItem(
-                              icon: CupertinoIcons.lock,
-                              color: Color(0xff262626),
-                              name: 'Security'
-                            ),
+                                icon: CupertinoIcons.lock,
+                                color: Color(0xff262626),
+                                name: 'Security'),
                             MyDivider(),
                             SettingsItem(
-                              icon: CupertinoIcons.link,
-                              color: Color(0xff262626),
-                              name: 'Referred to me'
-                            ),
+                                icon: CupertinoIcons.link,
+                                color: Color(0xff262626),
+                                name: 'Referred to me'),
                             MyDivider(),
                             SettingsItem(
-                              icon: CupertinoIcons.graph_square,
-                              color: Color(0xff262626),
-                              name: 'Stats'
-                            ),
+                                icon: CupertinoIcons.graph_square,
+                                color: Color(0xff262626),
+                                name: 'Stats'),
                             MyDivider(),
                             SettingsItem(
-                              icon: CupertinoIcons.chat_bubble,
-                              color: Color(0xff262626),
-                              name: 'Feedback'
-                            ),
+                                icon: CupertinoIcons.chat_bubble,
+                                color: Color(0xff262626),
+                                name: 'Feedback'),
                             MyDivider(),
                             SettingsItem(
-                              icon: CupertinoIcons.bag_badge_minus,
-                              color: Colors.redAccent,
-                              name: 'Logout'
-                            ),
+                                icon: CupertinoIcons.bag_badge_minus,
+                                color: Colors.redAccent,
+                                name: 'Logout'),
                           ],
                         ),
                       ),
@@ -149,8 +148,6 @@ class _SettingsState extends State<Settings> {
 }
 
 class MyDivider extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
