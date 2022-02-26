@@ -1,14 +1,13 @@
-import 'package:domestics/Functions/SettingsFuncs.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
+class Notifications extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _NotificationsState createState() => _NotificationsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +73,7 @@ class _SettingsState extends State<Settings> {
                   top: 10.0,
                 ),
                 child: const Text(
-                  'Settings',
+                  'Notifications',
                   style: TextStyle(
                     fontFamily: 'SFD-Bold',
                     color: Color(0xff262626),
@@ -97,68 +96,41 @@ class _SettingsState extends State<Settings> {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 10.0,
+                        ),
+                        child: Text(
+                          'Today',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'SFT-Regular',
+                            color: Color(0xff262626),
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15.0),
                       Container(
                         decoration: BoxDecoration(
                           color: const Color(0xfffafafa),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                EditProfileModal(context);
-                              },
-                              child: SettingsItem(
-                                  icon: CupertinoIcons.person,
-                                  color: Color(0xff262626),
-                                  name: 'Edit Profile'),
-                            ),
+                            NotifyItem(
+                                title: 'Domestics Team',
+                                message:
+                                    'We have updated our privacy visit our website to learn more.'),
+                            const SizedBox(height: 6.0),
                             MyDivider(),
-                            InkWell(
-                              onTap: () {
-                                securityModal(context);
-                              },
-                              child: SettingsItem(
-                                  icon: CupertinoIcons.lock,
-                                  color: Color(0xff262626),
-                                  name: 'Security'),
-                            ),
-                            MyDivider(),
-                            InkWell(
-                              onTap: () {
-                                referredModal(context);
-                              },
-                              child: SettingsItem(
-                                  icon: CupertinoIcons.link,
-                                  color: Color(0xff262626),
-                                  name: 'Referred to me'),
-                            ),
-                            MyDivider(),
-                            InkWell(
-                              onTap: (){
-                                statsModal(context);
-                              },
-                              child: SettingsItem(
-                                  icon: CupertinoIcons.graph_square,
-                                  color: Color(0xff262626),
-                                  name: 'Stats'),
-                            ),
-                            MyDivider(),
-                            InkWell(
-                              onTap: () {
-                                feedbackModal(context);
-                              },
-                              child: SettingsItem(
-                                  icon: CupertinoIcons.chat_bubble,
-                                  color: Color(0xff262626),
-                                  name: 'Feedback'),
-                            ),
-                            MyDivider(),
-                            SettingsItem(
-                                icon: CupertinoIcons.bag_badge_minus,
-                                color: Colors.redAccent,
-                                name: 'Logout'),
+                            NotifyItem(
+                                title: 'Linked',
+                                message: 'Chico linked you to Evans.'),
                           ],
                         ),
                       ),
@@ -174,17 +146,13 @@ class _SettingsState extends State<Settings> {
   }
 }
 
+class NotifyItem extends StatelessWidget {
+  final String title;
+  final String message;
 
-
-class SettingsItem extends StatelessWidget {
-  final String name;
-  final IconData icon;
-  final Color color;
-
-  SettingsItem({
-    required this.name,
-    required this.icon,
-    required this.color,
+  NotifyItem({
+    required this.title,
+    required this.message,
   });
 
   @override
@@ -192,31 +160,39 @@ class SettingsItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                icon,
-                size: 20.0,
-                color: color,
-              ),
-              const SizedBox(width: 20.0),
-              Text(
-                name,
-                style: TextStyle(
-                  fontFamily: 'SFT-Regular',
-                  color: color,
-                  fontSize: 16.0,
-                ),
-              ),
-            ],
-          ),
           Icon(
-            CupertinoIcons.chevron_right,
-            size: 20.0,
+            CupertinoIcons.chat_bubble,
             color: Color(0xff262626),
+            size: 20.0,
+          ),
+          const SizedBox(width: 20.0),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontFamily: 'SFD-Bold',
+                    color: Color(0xff262626),
+                    fontSize: 14.0,
+                  ),
+                ),
+                const SizedBox(height: 6.0),
+                Text(
+                  message,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                    fontFamily: 'SFT-Regular',
+                    color: Color(0xff262626),
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

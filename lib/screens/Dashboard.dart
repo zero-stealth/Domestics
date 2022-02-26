@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:domestics/screens/Notifications.dart';
 import 'package:domestics/screens/Settings.dart';
 import 'package:domestics/widgets/Dashboard/PopularCard.dart';
 import 'package:domestics/widgets/Dashboard/UserTab.dart';
@@ -78,10 +79,18 @@ class _DashboardState extends State<Dashboard> {
                 padding: const EdgeInsets.only(
                   top: 10.0,
                 ),
-                child: const Icon(
-                  CupertinoIcons.bell,
-                  color: Color(0xff262626),
-                  size: 23.0,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Notifications()),
+                    );
+                  },
+                  child: const Icon(
+                    CupertinoIcons.bell,
+                    color: Color(0xff262626),
+                    size: 23.0,
+                  ),
                 ),
               ),
               const SizedBox(width: 28.0),
@@ -91,11 +100,11 @@ class _DashboardState extends State<Dashboard> {
                   right: 20.0,
                 ),
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Settings()),
-                      );
+                      context,
+                      MaterialPageRoute(builder: (context) => Settings()),
+                    );
                   },
                   child: const Icon(
                     CupertinoIcons.settings_solid,
