@@ -18,6 +18,7 @@ class _DashboardState extends State<Dashboard> {
       'fname': 'Levin Adams',
       'minutesAway': '2 min away',
       'stars': 4,
+      'bio': 'Hello, i am a tutor in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjB0ZWFjaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -26,6 +27,7 @@ class _DashboardState extends State<Dashboard> {
       'fname': 'Lily Colt',
       'stars': 2,
       'minutesAway': '1 min away',
+      'bio': 'Hello, i am a painter in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1510832842230-87253f48d74f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFpbnRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
     },
@@ -34,6 +36,7 @@ class _DashboardState extends State<Dashboard> {
       'fname': 'Sarah Payne',
       'stars': 1,
       'minutesAway': '1 min away',
+      'bio': 'Hello, i am a baby sitter and pet sitter in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1534806391029-791d2695c38b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBiYWJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -42,6 +45,7 @@ class _DashboardState extends State<Dashboard> {
       'fname': 'Brad Philips',
       'stars': 4,
       'minutesAway': '1 min away',
+      'bio': 'Hello, i am a mechanic in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1583954964358-1bd7215b6f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -50,6 +54,7 @@ class _DashboardState extends State<Dashboard> {
       'fname': 'Karl Gibson',
       'stars': 3,
       'minutesAway': '1 min away',
+      'bio': 'Hello, i am a electrician in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -58,6 +63,7 @@ class _DashboardState extends State<Dashboard> {
       'fname': 'Colleen',
       'stars': 4,
       'minutesAway': '1 min away',
+      'bio': 'Hello, i am an IT support in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1617042375876-a13e36732a04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBwcm9ncmFtbWVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -164,11 +170,11 @@ class _DashboardState extends State<Dashboard> {
                             fontSize: 16.0,
                           ),
                         ),
-                        Icon(
-                          CupertinoIcons.arrow_right,
-                          size: 20.0,
-                          color: Color(0xff262626),
-                        ),
+                        // Icon(
+                        //   CupertinoIcons.arrow_right,
+                        //   size: 20.0,
+                        //   color: Color(0xff262626),
+                        // ),
                       ],
                     ),
                   ),
@@ -188,6 +194,7 @@ class _DashboardState extends State<Dashboard> {
                             url: i['url'],
                             fname: i['fname'],
                             minutesAway: i['minutesAway'],
+                            bio: i['bio']
                           ),
                       ],
                     ),
@@ -210,11 +217,11 @@ class _DashboardState extends State<Dashboard> {
                             fontSize: 16.0,
                           ),
                         ),
-                        Icon(
-                          CupertinoIcons.arrow_right,
-                          size: 20.0,
-                          color: Color(0xff262626),
-                        ),
+                        // Icon(
+                        //   CupertinoIcons.arrow_right,
+                        //   size: 20.0,
+                        //   color: Color(0xff262626),
+                        // ),
                       ],
                     ),
                   ),
@@ -224,6 +231,8 @@ class _DashboardState extends State<Dashboard> {
                       fname: i['fname'],
                       tag: i['tag'],
                       url: i['url'],
+                      bio: i['bio'],
+                      minutesAway: i['minutesAway'],
                     ),
                 ],
               ),

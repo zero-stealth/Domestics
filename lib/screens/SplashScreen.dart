@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:domestics/screens/Selections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Login.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Future.delayed(const Duration(seconds: 2), (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Login()),
+          MaterialPageRoute(builder: (context) => Selections()),
         );
       });
     });

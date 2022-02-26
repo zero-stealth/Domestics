@@ -8,10 +8,15 @@ class Star extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      CupertinoIcons.star_fill,
-      color: Colors.deepOrangeAccent,
-      size: 15.0,
+    return Container(
+      margin: EdgeInsets.only(
+        right: 4.0,
+      ),
+      child: Icon(
+        CupertinoIcons.star_fill,
+        color: Colors.orangeAccent,
+        size: 14.0,
+      ),
     );
   }
 }
