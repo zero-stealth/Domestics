@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +107,7 @@ class _SelectionsState extends State<Selections> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffda4b2e),
+      backgroundColor: dBlueBackground,
       body: SafeArea(
           child: Stack(children: [
         SingleChildScrollView(
@@ -119,7 +120,7 @@ class _SelectionsState extends State<Selections> {
                   width: double.infinity,
                   height: 5.0,
                   decoration: BoxDecoration(
-                    color: const Color(0xffcf3f23),
+                    color: dDarkBlue,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Row(
@@ -234,10 +235,10 @@ class _SelectionsState extends State<Selections> {
             padding: const EdgeInsets.all(20.0),
             child: CupertinoButton(
               color: Colors.white,
-              child: const Text(
+              child: Text(
                 'Continue',
                 style: TextStyle(
-                    color: Color(0xffda4b2e),
+                    color: dBlueBackground,
                     fontSize: 16.0,
                     fontFamily: 'SFD-Bold'),
               ),
@@ -284,7 +285,7 @@ class Dialog extends StatelessWidget {
         children: [
           Container(
             width: MediaQuery.of(context).size.width - 40,
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0), color: Colors.white),
             child: Column(
@@ -293,7 +294,7 @@ class Dialog extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'SFD-Bold',
                     decoration: TextDecoration.none,
                     fontWeight: FontWeight.normal,
@@ -305,7 +306,7 @@ class Dialog extends StatelessWidget {
                 Text(
                   content,
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'SFT-Regular',
                     fontWeight: FontWeight.normal,
                     decoration: TextDecoration.none,
@@ -337,7 +338,7 @@ class Tab extends StatefulWidget {
 }
 
 class _TabState extends State<Tab> {
-  Color highback = const Color(0xffcf3f23);
+  Color highback = dDarkBlue;
   Color hightext = Colors.white;
   bool highlighted = false;
 
@@ -350,11 +351,11 @@ class _TabState extends State<Tab> {
             highlighted = true;
             widget.onSelect(true);
             highback = Colors.white;
-            hightext = const Color(0xffcf3f23);
+            hightext = dDarkBlue;
           } else {
             highlighted = false;
             widget.onSelect(false);
-            highback = const Color(0xffcf3f23);
+            highback = dDarkBlue;
             hightext = Colors.white;
           }
         });

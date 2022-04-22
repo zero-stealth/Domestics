@@ -65,7 +65,7 @@ class PopularCard extends StatelessWidget {
                         right: 12.0,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xfffafafa).withOpacity(0.8),
+                        color: const Color(0xff278fe9),
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       child: Row(
@@ -81,7 +81,7 @@ class PopularCard extends StatelessWidget {
                           Text(
                             tag,
                             style: TextStyle(
-                              color: Color(0xff262626),
+                              color: Colors.white,
                               fontSize: 12.0,
                               fontFamily: 'SFD-Bold',
                             ),

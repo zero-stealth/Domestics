@@ -120,12 +120,12 @@ class _DashboardState extends State<Dashboard> {
                 ),
               )
             ],
-            title: Padding(
-              padding: const EdgeInsets.only(
+            title: const Padding(
+              padding: EdgeInsets.only(
                 top: 10.0,
                 left: 5.0,
               ),
-              child: const Text(
+              child: Text(
                 'Domestics',
                 style: TextStyle(
                   fontFamily: 'SFD-Bold',
@@ -160,7 +160,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         Text(
                           'Popular Nearby',
                           textAlign: TextAlign.start,
@@ -180,8 +180,8 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   const SizedBox(height: 26.0),
                   SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.only(
                       left: 20.0,
                       right: 20.0,
                     ),
@@ -207,7 +207,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         Text(
                           'Recommended',
                           textAlign: TextAlign.start,
