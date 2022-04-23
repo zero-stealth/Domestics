@@ -1,10 +1,10 @@
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/widgets/Dashboard/Star.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-
   final String username;
   final String url;
   final String tag;
@@ -27,7 +27,8 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffefefef),
+      // backgroundColor: const Color(0xffefefef),
+      backgroundColor: dBackgroundWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -165,48 +166,34 @@ class _ProfileState extends State<Profile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: (MediaQuery.of(context).size.width - 60) / 2,
+                        width: (MediaQuery.of(context).size.width - 40),
                         child: CupertinoButton(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             top: 10.0,
                             bottom: 10.0,
                             left: 0.0,
                             right: 0.0,
                           ),
-                          color: Colors.blueAccent,
-                          child: const Text(
-                            'Call me',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontFamily: 'SFD-Bold',
-                            ),
-                          ),
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => Selections()),
-                            // );
-                          },
-                        ),
-                      ),
-                      Container(
-                        width: (MediaQuery.of(context).size.width - 60) / 2,
-                        child: CupertinoButton(
-                          padding: EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0,
-                            left: 0.0,
-                            right: 0.0,
-                          ),
-                          color: const Color(0xff8e8e90).withOpacity(0.1),
-                          child: const Text(
-                            'Save',
-                            style: TextStyle(
-                              fontFamily: 'SFT-Regular',
-                              color: Color(0xff262626),
-                              fontSize: 16.0,
-                            ),
+                          color: Color.fromARGB(255, 154, 154, 161)
+                              .withOpacity(0.1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                CupertinoIcons.bookmark,
+                                color: dBlack,
+                                size: 18.0,
+                              ),
+                              const SizedBox(width: 15.0),
+                              const Text(
+                                'Save worker',
+                                style: TextStyle(
+                                  fontFamily: 'SFT-Regular',
+                                  color: Color(0xff262626),
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ],
                           ),
                           onPressed: () {
                             // Navigator.push(
@@ -219,7 +206,45 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 30.0),
+                const SizedBox(height: 10.0),
+                Container(
+                  width: (MediaQuery.of(context).size.width - 40),
+                  child: CupertinoButton(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                      left: 0.0,
+                      right: 0.0,
+                    ),
+                    color: dBackgroundWhite,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Icon(
+                        //   CupertinoIcons.bookmark,
+                        //   color: dBlack,
+                        //   size: 18.0,
+                        // ),
+                        // const SizedBox(width: 15.0),
+                        Text(
+                          'Refer me to someone',
+                          style: TextStyle(
+                            fontFamily: 'SFT-Bold',
+                            color: dBlueBackground,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Selections()),
+                      // );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10.0),
                 Text(
                   'Reviews',
                   style: TextStyle(
@@ -231,7 +256,11 @@ class _ProfileState extends State<Profile> {
                 const SizedBox(height: 15.0),
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xfffafafa),
+                    color: dBackgroundWhite,
+                    border: Border.all(
+                      color: dGreyFaded,
+                      width: 2.0,
+                    ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Column(
@@ -358,6 +387,44 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        child: CupertinoButton(
+          borderRadius: BorderRadius.circular(0.0),
+          padding: const EdgeInsets.only(
+            top: 15.0,
+            bottom: 15.0,
+            left: 0.0,
+            right: 0.0,
+          ),
+          color: dBlueBackground,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                CupertinoIcons.phone_fill,
+                color: Colors.white,
+                size: 20.0,
+              ),
+              SizedBox(width: 15.0),
+              Text(
+                'Call me',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontFamily: 'SFD-Bold',
+                ),
+              ),
+            ],
+          ),
+          onPressed: () {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => Selections()),
+            // );
+          },
         ),
       ),
     );

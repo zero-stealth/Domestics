@@ -1,9 +1,11 @@
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/widgets/Dashboard/UserTab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 feedbackModal(context) {
   showModalBottomSheet(
+    backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(15.0),
@@ -89,6 +91,7 @@ feedbackModal(context) {
 
 EditProfileModal(context) {
   showModalBottomSheet(
+    backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(15.0),
@@ -236,6 +239,7 @@ EditProfileModal(context) {
 
 securityModal(context) {
   showModalBottomSheet(
+    backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(15.0),
@@ -360,6 +364,7 @@ securityModal(context) {
 
 statsModal(context) {
   showModalBottomSheet(
+    backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(15.0),
@@ -524,7 +529,7 @@ referredModal(context) {
   ];
 
   showModalBottomSheet(
-    backgroundColor: const Color(0xffefefef),
+    backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(15.0),
