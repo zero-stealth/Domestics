@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Notifications.dart';
 import 'package:domestics/screens/Settings.dart';
 import 'package:domestics/widgets/Dashboard/PopularCard.dart';
@@ -79,7 +80,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: const Color(0xffefefef),
-      backgroundColor: const Color(0xfffafafa),
+      backgroundColor: dBackgroundWhite,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -96,19 +97,20 @@ class _DashboardState extends State<Dashboard> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Notifications()),
+                      MaterialPageRoute(
+                          builder: (context) => Notifications()),
                     );
                   },
-                  child: const Icon(
-                    CupertinoIcons.bell,
-                    color: Color(0xff262626),
+                  child: Icon(
+                    CupertinoIcons.plus,
+                    color: dBlack,
                     size: 23.0,
                   ),
                 ),
               ),
               const SizedBox(width: 28.0),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 10.0,
                   right: 20.0,
                 ),
@@ -119,16 +121,16 @@ class _DashboardState extends State<Dashboard> {
                       MaterialPageRoute(builder: (context) => Settings()),
                     );
                   },
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.settings_solid,
-                    color: Color(0xff262626),
+                    color: dBlack,
                     size: 23.0,
                   ),
                 ),
               )
             ],
-            title: const Padding(
-              padding: EdgeInsets.only(
+            title: Padding(
+              padding: const EdgeInsets.only(
                 top: 10.0,
                 left: 5.0,
               ),
@@ -136,12 +138,12 @@ class _DashboardState extends State<Dashboard> {
                 'Domestics',
                 style: TextStyle(
                   fontFamily: 'SFD-Bold',
-                  color: Color(0xff262626),
+                  color: dBlack,
                   fontSize: 20.0,
                 ),
               ),
             ),
-            backgroundColor: const Color(0xffefefef),
+            backgroundColor: dBackgroundWhite,
             // expandedHeight: 100.0,
             floating: true,
             pinned: true,
@@ -167,20 +169,20 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text(
                           'Popular Nearby',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontFamily: 'SFD-Bold',
-                            color: Color(0xff262626),
+                            color: dBlack,
                             fontSize: 16.0,
                           ),
                         ),
                         // Icon(
                         //   CupertinoIcons.arrow_right,
                         //   size: 20.0,
-                        //   color: Color(0xff262626),
+                        //   color: dBlack,
                         // ),
                       ],
                     ),
@@ -213,25 +215,25 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text(
                           'Recommended',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontFamily: 'SFD-Bold',
-                            color: Color(0xff262626),
+                            color: dBlack,
                             fontSize: 16.0,
                           ),
                         ),
                         // Icon(
                         //   CupertinoIcons.arrow_right,
                         //   size: 20.0,
-                        //   color: Color(0xff262626),
+                        //   color: dBlack,
                         // ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 5.0),
+                  const SizedBox(height: 0.0),
                   Container(
                     margin: const EdgeInsets.all(0.0),
                     padding: const EdgeInsets.only(
@@ -239,7 +241,7 @@ class _DashboardState extends State<Dashboard> {
                       bottom: 10.0,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xfffafafa),
+                      color: dBackgroundWhite,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Column(
@@ -261,6 +263,33 @@ class _DashboardState extends State<Dashboard> {
             ]),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.only(
+          top: 12.0,
+          bottom: 12.0,
+          left: 20.0,
+          right: 20.0
+        ),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              width: 2,
+              color: Color(0xff8e8e90).withOpacity(0.1),
+            ),
+          ),
+          color: dBackgroundWhite,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(CupertinoIcons.bag_fill, color: dBlack, size: 26.0),
+            Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
+            Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
+            Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
+          ],
+        ),
       ),
     );
   }
