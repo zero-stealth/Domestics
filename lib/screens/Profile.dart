@@ -73,7 +73,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 20.0),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,7 +92,7 @@ class _ProfileState extends State<Profile> {
                     fontSize: 12.0,
                   ),
                 ),
-                const SizedBox(height: 6.0),
+                const SizedBox(height: 10.0),
                 Text(
                   widget.username,
                   style: TextStyle(
@@ -169,8 +169,8 @@ class _ProfileState extends State<Profile> {
                         width: (MediaQuery.of(context).size.width - 40),
                         child: CupertinoButton(
                           padding: const EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0,
+                            top: 15.0,
+                            bottom: 15.0,
                             left: 0.0,
                             right: 0.0,
                           ),
@@ -229,7 +229,7 @@ class _ProfileState extends State<Profile> {
                         Text(
                           'Refer me to someone',
                           style: TextStyle(
-                            fontFamily: 'SFT-Bold',
+                            fontFamily: 'SFT-Regular',
                             color: dBlueBackground,
                             fontSize: 14.0,
                           ),
