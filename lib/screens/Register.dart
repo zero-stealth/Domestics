@@ -46,7 +46,7 @@ class _RegisterState extends State<Register> {
                 'Phone Number',
                 style: TextStyle(
                   fontSize: 14.0,
-                  color: dBlackFaded,
+                  color: dGrey,
                   fontFamily: 'SFD-Bold',
                 ),
               ),
@@ -93,10 +93,10 @@ class _RegisterState extends State<Register> {
                 width: double.infinity,
                 child: CupertinoButton(
                   color: dBlack,
-                  child: const Text(
+                  child: Text(
                     'Register',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: dWhitePure,
                         fontSize: 16.0,
                         fontFamily: 'SFD-Bold'),
                   ),
@@ -155,60 +155,63 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 const SizedBox(height: 30.0),
-                CupertinoTextField(
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  style: TextStyle(
-                    color: dBlack,
-                  ),
-                  onSubmitted: (value) {},
+                Container(
+                  padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(width: 1.0, color: dBlackFaded),
-                  )),
-                  maxLines: 1,
-                  padding: const EdgeInsets.only(
-                    bottom: 10.0,
+                    color: dGreyFaded,
+                    borderRadius: BorderRadius.circular(6.0),
                   ),
-                  placeholder: 'Email Address',
-                  placeholderStyle: TextStyle(color: dBlackFaded),
+                  child: CupertinoTextField(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    style: TextStyle(
+                      color: dBlack,
+                    ),
+                    onSubmitted: (value) {},
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    maxLines: 1,
+                    placeholder: 'Email Address',
+                    placeholderStyle: TextStyle(color: dGrey),
+                  ),
                 ),
                 const SizedBox(height: 30.0),
-                CupertinoTextField(
-                  obscureText: true,
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  style: TextStyle(
-                    color: dBlack,
-                  ),
-                  onSubmitted: (value) {},
+                Container(
+                  padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(width: 1.0, color: dBlackFaded),
-                  )),
-                  maxLines: 1,
-                  padding: const EdgeInsets.only(
-                    bottom: 10.0,
+                    color: dGreyFaded,
+                    borderRadius: BorderRadius.circular(6.0),
                   ),
-                  placeholder: 'Password',
-                  placeholderStyle: TextStyle(color: dBlackFaded),
+                  child: CupertinoTextField(
+                    obscureText: true,
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    style: TextStyle(
+                      color: dBlack,
+                    ),
+                    onSubmitted: (value) {},
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    maxLines: 1,
+                    placeholder: 'Password',
+                    placeholderStyle: TextStyle(color: dGrey),
+                  ),
                 ),
                 const SizedBox(height: 30.0),
-                CupertinoTextField(
-                  obscureText: true,
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                  onSubmitted: (value) {},
+                Container(
+                  padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(width: 1.0, color: dBlackFaded),
-                  )),
-                  maxLines: 1,
-                  padding: const EdgeInsets.only(
-                    bottom: 10.0,
+                    color: dGreyFaded,
+                    borderRadius: BorderRadius.circular(6.0),
                   ),
-                  placeholder: 'Confirm password',
-                  placeholderStyle: TextStyle(color: dBlackFaded),
+                  child: CupertinoTextField(
+                    obscureText: true,
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    style: TextStyle(
+                      color: dWhitePure,
+                    ),
+                    onSubmitted: (value) {},
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    maxLines: 1,
+                    placeholder: 'Confirm password',
+                    placeholderStyle: TextStyle(color: dGrey),
+                  ),
                 ),
                 const SizedBox(height: 25.0),
                 Container(
@@ -220,10 +223,10 @@ class _RegisterState extends State<Register> {
                   ),
                   child: CupertinoButton(
                     color: dBlueBackground,
-                    child: const Text(
+                    child: Text(
                       'Register',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: dWhitePure,
                           fontSize: 16.0,
                           fontFamily: 'SFD-Bold'),
                     ),
@@ -243,7 +246,7 @@ class _RegisterState extends State<Register> {
                     Container(
                       height: 2.0,
                       width: 60.0,
-                      decoration: const BoxDecoration(color: Colors.white12),
+                      decoration: BoxDecoration(color: dWhitePure),
                     ),
                     const SizedBox(width: 10.0),
                     Text(
@@ -257,7 +260,7 @@ class _RegisterState extends State<Register> {
                     Container(
                       height: 2.0,
                       width: 60.0,
-                      decoration: const BoxDecoration(color: Colors.white12),
+                      decoration: BoxDecoration(color: dWhitePure),
                     )
                   ],
                 ),
@@ -270,7 +273,7 @@ class _RegisterState extends State<Register> {
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
+                        color: dBackgroundWhite,
                       ),
                       child: FaIcon(
                         FontAwesomeIcons.facebook,
@@ -282,7 +285,7 @@ class _RegisterState extends State<Register> {
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
+                        color: dBackgroundWhite,
                       ),
                       child: FaIcon(
                         FontAwesomeIcons.github,
@@ -294,7 +297,7 @@ class _RegisterState extends State<Register> {
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
+                        color: dBackgroundWhite,
                       ),
                       child: FaIcon(
                         FontAwesomeIcons.google,
@@ -304,7 +307,7 @@ class _RegisterState extends State<Register> {
                     )
                   ],
                 ),
-                const SizedBox(height: 50.0),
+                const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(

@@ -90,10 +90,10 @@ class _LoginState extends State<Login> {
                 width: double.infinity,
                 child: CupertinoButton(
                   color: const Color(0xffda4b2e),
-                  child: const Text(
+                  child: Text(
                     'Login',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: dWhitePure,
                         fontSize: 16.0,
                         fontFamily: 'SFD-Bold'),
                   ),
@@ -203,7 +203,7 @@ class _LoginState extends State<Login> {
                     child: Text(
                       'Login',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: dWhitePure,
                         fontSize: 16.0,
                         fontFamily: 'SFD-Bold',
                       ),
@@ -224,7 +224,7 @@ class _LoginState extends State<Login> {
                     Container(
                       height: 2.0,
                       width: 60.0,
-                      decoration: const BoxDecoration(color: Colors.white12),
+                      decoration: BoxDecoration(color: dGreyFaded),
                     ),
                     const SizedBox(width: 10.0),
                     Text(
@@ -238,7 +238,7 @@ class _LoginState extends State<Login> {
                     Container(
                       height: 2.0,
                       width: 60.0,
-                      decoration: const BoxDecoration(color: Colors.white12),
+                      decoration: BoxDecoration(color: dGreyFaded),
                     )
                   ],
                 ),
@@ -251,7 +251,7 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
+                        color: dBackgroundWhite,
                       ),
                       child: FaIcon(
                         FontAwesomeIcons.facebook,
@@ -263,7 +263,7 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
+                        color: dBackgroundWhite,
                       ),
                       child: FaIcon(
                         FontAwesomeIcons.github,
@@ -275,7 +275,7 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
+                        color: dBackgroundWhite,
                       ),
                       child: FaIcon(
                         FontAwesomeIcons.google,
@@ -285,7 +285,7 @@ class _LoginState extends State<Login> {
                     )
                   ],
                 ),
-                const SizedBox(height: 50.0),
+                const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
