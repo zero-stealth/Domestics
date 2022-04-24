@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Hero(
                   tag: 'logo',
                   child: Image(
-                    image: AssetImage("assets/paw.png"),
+                    image: AssetImage("assets/paw-white.png"),
                     height: 150.0,
                   ),
                 ),

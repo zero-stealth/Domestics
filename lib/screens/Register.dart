@@ -126,14 +126,15 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: 20.0),
                 const Hero(
                   tag: 'logo',
                   child: Image(
                     image: AssetImage("assets/paw.png"),
-                    height: 30.0,
+                    height: 40.0,
                   ),
                 ),
-                const SizedBox(height: 50.0),
+                const SizedBox(height: 40.0),
                 Text(
                   'Welcome',
                   textAlign: TextAlign.start,
