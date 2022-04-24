@@ -1,5 +1,7 @@
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Selections.dart';
+import 'package:domestics/widgets/Dialog.dart';
+import 'package:domestics/widgets/Forms/AuthBtn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,103 +16,38 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  _loginModal(context) {
-    showModalBottomSheet(
-      backgroundColor: const Color(0xFFfdfbfa),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25.0),
-        ),
-      ),
-      isScrollControlled: true,
-      context: context,
-      builder: (context) => Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 30.0),
-              Text(
-                'Login',
-                style: TextStyle(
-                  color: dBlack,
-                  fontSize: 20.0,
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              Text(
-                'Phone Number',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: dGrey,
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              CupertinoTextField(
-                onSubmitted: (value) {},
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  color: Colors.grey[100],
-                ),
-                maxLines: 1,
-                padding: const EdgeInsets.all(14.0),
-                placeholder: '0723442354',
-                placeholderStyle: TextStyle(
-                  color: Colors.black26,
-                ),
-              ),
-              const SizedBox(height: 15.0),
-              Text(
-                'Password',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: dBlack,
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              CupertinoTextField(
-                onSubmitted: (value) {},
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  color: Colors.grey[100],
-                ),
-                maxLines: 1,
-                padding: const EdgeInsets.all(14.0),
-                placeholder: '*******',
-                placeholderStyle: TextStyle(
-                  color: Colors.black26,
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              // ignore: sized_box_for_whitespace
-              Container(
-                width: double.infinity,
-                child: CupertinoButton(
-                  color: dBlack,
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                        color: dWhitePure,
+  void _popup() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return MyDialog(
+            title: 'Working on it',
+            content: 'This feature will be available soon.',
+            continueWidget: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width - 80,
+                  child: CupertinoButton(
+                    padding: const EdgeInsets.all(10.0),
+                    color: dGreyFaded,
+                    child: Text(
+                      'If you say so',
+                      style: TextStyle(
+                        color: dBlack,
                         fontSize: 16.0,
-                        fontFamily: 'SFD-Bold'),
+                        fontFamily: 'SFT-Regular',
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () {
-                    _loginModal(context);
-                  },
                 ),
-              ),
-              const SizedBox(height: 30.0),
-            ],
-          ),
-        ),
-      ),
-    );
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -269,42 +206,36 @@ class _RegisterState extends State<Register> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: dBackgroundWhite,
-                      ),
-                      child: FaIcon(
-                        FontAwesomeIcons.facebook,
-                        color: dBlack,
-                        size: 24.0,
+                    GestureDetector(
+                      onTap: _popup,
+                      child: AuthBtn(
+                        icon: FaIcon(
+                          FontAwesomeIcons.facebook,
+                          color: dBlack,
+                          size: 24.0,
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: dBackgroundWhite,
-                      ),
-                      child: FaIcon(
-                        FontAwesomeIcons.github,
-                        color: dBlack,
-                        size: 24.0,
+                    GestureDetector(
+                      onTap: _popup,
+                      child: AuthBtn(
+                        icon: FaIcon(
+                          FontAwesomeIcons.github,
+                          color: dBlack,
+                          size: 24.0,
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: dBackgroundWhite,
+                    GestureDetector(
+                      onTap: _popup,
+                      child: AuthBtn(
+                        icon: FaIcon(
+                          FontAwesomeIcons.google,
+                          color: dBlack,
+                          size: 24.0,
+                        ),
                       ),
-                      child: FaIcon(
-                        FontAwesomeIcons.google,
-                        color: dBlack,
-                        size: 24.0,
-                      ),
-                    )
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20.0),

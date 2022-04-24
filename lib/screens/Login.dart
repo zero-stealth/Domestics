@@ -1,9 +1,12 @@
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Register.dart';
 import 'package:domestics/screens/Selections.dart';
+import 'package:domestics/widgets/Dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../widgets/Forms/AuthBtn.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,103 +14,38 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  _loginModal(context) {
-    showModalBottomSheet(
-      backgroundColor: dBackgroundWhite,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25.0),
-        ),
-      ),
-      isScrollControlled: true,
-      context: context,
-      builder: (context) => Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 30.0),
-              const Text(
-                'Login',
-                style: TextStyle(
-                  color: Color(0xffda4b2e),
-                  fontSize: 20.0,
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Phone Number',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Color(0xffda4b2e),
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              CupertinoTextField(
-                onSubmitted: (value) {},
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  color: dGrey[100],
-                ),
-                maxLines: 1,
-                padding: const EdgeInsets.all(14.0),
-                placeholder: '0723442354',
-                placeholderStyle: TextStyle(
-                  color: Colors.black26,
-                ),
-              ),
-              const SizedBox(height: 15.0),
-              const Text(
-                'Password',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Color(0xffda4b2e),
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              CupertinoTextField(
-                onSubmitted: (value) {},
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  color: dGrey[100],
-                ),
-                maxLines: 1,
-                padding: const EdgeInsets.all(14.0),
-                placeholder: '*******',
-                placeholderStyle: TextStyle(
-                  color: Colors.black26,
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              // ignore: sized_box_for_whitespace
-              Container(
-                width: double.infinity,
-                child: CupertinoButton(
-                  color: const Color(0xffda4b2e),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                        color: dWhitePure,
+  void _popup() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return MyDialog(
+            title: 'Working on it',
+            content: 'This feature will be available soon.',
+            continueWidget: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width - 80,
+                  child: CupertinoButton(
+                    padding: const EdgeInsets.all(10.0),
+                    color: dGreyFaded,
+                    child: Text(
+                      'If you say so',
+                      style: TextStyle(
+                        color: dBlack,
                         fontSize: 16.0,
-                        fontFamily: 'SFD-Bold'),
+                        fontFamily: 'SFT-Regular',
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () {
-                    _loginModal(context);
-                  },
                 ),
-              ),
-              const SizedBox(height: 30.0),
-            ],
-          ),
-        ),
-      ),
-    );
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -163,8 +101,7 @@ class _LoginState extends State<Login> {
                       color: dBlack,
                     ),
                     onSubmitted: (value) {},
-                    decoration: const BoxDecoration(
-                        color: Colors.transparent),
+                    decoration: const BoxDecoration(color: Colors.transparent),
                     maxLines: 1,
                     placeholder: 'Email Address',
                     placeholderStyle: TextStyle(color: dGrey),
@@ -247,42 +184,36 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: dBackgroundWhite,
-                      ),
-                      child: FaIcon(
-                        FontAwesomeIcons.facebook,
-                        color: dBlack,
-                        size: 24.0,
+                    GestureDetector(
+                      onTap: _popup,
+                      child: AuthBtn(
+                        icon: FaIcon(
+                          FontAwesomeIcons.facebook,
+                          color: dBlack,
+                          size: 24.0,
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: dBackgroundWhite,
-                      ),
-                      child: FaIcon(
-                        FontAwesomeIcons.github,
-                        color: dBlack,
-                        size: 24.0,
+                    GestureDetector(
+                      onTap: _popup,
+                      child: AuthBtn(
+                        icon: FaIcon(
+                          FontAwesomeIcons.github,
+                          color: dBlack,
+                          size: 24.0,
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: dBackgroundWhite,
+                    GestureDetector(
+                      onTap: _popup,
+                      child: AuthBtn(
+                        icon: FaIcon(
+                          FontAwesomeIcons.google,
+                          color: dBlack,
+                          size: 24.0,
+                        ),
                       ),
-                      child: FaIcon(
-                        FontAwesomeIcons.google,
-                        color: dBlack,
-                        size: 24.0,
-                      ),
-                    )
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -310,3 +241,4 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
