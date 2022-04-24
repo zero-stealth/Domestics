@@ -169,8 +169,8 @@ class _ProfileState extends State<Profile> {
                         width: (MediaQuery.of(context).size.width - 40),
                         child: CupertinoButton(
                           padding: const EdgeInsets.only(
-                            top: 15.0,
-                            bottom: 15.0,
+                            top: 12.0,
+                            bottom: 12.0,
                             left: 0.0,
                             right: 0.0,
                           ),

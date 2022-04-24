@@ -1,3 +1,4 @@
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Register.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   _loginModal(context) {
     showModalBottomSheet(
-      backgroundColor: const Color(0xFFfdfbfa),
+      backgroundColor: dBackgroundWhite,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(25.0),
@@ -51,7 +52,7 @@ class _LoginState extends State<Login> {
                 onSubmitted: (value) {},
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.0),
-                  color: Colors.grey[100],
+                  color: dGrey[100],
                 ),
                 maxLines: 1,
                 padding: const EdgeInsets.all(14.0),
@@ -74,7 +75,7 @@ class _LoginState extends State<Login> {
                 onSubmitted: (value) {},
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.0),
-                  color: Colors.grey[100],
+                  color: dGrey[100],
                 ),
                 maxLines: 1,
                 padding: const EdgeInsets.all(14.0),
@@ -112,7 +113,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffda4b2e),
+      backgroundColor: dBackgroundWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -130,61 +131,63 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 const SizedBox(height: 50.0),
-                const Text(
+                Text(
                   'Welcome back',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 26.0,
                     fontFamily: 'SFD-Bold',
-                    color: Colors.white,
+                    color: dBlack,
                   ),
                 ),
                 const SizedBox(height: 4.0),
-                const Text(
-                  'Its been a while.',
+                Text(
+                  'Lets go!',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 16.0,
                     fontFamily: 'SFT-Regular',
-                    color: Colors.white,
+                    color: dBlack,
                   ),
                 ),
                 const SizedBox(height: 30.0),
-                CupertinoTextField(
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  style: const TextStyle(
-                    color: Colors.white,
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                      color: dGreyFaded,
+                      borderRadius: BorderRadius.circular(6.0)),
+                  child: CupertinoTextField(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    style: TextStyle(
+                      color: dBlack,
+                    ),
+                    onSubmitted: (value) {},
+                    decoration: const BoxDecoration(
+                        color: Colors.transparent),
+                    maxLines: 1,
+                    placeholder: 'Email Address',
+                    placeholderStyle: TextStyle(color: dGrey),
                   ),
-                  onSubmitted: (value) {},
-                  decoration: const BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.white70),
-                  )),
-                  maxLines: 1,
-                  padding: const EdgeInsets.only(
-                    bottom: 10.0,
-                  ),
-                  placeholder: 'Email Address',
-                  placeholderStyle: const TextStyle(color: Colors.white54),
                 ),
                 const SizedBox(height: 30.0),
-                CupertinoTextField(
-                  obscureText: true,
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  style: const TextStyle(
-                    color: Colors.white,
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: dGreyFaded,
+                    borderRadius: BorderRadius.circular(6.0),
                   ),
-                  onSubmitted: (value) {},
-                  decoration: const BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.white70),
-                  )),
-                  maxLines: 1,
-                  padding: const EdgeInsets.only(
-                    bottom: 10.0,
+                  child: CupertinoTextField(
+                    obscureText: true,
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    style: TextStyle(
+                      color: dBlack,
+                    ),
+                    onSubmitted: (value) {},
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    maxLines: 1,
+                    placeholder: 'Password',
+                    placeholderStyle: TextStyle(color: dGrey),
                   ),
-                  placeholder: 'Password',
-                  placeholderStyle: const TextStyle(color: Colors.white54),
                 ),
                 const SizedBox(height: 25.0),
                 Container(
@@ -195,13 +198,14 @@ class _LoginState extends State<Login> {
                     right: 0.0,
                   ),
                   child: CupertinoButton(
-                    color: Colors.white,
-                    child: const Text(
+                    color: dBlueBackground,
+                    child: Text(
                       'Login',
                       style: TextStyle(
-                          color: Color(0xffda4b2e),
-                          fontSize: 16.0,
-                          fontFamily: 'SFD-Bold'),
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontFamily: 'SFD-Bold',
+                      ),
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -222,10 +226,10 @@ class _LoginState extends State<Login> {
                       decoration: const BoxDecoration(color: Colors.white12),
                     ),
                     const SizedBox(width: 10.0),
-                    const Text(
+                    Text(
                       'or login with',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: dBlack,
                           fontSize: 14.0,
                           fontFamily: 'SFT-Regular'),
                     ),
@@ -248,9 +252,9 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(10.0),
                         color: Colors.white,
                       ),
-                      child: const FaIcon(
+                      child: FaIcon(
                         FontAwesomeIcons.facebook,
-                        color: Color(0xffda4b2e),
+                        color: dBlack,
                         size: 24.0,
                       ),
                     ),
@@ -260,9 +264,9 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(10.0),
                         color: Colors.white,
                       ),
-                      child: const FaIcon(
+                      child: FaIcon(
                         FontAwesomeIcons.github,
-                        color: Color(0xffda4b2e),
+                        color: dBlack,
                         size: 24.0,
                       ),
                     ),
@@ -272,9 +276,9 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(10.0),
                         color: Colors.white,
                       ),
-                      child: const FaIcon(
+                      child: FaIcon(
                         FontAwesomeIcons.google,
-                        color: Color(0xffda4b2e),
+                        color: dBlack,
                         size: 24.0,
                       ),
                     )
@@ -288,11 +292,11 @@ class _LoginState extends State<Login> {
                       MaterialPageRoute(builder: (context) => const Register()),
                     );
                   },
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Don\'t have an account? Register',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
+                      style: TextStyle(color: dBlack, fontSize: 16.0),
                     ),
                   ),
                 ),
