@@ -80,25 +80,51 @@ class _SelectionsState extends State<Selections> {
         barrierDismissible: true,
         builder: (context) {
           return Dialog(
-            title: 'Tags',
-            content: 'You must select atleast 4 tags to continue',
-            continueWidget: Container(
-              width: MediaQuery.of(context).size.width - 80,
-              child: CupertinoButton(
-                padding: const EdgeInsets.all(10.0),
-                color: const Color(0xffda4b2e).withOpacity(0.1),
-                child: const Text(
-                  'Got it',
-                  style: TextStyle(
-                    color: Color(0xffda4b2e),
-                    fontSize: 16.0,
-                    fontFamily: 'SFT-Regular',
+            title: 'Hello',
+            content: 'Selecting categories will help you find workers easily.',
+            continueWidget: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width - 80,
+                  child: CupertinoButton(
+                    padding: const EdgeInsets.all(10.0),
+                    color: dBlueBackground,
+                    child: const Text(
+                      'Skip for now',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontFamily: 'SFT-Regular',
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Dashboard()),
+                      );
+                    },
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+                SizedBox(height: 10.0),
+                Container(
+                  width: MediaQuery.of(context).size.width - 80,
+                  child: CupertinoButton(
+                    padding: const EdgeInsets.all(10.0),
+                    color: dGreyFaded,
+                    child: Text(
+                      'Back',
+                      style: TextStyle(
+                        color: dBlack,
+                        fontSize: 16.0,
+                        fontFamily: 'SFT-Regular',
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
             ),
           );
         });
@@ -107,7 +133,7 @@ class _SelectionsState extends State<Selections> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: dBlueBackground,
+      backgroundColor: dBackgroundWhite,
       body: SafeArea(
           child: Stack(children: [
         SingleChildScrollView(
@@ -120,7 +146,7 @@ class _SelectionsState extends State<Selections> {
                   width: double.infinity,
                   height: 5.0,
                   decoration: BoxDecoration(
-                    color: dDarkBlue,
+                    color: dGreyFaded,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Row(
@@ -129,7 +155,7 @@ class _SelectionsState extends State<Selections> {
                       Container(
                         width: barWidth,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: dBlueBackground,
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
@@ -137,13 +163,13 @@ class _SelectionsState extends State<Selections> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                const Text(
+                Text(
                   "Who do you want to find?",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontFamily: 'SFD-Bold',
                     fontSize: 26.0,
-                    color: Colors.white,
+                    color: dBlack,
                   ),
                 ),
                 const SizedBox(height: 30.0),
@@ -234,11 +260,11 @@ class _SelectionsState extends State<Selections> {
             width: double.infinity,
             padding: const EdgeInsets.all(20.0),
             child: CupertinoButton(
-              color: Colors.white,
+              color: dBlueBackground,
               child: Text(
                 'Continue',
                 style: TextStyle(
-                    color: dBlueBackground,
+                    color: Colors.white,
                     fontSize: 16.0,
                     fontFamily: 'SFD-Bold'),
               ),
@@ -247,7 +273,7 @@ class _SelectionsState extends State<Selections> {
                   log(m);
                 }
 
-                if (selected.length < 4) {
+                if (selected.length < 1) {
                   _popup();
                 } else {
                   Navigator.push(
@@ -287,18 +313,20 @@ class Dialog extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 40,
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0), color: Colors.white),
+              borderRadius: BorderRadius.circular(10.0),
+              color: dBackgroundWhite,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
                   textAlign: TextAlign.start,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'SFD-Bold',
                     decoration: TextDecoration.none,
                     fontWeight: FontWeight.normal,
-                    color: Color(0xff363831),
+                    color: dBlack,
                     fontSize: 18.0,
                   ),
                 ),
@@ -306,11 +334,11 @@ class Dialog extends StatelessWidget {
                 Text(
                   content,
                   textAlign: TextAlign.start,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'SFT-Regular',
                     fontWeight: FontWeight.normal,
                     decoration: TextDecoration.none,
-                    color: Color(0xff736c7a),
+                    color: dBlack,
                     fontSize: 16.0,
                   ),
                 ),
@@ -338,8 +366,8 @@ class Tab extends StatefulWidget {
 }
 
 class _TabState extends State<Tab> {
-  Color highback = dDarkBlue;
-  Color hightext = Colors.white;
+  Color highback = dGreyFaded;
+  Color hightext = dBlack;
   bool highlighted = false;
 
   @override
@@ -350,13 +378,13 @@ class _TabState extends State<Tab> {
           if (highlighted == false) {
             highlighted = true;
             widget.onSelect(true);
-            highback = Colors.white;
-            hightext = dDarkBlue;
+            highback = dBlueBackground;
+            hightext = Colors.white;
           } else {
             highlighted = false;
             widget.onSelect(false);
-            highback = dDarkBlue;
-            hightext = Colors.white;
+            highback = dGreyFaded;
+            hightext = dBlack;
           }
         });
       },
