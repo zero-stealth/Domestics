@@ -5,7 +5,9 @@ import 'package:domestics/widgets/Forms/AuthBtn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../widgets/Forms/InputWidget.dart';
 import 'Login.dart';
 
 class Register extends StatefulWidget {
@@ -22,6 +24,10 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
+
+  bool errorStatus = false;
+  String errorMessage = "";
+  String buttonState = 'notloading';
 
   void _popup() {
     showDialog(
@@ -55,6 +61,23 @@ class _RegisterState extends State<Register> {
             ),
           );
         });
+  }
+
+  buttonStatus(buttonState) {
+    switch (buttonState) {
+      case "loading":
+        return LoadingAnimationWidget.inkDrop(
+          color: Colors.white,
+          size: 20.0,
+        );
+
+      default:
+        return Text(
+          'Register',
+          style: TextStyle(
+              color: dWhitePure, fontSize: 16.0, fontFamily: 'SFD-Bold'),
+        );
+    }
   }
 
   @override
@@ -126,7 +149,12 @@ class _RegisterState extends State<Register> {
                   mycontroller: confirmController,
                   obscure: true,
                 ),
-                const SizedBox(height: 25.0),
+                const SizedBox(height: 10.0),
+                ErrorAlert(
+                  errorMessage: errorMessage,
+                  status: errorStatus,
+                ),
+                const SizedBox(height: 10.0),
                 Container(
                   width: double.infinity,
                   margin: const EdgeInsets.only(
@@ -136,84 +164,34 @@ class _RegisterState extends State<Register> {
                   ),
                   child: CupertinoButton(
                     color: dBlueBackground,
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                          color: dWhitePure,
-                          fontSize: 16.0,
-                          fontFamily: 'SFD-Bold'),
-                    ),
+                    child: buttonStatus(buttonState),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Selections()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Selections()),
+                      // );
+                      setState(() {
+                        errorStatus = false;
+                        buttonState = 'loading';
+                      });
+
+                      
+
+                      if (passwordController.text != confirmController.text) {
+                        print('[----] Passwords dont match');
+                        setState(() {
+                          errorMessage = "Password don\'t match!";
+                          errorStatus = true;
+                          buttonState = 'notloading';
+                        });
+                      } else {
+                        print('[+] Passwords match!!!');
+                        buttonState = 'notloading';
+                      }
                     },
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     Container(
-                //       height: 2.0,
-                //       width: 60.0,
-                //       decoration: BoxDecoration(color: dWhitePure),
-                //     ),
-                //     const SizedBox(width: 10.0),
-                //     Text(
-                //       'or register with',
-                //       style: TextStyle(
-                //           color: dBlack,
-                //           fontSize: 14.0,
-                //           fontFamily: 'SFT-Regular'),
-                //     ),
-                //     const SizedBox(width: 10.0),
-                //     Container(
-                //       height: 2.0,
-                //       width: 60.0,
-                //       decoration: BoxDecoration(color: dWhitePure),
-                //     )
-                //   ],
-                // ),
-                // const SizedBox(height: 30.0),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: _popup,
-                //       child: AuthBtn(
-                //         icon: FaIcon(
-                //           FontAwesomeIcons.facebook,
-                //           color: dBlack,
-                //           size: 24.0,
-                //         ),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: _popup,
-                //       child: AuthBtn(
-                //         icon: FaIcon(
-                //           FontAwesomeIcons.github,
-                //           color: dBlack,
-                //           size: 24.0,
-                //         ),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: _popup,
-                //       child: AuthBtn(
-                //         icon: FaIcon(
-                //           FontAwesomeIcons.google,
-                //           color: dBlack,
-                //           size: 24.0,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 const SizedBox(height: 10.0),
                 GestureDetector(
                   onTap: () {
@@ -240,61 +218,37 @@ class _RegisterState extends State<Register> {
   }
 }
 
-class InputWidget extends StatefulWidget {
-  final String label;
-  final String placeholder;
-  final TextEditingController mycontroller;
-  final bool obscure;
+class ErrorAlert extends StatelessWidget {
+  final String errorMessage;
+  final bool status;
 
-  InputWidget({
-    required this.label,
-    required this.placeholder,
-    required this.mycontroller,
-    required this.obscure,
+  ErrorAlert({
+    required this.errorMessage,
+    required this.status,
   });
 
   @override
-  State<InputWidget> createState() => _InputWidgetState();
-}
-
-class _InputWidgetState extends State<InputWidget> {
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.label,
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            color: dBlack,
-            fontSize: 12.0,
-          ),
+    if (status == true) {
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.redAccent,
+          borderRadius: BorderRadius.circular(6.0),
         ),
-        SizedBox(height: 8.0),
-        Container(
-          padding: EdgeInsets.all(6.0),
-          decoration: BoxDecoration(
-            color: dGreyFaded,
-            borderRadius: BorderRadius.circular(6.0),
-          ),
-          child: CupertinoTextField(
-            obscureText: widget.obscure,
-            controller: widget.mycontroller,
-            scrollPhysics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.all(15.0),
+        child: Center(
+          child: Text(
+            errorMessage,
             style: TextStyle(
-              color: dBlack,
+              fontSize: 14.0,
+              color: Colors.white,
             ),
-            onChanged: (text) {
-              print(text);
-            },
-            decoration: const BoxDecoration(color: Colors.transparent),
-            maxLines: 1,
-            placeholder: widget.placeholder,
-            placeholderStyle: TextStyle(color: dGrey),
           ),
         ),
-      ],
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }
