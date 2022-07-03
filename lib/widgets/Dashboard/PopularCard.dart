@@ -66,7 +66,7 @@ class PopularCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: const Color(0xff278fe9),
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Notifications.dart';
 import 'package:domestics/screens/Settings.dart';
@@ -75,6 +76,16 @@ class _DashboardState extends State<Dashboard> {
           'https://images.unsplash.com/photo-1617042375876-a13e36732a04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBwcm9ncmFtbWVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // stuff();
+  }
+
+  // stuff() async {
+  //   await getPosts();
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -16,6 +16,13 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController fnameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmController = TextEditingController();
+
   void _popup() {
     showDialog(
         context: context,
@@ -63,14 +70,14 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20.0),
-                const Hero(
-                  tag: 'logo',
-                  child: Image(
-                    image: AssetImage("assets/paw.png"),
-                    height: 40.0,
-                  ),
-                ),
+                // const SizedBox(height: 20.0),
+                // const Hero(
+                //   tag: 'logo',
+                //   child: Image(
+                //     image: AssetImage("assets/paw.png"),
+                //     height: 40.0,
+                //   ),
+                // ),
                 const SizedBox(height: 40.0),
                 Text(
                   'Welcome',
@@ -83,7 +90,7 @@ class _RegisterState extends State<Register> {
                 ),
                 const SizedBox(height: 4.0),
                 Text(
-                  'Lets get you set up.',
+                  'Lets get you signed up.',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 16.0,
@@ -92,63 +99,32 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 const SizedBox(height: 30.0),
-                Container(
-                  padding: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: dGreyFaded,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  child: CupertinoTextField(
-                    scrollPhysics: const BouncingScrollPhysics(),
-                    style: TextStyle(
-                      color: dBlack,
-                    ),
-                    onSubmitted: (value) {},
-                    decoration: const BoxDecoration(color: Colors.transparent),
-                    maxLines: 1,
-                    placeholder: 'Email Address',
-                    placeholderStyle: TextStyle(color: dGrey),
-                  ),
+                InputWidget(
+                  label: "First Name",
+                  placeholder: "john",
+                  mycontroller: fnameController,
+                  obscure: false,
                 ),
-                const SizedBox(height: 30.0),
-                Container(
-                  padding: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: dGreyFaded,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  child: CupertinoTextField(
-                    obscureText: true,
-                    scrollPhysics: const BouncingScrollPhysics(),
-                    style: TextStyle(
-                      color: dBlack,
-                    ),
-                    onSubmitted: (value) {},
-                    decoration: const BoxDecoration(color: Colors.transparent),
-                    maxLines: 1,
-                    placeholder: 'Password',
-                    placeholderStyle: TextStyle(color: dGrey),
-                  ),
+                const SizedBox(height: 15.0),
+                InputWidget(
+                  label: "Last Name",
+                  placeholder: "cena",
+                  mycontroller: lnameController,
+                  obscure: false,
                 ),
-                const SizedBox(height: 30.0),
-                Container(
-                  padding: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: dGreyFaded,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  child: CupertinoTextField(
-                    obscureText: true,
-                    scrollPhysics: const BouncingScrollPhysics(),
-                    style: TextStyle(
-                      color: dWhitePure,
-                    ),
-                    onSubmitted: (value) {},
-                    decoration: const BoxDecoration(color: Colors.transparent),
-                    maxLines: 1,
-                    placeholder: 'Confirm password',
-                    placeholderStyle: TextStyle(color: dGrey),
-                  ),
+                const SizedBox(height: 15.0),
+                InputWidget(
+                  label: "Password",
+                  placeholder: "***********",
+                  mycontroller: passwordController,
+                  obscure: true,
+                ),
+                const SizedBox(height: 15.0),
+                InputWidget(
+                  label: "Confirm Password",
+                  placeholder: "***********",
+                  mycontroller: confirmController,
+                  obscure: true,
                 ),
                 const SizedBox(height: 25.0),
                 Container(
@@ -176,69 +152,69 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 2.0,
-                      width: 60.0,
-                      decoration: BoxDecoration(color: dWhitePure),
-                    ),
-                    const SizedBox(width: 10.0),
-                    Text(
-                      'or register with',
-                      style: TextStyle(
-                          color: dBlack,
-                          fontSize: 14.0,
-                          fontFamily: 'SFT-Regular'),
-                    ),
-                    const SizedBox(width: 10.0),
-                    Container(
-                      height: 2.0,
-                      width: 60.0,
-                      decoration: BoxDecoration(color: dWhitePure),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: _popup,
-                      child: AuthBtn(
-                        icon: FaIcon(
-                          FontAwesomeIcons.facebook,
-                          color: dBlack,
-                          size: 24.0,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: _popup,
-                      child: AuthBtn(
-                        icon: FaIcon(
-                          FontAwesomeIcons.github,
-                          color: dBlack,
-                          size: 24.0,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: _popup,
-                      child: AuthBtn(
-                        icon: FaIcon(
-                          FontAwesomeIcons.google,
-                          color: dBlack,
-                          size: 24.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Container(
+                //       height: 2.0,
+                //       width: 60.0,
+                //       decoration: BoxDecoration(color: dWhitePure),
+                //     ),
+                //     const SizedBox(width: 10.0),
+                //     Text(
+                //       'or register with',
+                //       style: TextStyle(
+                //           color: dBlack,
+                //           fontSize: 14.0,
+                //           fontFamily: 'SFT-Regular'),
+                //     ),
+                //     const SizedBox(width: 10.0),
+                //     Container(
+                //       height: 2.0,
+                //       width: 60.0,
+                //       decoration: BoxDecoration(color: dWhitePure),
+                //     )
+                //   ],
+                // ),
+                // const SizedBox(height: 30.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: _popup,
+                //       child: AuthBtn(
+                //         icon: FaIcon(
+                //           FontAwesomeIcons.facebook,
+                //           color: dBlack,
+                //           size: 24.0,
+                //         ),
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: _popup,
+                //       child: AuthBtn(
+                //         icon: FaIcon(
+                //           FontAwesomeIcons.github,
+                //           color: dBlack,
+                //           size: 24.0,
+                //         ),
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: _popup,
+                //       child: AuthBtn(
+                //         icon: FaIcon(
+                //           FontAwesomeIcons.google,
+                //           color: dBlack,
+                //           size: 24.0,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                const SizedBox(height: 10.0),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -260,6 +236,65 @@ class _RegisterState extends State<Register> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class InputWidget extends StatefulWidget {
+  final String label;
+  final String placeholder;
+  final TextEditingController mycontroller;
+  final bool obscure;
+
+  InputWidget({
+    required this.label,
+    required this.placeholder,
+    required this.mycontroller,
+    required this.obscure,
+  });
+
+  @override
+  State<InputWidget> createState() => _InputWidgetState();
+}
+
+class _InputWidgetState extends State<InputWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: dBlack,
+            fontSize: 12.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Container(
+          padding: EdgeInsets.all(6.0),
+          decoration: BoxDecoration(
+            color: dGreyFaded,
+            borderRadius: BorderRadius.circular(6.0),
+          ),
+          child: CupertinoTextField(
+            obscureText: widget.obscure,
+            controller: widget.mycontroller,
+            scrollPhysics: const BouncingScrollPhysics(),
+            style: TextStyle(
+              color: dBlack,
+            ),
+            onChanged: (text) {
+              print(text);
+            },
+            decoration: const BoxDecoration(color: Colors.transparent),
+            maxLines: 1,
+            placeholder: widget.placeholder,
+            placeholderStyle: TextStyle(color: dGrey),
+          ),
+        ),
+      ],
     );
   }
 }
