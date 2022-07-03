@@ -67,7 +67,7 @@ class _RegisterState extends State<Register> {
     switch (buttonState) {
       case "loading":
         return LoadingAnimationWidget.inkDrop(
-          color: Colors.white,
+          color: dWhitePure,
           size: 20.0,
         );
 
@@ -175,7 +175,7 @@ class _RegisterState extends State<Register> {
                         buttonState = 'loading';
                       });
 
-                      
+
 
                       if (passwordController.text != confirmController.text) {
                         print('[----] Passwords dont match');
@@ -242,7 +242,7 @@ class ErrorAlert extends StatelessWidget {
             errorMessage,
             style: TextStyle(
               fontSize: 14.0,
-              color: Colors.white,
+              color: dWhitePure,
             ),
           ),
         ),
