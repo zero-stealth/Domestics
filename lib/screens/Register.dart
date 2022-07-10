@@ -95,14 +95,6 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const SizedBox(height: 20.0),
-                // const Hero(
-                //   tag: 'logo',
-                //   child: Image(
-                //     image: AssetImage("assets/paw.png"),
-                //     height: 40.0,
-                //   ),
-                // ),
                 const SizedBox(height: 40.0),
                 Text(
                   'Welcome',
@@ -242,7 +234,10 @@ class _RegisterState extends State<Register> {
                     child: Text(
                       'Already have an account? Log in',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: dBlack, fontSize: 16.0),
+                      style: TextStyle(
+                        color: Colors.grey.withOpacity(0.8),
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                 ),
@@ -255,4 +250,3 @@ class _RegisterState extends State<Register> {
     );
   }
 }
-
