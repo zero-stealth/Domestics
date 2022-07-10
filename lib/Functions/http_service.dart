@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-var baseurl = "http://localhost:3000";
+var baseurl = "http://192.168.0.25:3000";
 
 Future createAccount(fname, lname, bio, phone, password, email) async {
   var data = {
@@ -13,18 +13,15 @@ Future createAccount(fname, lname, bio, phone, password, email) async {
     "email": email
   };
   var response = await http.Client().post(Uri.parse('$baseurl/users'), 
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: data,
+    body: jsonEncode(data),
     encoding: Encoding.getByName('utf-8'));
 
   if (response.statusCode == 200) {
-    // var jsonResponse = convert.jsonDecode();
     final parsed = json.decode(response.body);
     print(parsed);
+    return true;
   } else {
-    throw "Unable to create account";
+    return false;
+    // throw "Unable to create account";
   }
 }

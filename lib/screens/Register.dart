@@ -1,7 +1,9 @@
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:domestics/widgets/Dialog.dart';
 import 'package:domestics/widgets/Forms/AuthBtn.dart';
+import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -165,7 +167,7 @@ class _RegisterState extends State<Register> {
                   child: CupertinoButton(
                     color: dBlueBackground,
                     child: buttonStatus(buttonState),
-                    onPressed: () {
+                    onPressed: () async {
                       // Navigator.push(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => Selections()),
@@ -175,24 +177,60 @@ class _RegisterState extends State<Register> {
                         buttonState = 'loading';
                       });
 
-
+                      if (fnameController.text.length <= 0 ||
+                          lnameController.text.length <= 0) {
+                        return setState(() {
+                          errorMessage = "Fill all fields.";
+                          errorStatus = true;
+                          buttonState = 'notloading';
+                        });
+                      } else {
+                        print("[+] All fields filled.");
+                      }
 
                       if (passwordController.text != confirmController.text) {
                         print('[----] Passwords dont match');
-                        setState(() {
+                        return setState(() {
                           errorMessage = "Password don\'t match!";
                           errorStatus = true;
                           buttonState = 'notloading';
                         });
                       } else {
                         print('[+] Passwords match!!!');
-                        buttonState = 'notloading';
+
+                        try {
+                          bool createStatus = await createAccount(
+                            fnameController.text,
+                            lnameController.text,
+                            "Hello, i love domestics",
+                            "0000000000",
+                            passwordController.text,
+                            emailController.text,
+                          );
+
+                          switch (createStatus) {
+                            case true:
+                              print('[+] Created successfully.');
+                              break;
+                            default:
+                              print('[--] Failed to create account');
+                              break;
+                          }
+
+                          setState(() {
+                            buttonState = 'notloading';
+                          });
+                        } catch (e) {
+                          setState(() {
+                            buttonState = 'notloading';
+                          });
+                          print(e);
+                        }
                       }
                     },
                   ),
                 ),
-                const SizedBox(height: 10.0),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 5.0),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -218,37 +256,3 @@ class _RegisterState extends State<Register> {
   }
 }
 
-class ErrorAlert extends StatelessWidget {
-  final String errorMessage;
-  final bool status;
-
-  ErrorAlert({
-    required this.errorMessage,
-    required this.status,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (status == true) {
-      return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.redAccent,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-        padding: EdgeInsets.all(15.0),
-        child: Center(
-          child: Text(
-            errorMessage,
-            style: TextStyle(
-              fontSize: 14.0,
-              color: dWhitePure,
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Container();
-    }
-  }
-}
