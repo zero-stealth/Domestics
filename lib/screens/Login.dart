@@ -25,6 +25,8 @@ class _LoginState extends State<Login> {
           return MyDialog(
             title: 'Working on it',
             content: 'This feature will be available soon.',
+            backgroundColor: Colors.redAccent,
+            textColor: dBlack,
             continueWidget: Column(
               children: [
                 Container(

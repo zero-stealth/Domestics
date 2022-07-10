@@ -34,6 +34,8 @@ Future<dynamic> popup(
   String title,
   String content,
   Widget actionsWidget,
+  Color backgroundColor,
+  Color textColor,
 ) {
   return showDialog(
       context: context,
@@ -43,6 +45,8 @@ Future<dynamic> popup(
           title: title,
           content: content,
           continueWidget: actionsWidget,
+          textColor: textColor,
+          backgroundColor: backgroundColor,
         );
       });
 }

@@ -54,7 +54,7 @@ class _InputWidgetState extends State<InputWidget> {
             decoration: const BoxDecoration(color: Colors.transparent),
             maxLines: 1,
             placeholder: widget.placeholder,
-            placeholderStyle: TextStyle(color: dGrey),
+            placeholderStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
           ),
         ),
       ],

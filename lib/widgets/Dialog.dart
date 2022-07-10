@@ -7,12 +7,16 @@ class MyDialog extends StatelessWidget {
   final String content;
   // final Widget cancelWidget;
   final Widget continueWidget;
+  final Color backgroundColor;
+  final Color textColor;
 
   MyDialog({
     required this.title,
     required this.content,
     // required this.cancelWidget,
     required this.continueWidget,
+    required this.textColor,
+    required this.backgroundColor,
   });
 
   @override
@@ -25,7 +29,7 @@ class MyDialog extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              color: dBackgroundWhite,
+              color: backgroundColor,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +41,7 @@ class MyDialog extends StatelessWidget {
                     fontFamily: 'SFD-Bold',
                     decoration: TextDecoration.none,
                     fontWeight: FontWeight.normal,
-                    color: dBlack,
+                    color: textColor,
                     fontSize: 18.0,
                   ),
                 ),
@@ -49,7 +53,7 @@ class MyDialog extends StatelessWidget {
                     fontFamily: 'SFT-Regular',
                     fontWeight: FontWeight.normal,
                     decoration: TextDecoration.none,
-                    color: dBlack,
+                    color: textColor,
                     fontSize: 16.0,
                   ),
                 ),

@@ -326,7 +326,7 @@ class Dialog extends StatelessWidget {
                     fontFamily: 'SFD-Bold',
                     decoration: TextDecoration.none,
                     fontWeight: FontWeight.normal,
-                    color: dBlack,
+                    color: dBlueBackground,
                     fontSize: 18.0,
                   ),
                 ),

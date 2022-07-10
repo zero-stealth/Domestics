@@ -4,6 +4,7 @@ import 'package:domestics/screens/Selections.dart';
 import 'package:domestics/widgets/Dialog.dart';
 import 'package:domestics/widgets/Forms/AuthBtn.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
+import 'package:domestics/widgets/popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,24 +38,27 @@ class _RegisterState extends State<Register> {
         barrierDismissible: true,
         builder: (context) {
           return MyDialog(
-            title: 'Working on it',
-            content: 'This feature will be available soon.',
+            title: 'Really!',
+            content: 'Your password is too easy.',
+            textColor: dWhitePure,
+            backgroundColor: Colors.redAccent,
             continueWidget: Column(
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width - 80,
                   child: CupertinoButton(
                     padding: const EdgeInsets.all(10.0),
-                    color: dGreyFaded,
+                    color: Colors.white.withOpacity(0.2),
                     child: Text(
-                      'If you say so',
+                      'Change it',
                       style: TextStyle(
-                        color: dBlack,
-                        fontSize: 16.0,
+                        color: dWhitePure,
+                        fontSize: 14.0,
                         fontFamily: 'SFT-Regular',
                       ),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       Navigator.pop(context);
                     },
                   ),
@@ -190,33 +194,42 @@ class _RegisterState extends State<Register> {
                       } else {
                         print('[+] Passwords match!!!');
 
-                        try {
-                          bool createStatus = await createAccount(
-                            fnameController.text,
-                            lnameController.text,
-                            "Hello, i love domestics",
-                            "0000000000",
-                            passwordController.text,
-                            emailController.text,
-                          );
+                        if (passwordController.text == "password123" ||
+                            passwordController.text == "password") {
+                          setState(() {
+                            buttonState = 'notloading';
+                          });
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          return _popup();
+                        } else {
+                          try {
+                            bool createStatus = await createAccount(
+                              fnameController.text,
+                              lnameController.text,
+                              "Hello, i love domestics",
+                              "0000000000",
+                              passwordController.text,
+                              emailController.text,
+                            );
 
-                          switch (createStatus) {
-                            case true:
-                              print('[+] Created successfully.');
-                              break;
-                            default:
-                              print('[--] Failed to create account');
-                              break;
+                            switch (createStatus) {
+                              case true:
+                                print('[+] Created successfully.');
+                                break;
+                              default:
+                                print('[--] Failed to create account');
+                                break;
+                            }
+
+                            setState(() {
+                              buttonState = 'notloading';
+                            });
+                          } catch (e) {
+                            setState(() {
+                              buttonState = 'notloading';
+                            });
+                            print(e);
                           }
-
-                          setState(() {
-                            buttonState = 'notloading';
-                          });
-                        } catch (e) {
-                          setState(() {
-                            buttonState = 'notloading';
-                          });
-                          print(e);
                         }
                       }
                     },
