@@ -92,216 +92,238 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       // backgroundColor: const Color(0xffefefef),
       backgroundColor: dBackgroundWhite,
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            elevation: 0.0,
-            centerTitle: false,
-            automaticallyImplyLeading: false,
-            actions: [
-              Padding(
+      body: Stack(children: [
+        CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              elevation: 0.0,
+              centerTitle: false,
+              automaticallyImplyLeading: false,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Notifications()),
+                      );
+                    },
+                    child: Icon(
+                      CupertinoIcons.plus,
+                      color: dBlack,
+                      size: 23.0,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 28.0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                    right: 20.0,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Settings()),
+                      );
+                    },
+                    child: Icon(
+                      CupertinoIcons.settings_solid,
+                      color: dBlack,
+                      size: 23.0,
+                    ),
+                  ),
+                )
+              ],
+              title: Padding(
                 padding: const EdgeInsets.only(
                   top: 10.0,
+                  left: 5.0,
                 ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Notifications()),
-                    );
-                  },
-                  child: Icon(
-                    CupertinoIcons.plus,
+                child: Text(
+                  'Domestics',
+                  style: TextStyle(
+                    fontFamily: 'SFD-Bold',
                     color: dBlack,
-                    size: 23.0,
+                    fontSize: 20.0,
                   ),
                 ),
               ),
-              const SizedBox(width: 28.0),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 10.0,
-                  right: 20.0,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Settings()),
-                    );
-                  },
-                  child: Icon(
-                    CupertinoIcons.settings_solid,
-                    color: dBlack,
-                    size: 23.0,
-                  ),
-                ),
-              )
-            ],
-            title: Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                left: 5.0,
-              ),
-              child: Text(
-                'Domestics',
-                style: TextStyle(
-                  fontFamily: 'SFD-Bold',
-                  color: dBlack,
-                  fontSize: 20.0,
-                ),
-              ),
+              backgroundColor: dBackgroundWhite,
+              // expandedHeight: 100.0,
+              floating: true,
+              pinned: false,
             ),
-            backgroundColor: dBackgroundWhite,
-            // expandedHeight: 100.0,
-            floating: true,
-            pinned: true,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // for (var i in posts)
-                  //   DashboardItem(
-                  //     tag: i['tag'],
-                  //     fname: i['fname'],
-                  //     minutesAway: i['minutesAway'],
-                  //     url: i['url'],
-                  //     stars: i['stars']
-                  //   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 15.0,
-                      left: 20.0,
-                      right: 20.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Popular Nearby',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontFamily: 'SFD-Bold',
-                            color: dBlack,
-                            fontSize: 16.0,
+            SliverList(
+              delegate: SliverChildListDelegate([
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // for (var i in posts)
+                    //   DashboardItem(
+                    //     tag: i['tag'],
+                    //     fname: i['fname'],
+                    //     minutesAway: i['minutesAway'],
+                    //     url: i['url'],
+                    //     stars: i['stars']
+                    //   ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 15.0,
+                        left: 20.0,
+                        right: 20.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Popular Nearby',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: 'SFD-Bold',
+                              color: dBlack,
+                              fontSize: 16.0,
+                            ),
                           ),
-                        ),
-                        // Icon(
-                        //   CupertinoIcons.arrow_right,
-                        //   size: 20.0,
-                        //   color: dBlack,
-                        // ),
-                      ],
+                          // Icon(
+                          //   CupertinoIcons.arrow_right,
+                          //   size: 20.0,
+                          //   color: dBlack,
+                          // ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 26.0),
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
+                    const SizedBox(height: 26.0),
+                    SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (var i in posts)
+                            PopularCard(
+                                tag: i['tag'],
+                                url: i['url'],
+                                fname: i['fname'],
+                                minutesAway: i['minutesAway'],
+                                bio: i['bio']),
+                        ],
+                      ),
                     ),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (var i in posts)
-                          PopularCard(
+                    SizedBox(height: 30.0),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Recommended',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: 'SFD-Bold',
+                              color: dBlack,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          // Icon(
+                          //   CupertinoIcons.arrow_right,
+                          //   size: 20.0,
+                          //   color: dBlack,
+                          // ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 0.0),
+                    Container(
+                      margin: const EdgeInsets.all(0.0),
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 10.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: dBackgroundWhite,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (var i in posts)
+                            UserTab(
+                              fname: i['fname'],
                               tag: i['tag'],
                               url: i['url'],
-                              fname: i['fname'],
+                              bio: i['bio'],
                               minutesAway: i['minutesAway'],
-                              bio: i['bio']),
-                      ],
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 30.0),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Recommended',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontFamily: 'SFD-Bold',
-                            color: dBlack,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        // Icon(
-                        //   CupertinoIcons.arrow_right,
-                        //   size: 20.0,
-                        //   color: dBlack,
-                        // ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 0.0),
-                  Container(
-                    margin: const EdgeInsets.all(0.0),
-                    padding: const EdgeInsets.only(
-                      top: 10.0,
-                      bottom: 10.0,
-                    ),
-                    decoration: BoxDecoration(
-                      color: dBackgroundWhite,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (var i in posts)
-                          UserTab(
-                            fname: i['fname'],
-                            tag: i['tag'],
-                            url: i['url'],
-                            bio: i['bio'],
-                            minutesAway: i['minutesAway'],
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ]),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.only(
-          top: 12.0,
-          bottom: 12.0,
-          left: 20.0,
-          right: 20.0
-        ),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              width: 2,
-              color: Color(0xff8e8e90).withOpacity(0.1),
+                    SizedBox(height: 50.0),
+                  ],
+                ),
+              ]),
             ),
-          ),
-          color: dBackgroundWhite,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(CupertinoIcons.bag_fill, color: dBlack, size: 26.0),
-            Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
-            Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
-            Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
           ],
         ),
-      ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 3,
+                sigmaY: 3,
+              ),
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 12.0,
+                  bottom: 12.0,
+                  left: 20.0,
+                  right: 20.0,
+                ),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      width: 1,
+                      color: Color(0xff8e8e90).withOpacity(0.1),
+                    ),
+                  ),
+                  gradient: LinearGradient(
+                    colors: [
+                      dBackgroundWhite.withOpacity(0.9),
+                      dBackgroundWhite.withOpacity(0.9),
+                    ],
+                    begin: AlignmentDirectional.topStart,
+                    end: AlignmentDirectional.bottomEnd,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(CupertinoIcons.bag_fill,
+                        color: dBlueBackground, size: 26.0),
+                    Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
+                    Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
+                    Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }

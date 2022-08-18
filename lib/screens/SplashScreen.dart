@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff278fe9),
+      backgroundColor: dBlueBackground,
       body: Stack(
         children: [
           Center(
