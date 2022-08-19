@@ -1,6 +1,7 @@
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Register.dart';
 import 'package:domestics/screens/Selections.dart';
+import 'package:domestics/screens/Who.dart';
 import 'package:domestics/widgets/Dialog.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -121,7 +122,7 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Selections()),
+                        MaterialPageRoute(builder: (context) => Who()),
                       );
                     },
                   ),
