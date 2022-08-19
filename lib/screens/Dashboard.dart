@@ -7,6 +7,7 @@ import 'package:domestics/widgets/Dashboard/PopularCard.dart';
 import 'package:domestics/widgets/Dashboard/UserTab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -97,6 +98,10 @@ class _DashboardState extends State<Dashboard> {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: dBackgroundWhite,
+                statusBarIconBrightness: Brightness.dark,
+              ),
               elevation: 0.0,
               centerTitle: false,
               automaticallyImplyLeading: false,
@@ -114,13 +119,13 @@ class _DashboardState extends State<Dashboard> {
                       );
                     },
                     child: Icon(
-                      CupertinoIcons.plus,
+                      CupertinoIcons.bell,
                       color: dBlack,
-                      size: 23.0,
+                      size: 25.0,
                     ),
                   ),
                 ),
-                const SizedBox(width: 28.0),
+                const SizedBox(width: 32.0),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 10.0,
@@ -136,7 +141,7 @@ class _DashboardState extends State<Dashboard> {
                     child: Icon(
                       CupertinoIcons.settings_solid,
                       color: dBlack,
-                      size: 23.0,
+                      size: 25.0,
                     ),
                   ),
                 )
@@ -188,7 +193,7 @@ class _DashboardState extends State<Dashboard> {
                             style: TextStyle(
                               fontFamily: 'SFD-Bold',
                               color: dBlack,
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                             ),
                           ),
                           // Icon(
@@ -234,7 +239,7 @@ class _DashboardState extends State<Dashboard> {
                             style: TextStyle(
                               fontFamily: 'SFD-Bold',
                               color: dBlack,
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                             ),
                           ),
                           // Icon(
@@ -277,52 +282,51 @@ class _DashboardState extends State<Dashboard> {
             ),
           ],
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 3,
-                sigmaY: 3,
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(
-                  top: 12.0,
-                  bottom: 12.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      width: 1,
-                      color: Color(0xff8e8e90).withOpacity(0.1),
-                    ),
-                  ),
-                  gradient: LinearGradient(
-                    colors: [
-                      dBackgroundWhite.withOpacity(0.9),
-                      dBackgroundWhite.withOpacity(0.9),
-                    ],
-                    begin: AlignmentDirectional.topStart,
-                    end: AlignmentDirectional.bottomEnd,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(CupertinoIcons.bag_fill,
-                        color: dBlueBackground, size: 26.0),
-                    Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
-                    Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
-                    Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        // Align(
+        //   alignment: Alignment.bottomCenter,
+        //   child: ClipRRect(
+        //     child: BackdropFilter(
+        //       filter: ImageFilter.blur(
+        //         sigmaX: 3,
+        //         sigmaY: 3,
+        //       ),
+        //       child: Container(
+        //         padding: const EdgeInsets.only(
+        //           top: 12.0,
+        //           bottom: 12.0,
+        //           left: 30.0,
+        //           right: 30.0,
+        //         ),
+        //         width: double.infinity,
+        //         decoration: BoxDecoration(
+        //           border: Border(
+        //             top: BorderSide(
+        //               width: 1,
+        //               color: Color(0xff8e8e90).withOpacity(0.1),
+        //             ),
+        //           ),
+        //           gradient: LinearGradient(
+        //             colors: [
+        //               dBackgroundWhite.withOpacity(0.9),
+        //               dBackgroundWhite.withOpacity(0.9),
+        //             ],
+        //             begin: AlignmentDirectional.topStart,
+        //             end: AlignmentDirectional.bottomEnd,
+        //           ),
+        //         ),
+        //         child: Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Icon(CupertinoIcons.bag_fill, color: dBlueBackground, size: 26.0),
+        //             Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
+        //             Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
+        //             Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ]),
     );
   }

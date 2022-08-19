@@ -1,4 +1,5 @@
 import 'package:domestics/Functions/SettingsFuncs.dart';
+import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,75 +18,10 @@ class _SettingsState extends State<Settings> {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverAppBar(
-              elevation: 0.0,
-              centerTitle: false,
-              automaticallyImplyLeading: false,
-              actions: [
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     top: 10.0,
-                //   ),
-                //   child: const Icon(
-                //     CupertinoIcons.bell,
-                //     color: Color(0xff262626),
-                //     size: 23.0,
-                //   ),
-                // ),
-                // const SizedBox(width: 28.0),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //     top: 10.0,
-                //     right: 20.0,
-                //   ),
-                //   child: GestureDetector(
-                //     onTap: (){
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(builder: (context) => Settings()),
-                //         );
-                //     },
-                //     child: const Icon(
-                //       CupertinoIcons.settings_solid,
-                //       color: Color(0xff262626),
-                //       size: 23.0,
-                //     ),
-                //   ),
-                // )
-              ],
-              leading: Padding(
-                padding: EdgeInsets.only(
-                  left: 5.0,
-                  top: 10.0,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    CupertinoIcons.arrow_left,
-                    size: 20.0,
-                    color: Color(0xff262626),
-                  ),
-                ),
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(
-                  top: 10.0,
-                ),
-                child: const Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontFamily: 'SFD-Bold',
-                    color: Color(0xff262626),
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              backgroundColor: const Color(0xffefefef),
-              // expandedHeight: 100.0,
-              floating: true,
-              pinned: true,
+            TopControl(
+              name: "Settings",
+              icon: CupertinoIcons.chevron_back,
+              backgroundColor: Colors.transparent,
             ),
             SliverList(
               delegate: SliverChildListDelegate([

@@ -19,23 +19,17 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         // cupertinoOverrideTheme: const CupertinoThemeData(
-        //   brightness: Brightness.dark,
+        //   brightness: Brightness.light,
         // ),
-        brightness: Brightness.dark,
-        appBarTheme: AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          titleTextStyle: TextStyle(
-            color: dBlack,
-          ),
-          toolbarTextStyle: TextStyle(
-            color: dBlack,
-          ),
-          // systemOverlayStyle: SystemUiOverlayStyle(
-          //   systemNavigationBarColor: dBackgroundWhite,
-          //   statusBarColor: dBackgroundWhite,
-          //   systemNavigationBarDividerColor: dBackgroundWhite,
-          // ),
-        ),
+        // appBarTheme: AppBarTheme(
+        //   systemOverlayStyle: SystemUiOverlayStyle.dark,
+        //   // systemOverlayStyle: SystemUiOverlayStyle(
+        //   //   statusBarBrightness: Brightness.light,
+        //   //   systemNavigationBarColor: dBackgroundWhite,
+        //   //   statusBarColor: dBackgroundWhite,
+        //   //   systemNavigationBarDividerColor: dBackgroundWhite,
+        //   // ),
+        //),
       ),
       home: const SplashScreen(),
     );
