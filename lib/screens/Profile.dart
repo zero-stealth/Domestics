@@ -62,24 +62,6 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                           ),
-                          // InkWell(
-                          //   onTap: () {
-                          //     Navigator.pop(context);
-                          //   },
-                          //   child: Container(
-                          //     padding: EdgeInsets.all(10.0),
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(50.0),
-                          //       color: const Color(0xff8e8e90).withOpacity(0.1),
-                          //     ),
-                          //     child: Center(
-                          //       child: Icon(
-                          //         CupertinoIcons.clear,
-                          //         color: Color(0xff262626),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                       const SizedBox(height: 20.0),
@@ -96,7 +78,7 @@ class _ProfileState extends State<Profile> {
                       Text(
                         widget.minutesAway,
                         style: TextStyle(
-                          fontFamily: 'SFD-Bold',
+                          fontFamily: 'AR',
                           color: Color(0xff262626),
                           fontSize: 12.0,
                         ),
@@ -105,16 +87,16 @@ class _ProfileState extends State<Profile> {
                       Text(
                         widget.username,
                         style: TextStyle(
-                          fontFamily: 'SFD-Bold',
+                          fontFamily: 'AR',
                           color: Color(0xff262626),
-                          fontSize: 24.0,
+                          fontSize: 22.0,
                         ),
                       ),
                       const SizedBox(height: 10.0),
                       Text(
                         widget.bio,
                         style: TextStyle(
-                          fontFamily: 'SFT-Regular',
+                          fontFamily: 'SFNSR',
                           color: Color(0xff262626),
                           fontSize: 16.0,
                         ),
@@ -131,13 +113,14 @@ class _ProfileState extends State<Profile> {
                               right: 20.0,
                             ),
                             decoration: BoxDecoration(
-                                color: const Color(0xff8e8e90).withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(50.0)),
+                              color: const Color(0xff8e8e90).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
                             child: Center(
                               child: Text(
                                 widget.tag,
                                 style: TextStyle(
-                                  fontFamily: 'SFT-Regular',
+                                  fontFamily: 'SFNSR',
                                   color: Color(0xff262626),
                                   fontSize: 14.0,
                                 ),
@@ -159,7 +142,7 @@ class _ProfileState extends State<Profile> {
                           //     child: Text(
                           //       'Someone to talk to',
                           //       style: TextStyle(
-                          //         fontFamily: 'SFT-Regular',
+                          //         fontFamily: 'SFNSR',
                           //         color: Color(0xff262626),
                           //         fontSize: 14.0,
                           //       ),
@@ -183,22 +166,21 @@ class _ProfileState extends State<Profile> {
                                   left: 0.0,
                                   right: 0.0,
                                 ),
-                                color: Color.fromARGB(255, 154, 154, 161)
-                                    .withOpacity(0.1),
+                                color: dBlueBackground,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      CupertinoIcons.bookmark,
-                                      color: dBlack,
+                                      CupertinoIcons.phone_fill,
+                                      color: dWhitePure,
                                       size: 18.0,
                                     ),
                                     const SizedBox(width: 15.0),
-                                    const Text(
-                                      'Save to my list',
+                                    Text(
+                                      'Call me',
                                       style: TextStyle(
-                                        fontFamily: 'SFT-Regular',
-                                        color: Color(0xff262626),
+                                        fontFamily: 'AR',
+                                        color: dWhitePure,
                                         fontSize: 16.0,
                                       ),
                                     ),
@@ -215,7 +197,7 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10.0),
+                      const SizedBox(height: 15.0),
                       Container(
                         width: (MediaQuery.of(context).size.width - 40),
                         child: CupertinoButton(
@@ -238,9 +220,9 @@ class _ProfileState extends State<Profile> {
                               Text(
                                 'Refer me to someone',
                                 style: TextStyle(
-                                  fontFamily: 'SFT-Regular',
+                                  fontFamily: 'SFNSR',
                                   color: dBlueBackground,
-                                  fontSize: 14.0,
+                                  fontSize: 16.0,
                                 ),
                               ),
                             ],
@@ -253,11 +235,11 @@ class _ProfileState extends State<Profile> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 10.0),
+                      const SizedBox(height: 20.0),
                       Text(
                         'Reviews',
                         style: TextStyle(
-                          fontFamily: 'SFD-Bold',
+                          fontFamily: 'AR',
                           color: Color(0xff262626),
                           fontSize: 14.0,
                         ),
@@ -268,7 +250,7 @@ class _ProfileState extends State<Profile> {
                           color: dBackgroundWhite,
                           border: Border.all(
                             color: dGreyFaded,
-                            width: 1.0,
+                            width: 2.0,
                           ),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -296,7 +278,7 @@ class _ProfileState extends State<Profile> {
                                   Text(
                                     'Mullah',
                                     style: TextStyle(
-                                      fontFamily: 'SFD-Bold',
+                                      fontFamily: 'AR',
                                       color: Color(0xff262626),
                                       fontSize: 16.0,
                                     ),
@@ -306,7 +288,7 @@ class _ProfileState extends State<Profile> {
                                     'Very good services',
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
-                                      fontFamily: 'SFT-Regular',
+                                      fontFamily: 'SFNSR',
                                       color: Color(0xff262626),
                                       fontSize: 14.0,
                                     ),
@@ -335,7 +317,7 @@ class _ProfileState extends State<Profile> {
                                   Text(
                                     'Pauline ',
                                     style: TextStyle(
-                                      fontFamily: 'SFD-Bold',
+                                      fontFamily: 'AR',
                                       color: Color(0xff262626),
                                       fontSize: 16.0,
                                     ),
@@ -345,7 +327,7 @@ class _ProfileState extends State<Profile> {
                                     'I love what you do and appreciate your attention to detail',
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
-                                      fontFamily: 'SFT-Regular',
+                                      fontFamily: 'SFNSR',
                                       color: Color(0xff262626),
                                       fontSize: 14.0,
                                     ),
@@ -374,7 +356,7 @@ class _ProfileState extends State<Profile> {
                                   Text(
                                     'Pauline ',
                                     style: TextStyle(
-                                      fontFamily: 'SFD-Bold',
+                                      fontFamily: 'AR',
                                       color: Color(0xff262626),
                                       fontSize: 16.0,
                                     ),
@@ -384,7 +366,7 @@ class _ProfileState extends State<Profile> {
                                     'I love what you do and appreciate your attention to detail',
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
-                                      fontFamily: 'SFT-Regular',
+                                      fontFamily: 'SFNSR',
                                       color: Color(0xff262626),
                                       fontSize: 14.0,
                                     ),
@@ -404,45 +386,6 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        child: CupertinoButton(
-          borderRadius: BorderRadius.circular(0.0),
-          padding: const EdgeInsets.only(
-            top: 15.0,
-            bottom: 15.0,
-            left: 0.0,
-            right: 0.0,
-          ),
-          color: dBlueBackground,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
-                CupertinoIcons.phone_fill,
-                color: Colors.white,
-                size: 20.0,
-              ),
-              SizedBox(width: 15.0),
-              Text(
-                'Call me',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                  fontFamily: 'SFD-Bold',
-                ),
-              ),
-            ],
-          ),
-          onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Selections()),
-            // );
-          },
-        ),
-      ),
     );
   }
 }
-

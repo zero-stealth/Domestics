@@ -262,7 +262,7 @@ class _SelectionsState extends State<Selections> {
             child: CupertinoButton(
               color: dBlueBackground,
               child: Text(
-                'Continue',
+                'Finish',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,

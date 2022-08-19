@@ -43,9 +43,9 @@ class TopControl extends StatelessWidget {
         child: Text(
           name,
           style: TextStyle(
-            fontFamily: 'SFD-Bold',
+            fontFamily: 'AR',
             color: Color(0xff262626),
-            fontSize: 20.0,
+            fontSize: 18.0,
           ),
         ),
       ),

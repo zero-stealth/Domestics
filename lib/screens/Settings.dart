@@ -142,7 +142,7 @@ class SettingsItem extends StatelessWidget {
               Text(
                 name,
                 style: TextStyle(
-                  fontFamily: 'SFT-Regular',
+                  fontFamily: 'SFNSR',
                   color: color,
                   fontSize: 16.0,
                 ),

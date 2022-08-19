@@ -154,7 +154,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Text(
                   'Domestics',
                   style: TextStyle(
-                    fontFamily: 'SFD-Bold',
+                    fontFamily: 'AR',
                     color: dBlack,
                     fontSize: 20.0,
                   ),
@@ -191,7 +191,7 @@ class _DashboardState extends State<Dashboard> {
                             'Popular Nearby',
                             textAlign: TextAlign.start,
                             style: TextStyle(
-                              fontFamily: 'SFD-Bold',
+                              fontFamily: 'AR',
                               color: dBlack,
                               fontSize: 14.0,
                             ),
@@ -237,7 +237,7 @@ class _DashboardState extends State<Dashboard> {
                             'Recommended',
                             textAlign: TextAlign.start,
                             style: TextStyle(
-                              fontFamily: 'SFD-Bold',
+                              fontFamily: 'AR',
                               color: dBlack,
                               fontSize: 14.0,
                             ),

@@ -73,7 +73,7 @@ class UserTab extends StatelessWidget {
                         Text(
                           fname,
                           style: TextStyle(
-                            fontFamily: 'SFD-Bold',
+                            fontFamily: 'AR',
                             color: Color(0xff262626),
                             fontSize: 16.0,
                           ),
@@ -82,7 +82,7 @@ class UserTab extends StatelessWidget {
                         Text(
                           tag,
                           style: TextStyle(
-                            fontFamily: 'SFT-Regular',
+                            fontFamily: 'SFNSR',
                             color: Color(0xff262626),
                             fontSize: 14.0,
                           ),

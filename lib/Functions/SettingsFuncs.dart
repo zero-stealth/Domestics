@@ -39,7 +39,7 @@ feedbackModal(context) {
             const Text(
               'Feedback',
               style: TextStyle(
-                fontFamily: 'SFD-Bold',
+                fontFamily: 'AR',
                 color: Color(0xff262626),
                 fontSize: 22.0,
               ),
@@ -48,7 +48,7 @@ feedbackModal(context) {
             const Text(
               'Send us your thoughts, ideas or say hi. Life is too short.',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff8e8e90),
                 fontSize: 14.0,
               ),
@@ -57,11 +57,16 @@ feedbackModal(context) {
             CupertinoTextField(
               padding: const EdgeInsets.all(20.0),
               placeholder: 'Type something',
+              placeholderStyle: TextStyle(
+                fontFamily: "SFNSR",
+                color: dGrey,
+              ),
               minLines: 4,
               maxLines: 4,
               decoration: BoxDecoration(
-                  color: const Color(0xff8e8e90).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.0)),
+                color: const Color(0xff8e8e90).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
             const SizedBox(height: 20.0),
             Container(
@@ -73,7 +78,7 @@ feedbackModal(context) {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
-                    fontFamily: 'SFT-Regular',
+                    fontFamily: 'AR',
                   ),
                 ),
                 onPressed: () {
@@ -125,7 +130,7 @@ EditProfileModal(context) {
             const Text(
               'Edit Profile',
               style: TextStyle(
-                fontFamily: 'SFD-Bold',
+                fontFamily: 'AR',
                 color: Color(0xff262626),
                 fontSize: 22.0,
               ),
@@ -134,7 +139,7 @@ EditProfileModal(context) {
             const Text(
               'Change information on your user profile.',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff8e8e90),
                 fontSize: 14.0,
               ),
@@ -143,7 +148,7 @@ EditProfileModal(context) {
             Text(
               'Username',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff262626).withOpacity(0.5),
                 fontSize: 14.0,
               ),
@@ -153,9 +158,8 @@ EditProfileModal(context) {
               padding: const EdgeInsets.all(15.0),
               placeholder: 'Naughty Bullet',
               placeholderStyle: TextStyle(
-                color: Color(0xff262626),
-                fontFamily: 'SFT-Regular',
-                fontSize: 14.0,
+                fontFamily: "SFNSR",
+                color: dGrey,
               ),
               minLines: 1,
               maxLines: 1,
@@ -167,7 +171,7 @@ EditProfileModal(context) {
             Text(
               'Website',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff262626).withOpacity(0.5),
                 fontSize: 14.0,
               ),
@@ -177,9 +181,8 @@ EditProfileModal(context) {
               padding: const EdgeInsets.all(15.0),
               placeholder: 'https://naughty.com',
               placeholderStyle: TextStyle(
-                color: Color(0xff262626),
-                fontFamily: 'SFT-Regular',
-                fontSize: 14.0,
+                fontFamily: "SFNSR",
+                color: dGrey,
               ),
               minLines: 1,
               maxLines: 1,
@@ -191,7 +194,7 @@ EditProfileModal(context) {
             Text(
               'Bio',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff262626).withOpacity(0.5),
                 fontSize: 14.0,
               ),
@@ -201,9 +204,8 @@ EditProfileModal(context) {
               padding: const EdgeInsets.all(15.0),
               placeholder: 'I like chicken',
               placeholderStyle: TextStyle(
-                color: Color(0xff262626),
-                fontFamily: 'SFT-Regular',
-                fontSize: 14.0,
+                fontFamily: "SFNSR",
+                color: dGrey,
               ),
               minLines: 1,
               maxLines: 1,
@@ -221,7 +223,7 @@ EditProfileModal(context) {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
-                    fontFamily: 'SFT-Regular',
+                    fontFamily: 'AR',
                   ),
                 ),
                 onPressed: () {
@@ -273,7 +275,7 @@ securityModal(context) {
             const Text(
               'Security',
               style: TextStyle(
-                fontFamily: 'SFD-Bold',
+                fontFamily: 'AR',
                 color: Color(0xff262626),
                 fontSize: 22.0,
               ),
@@ -282,7 +284,7 @@ securityModal(context) {
             const Text(
               'Change critical account information.',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff8e8e90),
                 fontSize: 14.0,
               ),
@@ -291,7 +293,7 @@ securityModal(context) {
             Text(
               'Email',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff262626).withOpacity(0.5),
                 fontSize: 14.0,
               ),
@@ -301,9 +303,8 @@ securityModal(context) {
               padding: const EdgeInsets.all(15.0),
               placeholder: 'naughtybullet@pubg.com',
               placeholderStyle: TextStyle(
-                color: Color(0xff262626),
-                fontFamily: 'SFT-Regular',
-                fontSize: 14.0,
+                fontFamily: "SFNSR",
+                color: dGrey,
               ),
               minLines: 1,
               maxLines: 1,
@@ -315,7 +316,7 @@ securityModal(context) {
             Text(
               'Password',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff262626).withOpacity(0.5),
                 fontSize: 14.0,
               ),
@@ -324,12 +325,11 @@ securityModal(context) {
             CupertinoTextField(
               padding: const EdgeInsets.all(15.0),
               placeholder: '***********',
-              obscureText: true,
               placeholderStyle: TextStyle(
-                color: Color(0xff262626),
-                fontFamily: 'SFT-Regular',
-                fontSize: 14.0,
+                fontFamily: "SFNSR",
+                color: dGrey,
               ),
+              obscureText: true,
               minLines: 1,
               maxLines: 1,
               decoration: BoxDecoration(
@@ -346,7 +346,7 @@ securityModal(context) {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
-                    fontFamily: 'SFT-Regular',
+                    fontFamily: 'AR',
                   ),
                 ),
                 onPressed: () {
@@ -398,7 +398,7 @@ statsModal(context) {
             const Text(
               'Stats',
               style: TextStyle(
-                fontFamily: 'SFD-Bold',
+                fontFamily: 'AR',
                 color: Color(0xff262626),
                 fontSize: 22.0,
               ),
@@ -407,7 +407,7 @@ statsModal(context) {
             const Text(
               'Account engagement information.',
               style: TextStyle(
-                fontFamily: 'SFT-Regular',
+                fontFamily: 'SFNSR',
                 color: Color(0xff8e8e90),
                 fontSize: 14.0,
               ),
@@ -422,7 +422,7 @@ statsModal(context) {
                     Text(
                       'Profile Visits',
                       style: TextStyle(
-                        fontFamily: 'SFT-Regular',
+                        fontFamily: 'SFNSR',
                         color: Color(0xff262626).withOpacity(0.5),
                         fontSize: 14.0,
                       ),
@@ -431,7 +431,7 @@ statsModal(context) {
                     Text(
                       '233',
                       style: TextStyle(
-                        fontFamily: 'SFD-Bold',
+                        fontFamily: 'AR',
                         color: Color(0xff262626),
                         fontSize: 20.0,
                       ),
@@ -444,7 +444,7 @@ statsModal(context) {
                     Text(
                       'Profile Saves',
                       style: TextStyle(
-                        fontFamily: 'SFT-Regular',
+                        fontFamily: 'SFNSR',
                         color: Color(0xff262626).withOpacity(0.5),
                         fontSize: 14.0,
                       ),
@@ -453,7 +453,7 @@ statsModal(context) {
                     Text(
                       '6',
                       style: TextStyle(
-                        fontFamily: 'SFD-Bold',
+                        fontFamily: 'AR',
                         color: Color(0xff262626),
                         fontSize: 20.0,
                       ),
@@ -477,7 +477,8 @@ referredModal(context) {
       'fname': 'Levin Adams',
       'minutesAway': '2 min away',
       'stars': 4,
-      'bio': 'Hello, i am a tutor in nairobi contact me for business and enquiries.',
+      'bio':
+          'Hello, i am a tutor in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjB0ZWFjaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -486,7 +487,8 @@ referredModal(context) {
       'fname': 'Lily Colt',
       'stars': 2,
       'minutesAway': '1 min away',
-      'bio': 'Hello, i am a painter in nairobi contact me for business and enquiries.',
+      'bio':
+          'Hello, i am a painter in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1510832842230-87253f48d74f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFpbnRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
     },
@@ -495,7 +497,8 @@ referredModal(context) {
       'fname': 'Sarah Payne',
       'stars': 1,
       'minutesAway': '1 min away',
-      'bio': 'Hello, i am a baby sitter and pet sitter in nairobi contact me for business and enquiries.',
+      'bio':
+          'Hello, i am a baby sitter and pet sitter in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1534806391029-791d2695c38b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBiYWJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -504,7 +507,8 @@ referredModal(context) {
       'fname': 'Brad Philips',
       'stars': 4,
       'minutesAway': '1 min away',
-      'bio': 'Hello, i am a mechanic in nairobi contact me for business and enquiries.',
+      'bio':
+          'Hello, i am a mechanic in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1583954964358-1bd7215b6f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -513,7 +517,8 @@ referredModal(context) {
       'fname': 'Karl Gibson',
       'stars': 3,
       'minutesAway': '1 min away',
-      'bio': 'Hello, i am a electrician in nairobi contact me for business and enquiries.',
+      'bio':
+          'Hello, i am a electrician in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -522,7 +527,8 @@ referredModal(context) {
       'fname': 'Colleen',
       'stars': 4,
       'minutesAway': '1 min away',
-      'bio': 'Hello, i am an IT support in nairobi contact me for business and enquiries.',
+      'bio':
+          'Hello, i am an IT support in nairobi contact me for business and enquiries.',
       'url':
           'https://images.unsplash.com/photo-1617042375876-a13e36732a04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBwcm9ncmFtbWVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
@@ -567,7 +573,7 @@ referredModal(context) {
                   'Referred to me',
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontFamily: 'SFD-Bold',
+                    fontFamily: 'AR',
                     color: Color(0xff262626),
                     fontSize: 22.0,
                   ),
@@ -576,7 +582,7 @@ referredModal(context) {
                 const Text(
                   'People i have been suggested to for work.',
                   style: TextStyle(
-                    fontFamily: 'SFT-Regular',
+                    fontFamily: 'SFNSR',
                     color: Color(0xff8e8e90),
                     fontSize: 14.0,
                   ),

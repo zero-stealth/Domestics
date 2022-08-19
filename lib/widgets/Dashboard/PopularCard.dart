@@ -83,7 +83,7 @@ class PopularCard extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12.0,
-                              fontFamily: 'SFD-Bold',
+                              fontFamily: 'AR',
                             ),
                           ),
                         ],
@@ -98,7 +98,7 @@ class PopularCard extends StatelessWidget {
           Text(
             fname,
             style: TextStyle(
-              fontFamily: 'SFD-Bold',
+              fontFamily: 'AR',
               color: Color(0xff262626),
               fontSize: 16.0,
             ),
@@ -107,7 +107,7 @@ class PopularCard extends StatelessWidget {
           Text(
             minutesAway,
             style: TextStyle(
-              fontFamily: 'SFT-Regular',
+              fontFamily: 'SFNSR',
               color: Color(0xff262626),
               fontSize: 12.0,
             ),

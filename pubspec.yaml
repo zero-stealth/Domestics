@@ -98,6 +98,14 @@ flutter:
       fonts:
         - asset: assets/SFProText-Regular.ttf
 
+    - family: SFNSR
+      fonts:
+        - asset: assets/SFNSRounded.ttf
+
+    - family: AR
+      fonts:
+        - asset: assets/ArialRounded.ttf
+
     - family: SFT-Bold
       fonts:
         - asset: assets/SFProText-Bold.ttf
