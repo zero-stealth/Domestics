@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 class UserTab extends StatelessWidget {
   final String fname;
-  final String tag;
+  final List<String> tags;
   final String url;
   final String bio;
   final String minutesAway;
 
   UserTab({
     required this.fname,
-    required this.tag,
+    required this.tags,
     required this.url,
     required this.bio,
     required this.minutesAway,
@@ -25,7 +25,7 @@ class UserTab extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => Profile(
               username: fname,
-              tag: tag,
+              tags: tags,
               url: url,
               minutesAway: minutesAway,
               bio: bio,
@@ -80,7 +80,7 @@ class UserTab extends StatelessWidget {
                         ),
                         const SizedBox(height: 8.0),
                         Text(
-                          tag,
+                          tags[0],
                           style: TextStyle(
                             fontFamily: 'SFNSR',
                             color: Color(0xff262626),

@@ -46,9 +46,11 @@ class _SettingsState extends State<Settings> {
                                 EditProfileModal(context);
                               },
                               child: SettingsItem(
-                                  icon: CupertinoIcons.person,
-                                  color: Color(0xff262626),
-                                  name: 'Edit Profile'),
+                                icon: CupertinoIcons.person,
+                                color: Color(0xff262626),
+                                name: 'Edit Profile',
+                                trailing: true,
+                              ),
                             ),
                             MyDivider(),
                             InkWell(
@@ -56,9 +58,11 @@ class _SettingsState extends State<Settings> {
                                 securityModal(context);
                               },
                               child: SettingsItem(
-                                  icon: CupertinoIcons.lock,
-                                  color: Color(0xff262626),
-                                  name: 'Security'),
+                                icon: CupertinoIcons.lock,
+                                color: Color(0xff262626),
+                                name: 'Security',
+                                trailing: true,
+                              ),
                             ),
                             MyDivider(),
                             InkWell(
@@ -66,19 +70,23 @@ class _SettingsState extends State<Settings> {
                                 referredModal(context);
                               },
                               child: SettingsItem(
-                                  icon: CupertinoIcons.link,
-                                  color: Color(0xff262626),
-                                  name: 'Referred to me'),
+                                icon: CupertinoIcons.link,
+                                color: Color(0xff262626),
+                                name: 'Referred to me',
+                                trailing: true,
+                              ),
                             ),
                             MyDivider(),
                             InkWell(
-                              onTap: (){
+                              onTap: () {
                                 statsModal(context);
                               },
                               child: SettingsItem(
-                                  icon: CupertinoIcons.graph_square,
-                                  color: Color(0xff262626),
-                                  name: 'Stats'),
+                                icon: CupertinoIcons.graph_square,
+                                color: Color(0xff262626),
+                                name: 'Stats',
+                                trailing: true,
+                              ),
                             ),
                             MyDivider(),
                             InkWell(
@@ -86,15 +94,19 @@ class _SettingsState extends State<Settings> {
                                 feedbackModal(context);
                               },
                               child: SettingsItem(
-                                  icon: CupertinoIcons.chat_bubble,
-                                  color: Color(0xff262626),
-                                  name: 'Feedback'),
+                                icon: CupertinoIcons.chat_bubble,
+                                color: Color(0xff262626),
+                                name: 'Feedback',
+                                trailing: true,
+                              ),
                             ),
                             MyDivider(),
                             SettingsItem(
-                                icon: CupertinoIcons.bag_badge_minus,
-                                color: Colors.redAccent,
-                                name: 'Logout'),
+                              icon: CupertinoIcons.bag_badge_minus,
+                              color: Colors.redAccent,
+                              name: 'Logout',
+                              trailing: false,
+                            ),
                           ],
                         ),
                       ),
@@ -110,17 +122,17 @@ class _SettingsState extends State<Settings> {
   }
 }
 
-
-
 class SettingsItem extends StatelessWidget {
   final String name;
   final IconData icon;
   final Color color;
+  final bool trailing;
 
   SettingsItem({
     required this.name,
     required this.icon,
     required this.color,
+    required this.trailing,
   });
 
   @override
@@ -149,11 +161,11 @@ class SettingsItem extends StatelessWidget {
               ),
             ],
           ),
-          Icon(
+          trailing == true ? Icon(
             CupertinoIcons.chevron_right,
             size: 20.0,
             color: Color(0xff262626),
-          ),
+          ) : Container(),
         ],
       ),
     );

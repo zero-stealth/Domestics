@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/widgets/Dashboard/Star.dart';
 import 'package:domestics/widgets/TopControl.dart';
@@ -8,14 +10,14 @@ import 'package:flutter/material.dart';
 class Profile extends StatefulWidget {
   final String username;
   final String url;
-  final String tag;
+  final List<String> tags;
   final String bio;
   final String minutesAway;
 
   Profile({
     required this.username,
     required this.url,
-    required this.tag,
+    required this.tags,
     required this.bio,
     required this.minutesAway,
   });
@@ -25,6 +27,39 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  showTags() {
+    log("LENGTH ${widget.tags.length}");
+
+    for (var i = 0; i < widget.tags.length; i++) {
+      log(widget.tags[i]);
+      return Container(
+        margin: EdgeInsets.only(
+          right: 10.0,
+        ),
+        padding: const EdgeInsets.only(
+          top: 6.0,
+          bottom: 6.0,
+          left: 20.0,
+          right: 20.0,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xff8e8e90).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        child: Center(
+          child: Text(
+            widget.tags[i],
+            style: TextStyle(
+              fontFamily: 'SFNSR',
+              color: Color(0xff262626),
+              fontSize: 14.0,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +77,12 @@ class _ProfileState extends State<Profile> {
             SliverList(
               delegate: SliverChildListDelegate([
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                    left: 20.0,
+                    right: 20.0,
+                    bottom: 20.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -102,53 +142,39 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        direction: Axis.horizontal,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.only(
-                              top: 6.0,
-                              bottom: 6.0,
-                              left: 20.0,
-                              right: 20.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xff8e8e90).withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(50.0),
-                            ),
-                            child: Center(
-                              child: Text(
-                                widget.tag,
-                                style: TextStyle(
-                                  fontFamily: 'SFNSR',
-                                  color: Color(0xff262626),
-                                  fontSize: 14.0,
+                          for (var i = 0; i < widget.tags.length; i++)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                    top: 6.0,
+                                    bottom: 6.0,
+                                    left: 20.0,
+                                    right: 20.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff8e8e90).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(50.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      widget.tags[i],
+                                      style: TextStyle(
+                                        fontFamily: 'SFNSR',
+                                        color: Color(0xff262626),
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          // const SizedBox(width: 10.0),
-                          // Container(
-                          //   padding: const EdgeInsets.only(
-                          //     top: 6.0,
-                          //     bottom: 6.0,
-                          //     left: 20.0,
-                          //     right: 20.0,
-                          //   ),
-                          //   decoration: BoxDecoration(
-                          //       color: const Color(0xff8e8e90).withOpacity(0.1),
-                          //       borderRadius: BorderRadius.circular(50.0)),
-                          //   child: Center(
-                          //     child: Text(
-                          //       'Someone to talk to',
-                          //       style: TextStyle(
-                          //         fontFamily: 'SFNSR',
-                          //         color: Color(0xff262626),
-                          //         fontSize: 14.0,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
+                              ],
+                            )
                         ],
                       ),
                       const SizedBox(height: 20.0),
@@ -197,7 +223,7 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 10.0),
                       Container(
                         width: (MediaQuery.of(context).size.width - 40),
                         child: CupertinoButton(

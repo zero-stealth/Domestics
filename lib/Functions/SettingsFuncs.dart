@@ -473,7 +473,7 @@ statsModal(context) {
 referredModal(context) {
   List clients = [
     {
-      'tag': 'Tutor',
+      'tags': ['Thief','Preacher','Tutor','Teacher'],
       'fname': 'Levin Adams',
       'minutesAway': '2 min away',
       'stars': 4,
@@ -483,7 +483,7 @@ referredModal(context) {
           'https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjB0ZWFjaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tag': 'Painter',
+      'tags': ['Thief','Preacher','Tutor','Teacher'],
       'fname': 'Lily Colt',
       'stars': 2,
       'minutesAway': '1 min away',
@@ -493,7 +493,7 @@ referredModal(context) {
           'https://images.unsplash.com/photo-1510832842230-87253f48d74f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFpbnRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tag': 'Baby sitter',
+      'tags': ['Thief','Preacher','Tutor','Teacher'],
       'fname': 'Sarah Payne',
       'stars': 1,
       'minutesAway': '1 min away',
@@ -503,7 +503,7 @@ referredModal(context) {
           'https://images.unsplash.com/photo-1534806391029-791d2695c38b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBiYWJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tag': 'Mechanic',
+      'tags': ['Thief','Preacher','Tutor','Teacher'],
       'fname': 'Brad Philips',
       'stars': 4,
       'minutesAway': '1 min away',
@@ -513,7 +513,7 @@ referredModal(context) {
           'https://images.unsplash.com/photo-1583954964358-1bd7215b6f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tag': 'Electrician',
+      'tags': ['Thief','Preacher','Tutor','Teacher'],
       'fname': 'Karl Gibson',
       'stars': 3,
       'minutesAway': '1 min away',
@@ -523,7 +523,7 @@ referredModal(context) {
           'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tag': 'IT support',
+      'tags': ['Thief','Preacher','Tutor','Teacher'],
       'fname': 'Colleen',
       'stars': 4,
       'minutesAway': '1 min away',
@@ -600,7 +600,7 @@ referredModal(context) {
                   for (var i in clients)
                     UserTab(
                       fname: i['fname'],
-                      tag: i['tag'],
+                      tags: i['tag'],
                       url: i['url'],
                       bio: i['bio'],
                       minutesAway: i['minutesAway'],
