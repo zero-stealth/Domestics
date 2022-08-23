@@ -2,7 +2,7 @@
     package="com.example.domestics">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="domestics"
+        android:label="Domestics"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
