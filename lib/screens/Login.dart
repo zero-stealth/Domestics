@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Register.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:domestics/screens/Who.dart';
 import 'package:domestics/widgets/Dialog.dart';
+import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +21,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  bool _errorStatus = false;
+  String _errorMessage = "";
+  String _buttonState = 'notloading';
 
   void _popup() {
     showDialog(
@@ -52,6 +62,14 @@ class _LoginState extends State<Login> {
             ),
           );
         });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -91,17 +109,22 @@ class _LoginState extends State<Login> {
                 InputWidget(
                   label: "Email",
                   placeholder: "someone@gmail.com",
-                  mycontroller: emailController,
+                  mycontroller: _emailController,
                   obscure: false,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
                   label: "Password",
                   placeholder: "***********",
-                  mycontroller: emailController,
+                  mycontroller: _passwordController,
                   obscure: true,
                 ),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 10.0),
+                ErrorAlert(
+                  errorMessage: _errorMessage,
+                  status: _errorStatus,
+                ),
+                const SizedBox(height: 10.0),
                 Container(
                   width: double.infinity,
                   margin: const EdgeInsets.only(
@@ -111,20 +134,56 @@ class _LoginState extends State<Login> {
                   ),
                   child: CupertinoButton(
                     color: dBlueBackground,
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: dWhitePure,
-                        fontSize: 16.0,
-                        fontFamily: 'SFD-Bold',
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Selections()),
-                      );
+                    child: buttonStatus(_buttonState, "Login"),
+                    onPressed: () async {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Selections()),
+                      // );
+
+                      setState(() {
+                        _errorStatus = false;
+                        _buttonState = 'loading';
+                      });
+
+                      if (_emailController.text.length <= 0 ||
+                          _passwordController.text.length <= 0) {
+                        return setState(() {
+                          _errorMessage = "Fill all fields.";
+                          _errorStatus = true;
+                          _buttonState = 'notloading';
+                        });
+                      } else {
+                        log("[+] All fields filled.");
+                      }
+
+                      try {
+                            bool createStatus = await login(
+                               _emailController.text,
+                              _passwordController.text,
+                            );
+
+                            switch (createStatus) {
+                              case true:
+                                log('[+] Logged in successfully.');
+                                break;
+                              default:
+                                log('[--] Failed to login');
+                                break;
+                            }
+
+                            setState(() {
+                              _buttonState = 'notloading';
+                            });
+                          } catch (e) {
+                            setState(() {
+                              _buttonState = 'notloading';
+                            });
+                            print(e);
+                          }
                     },
+
+                    
                   ),
                 ),
                 const SizedBox(height: 10.0),

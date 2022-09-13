@@ -1,3 +1,4 @@
+import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Selections.dart';
@@ -21,16 +22,16 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController fnameController = TextEditingController();
-  TextEditingController lnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _fnameController = TextEditingController();
+  TextEditingController _lnameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmController = TextEditingController();
 
-  bool errorStatus = false;
-  String errorMessage = "";
-  String buttonState = 'notloading';
+  bool _errorStatus = false;
+  String _errorMessage = "";
+  String _buttonState = 'notloading';
 
   void _popup() {
     showDialog(
@@ -69,21 +70,16 @@ class _RegisterState extends State<Register> {
         });
   }
 
-  buttonStatus(buttonState) {
-    switch (buttonState) {
-      case "loading":
-        return LoadingAnimationWidget.inkDrop(
-          color: dWhitePure,
-          size: 20.0,
-        );
-
-      default:
-        return Text(
-          'Register',
-          style: TextStyle(
-              color: dWhitePure, fontSize: 16.0, fontFamily: 'SFD-Bold'),
-        );
-    }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passwordController.dispose();
+    _fnameController.dispose();
+    _lnameController.dispose();
+    _phoneController.dispose();
+    _confirmController.dispose();
+    super.dispose();
   }
 
   @override
@@ -123,34 +119,41 @@ class _RegisterState extends State<Register> {
                 InputWidget(
                   label: "First Name",
                   placeholder: "john",
-                  mycontroller: fnameController,
+                  mycontroller: _fnameController,
                   obscure: false,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
                   label: "Last Name",
                   placeholder: "cena",
-                  mycontroller: lnameController,
+                  mycontroller: _lnameController,
+                  obscure: false,
+                ),
+                const SizedBox(height: 15.0),
+                InputWidget(
+                  label: "Email",
+                  placeholder: "johncena@gmail.com",
+                  mycontroller: _emailController,
                   obscure: false,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
                   label: "Password",
                   placeholder: "***********",
-                  mycontroller: passwordController,
+                  mycontroller: _passwordController,
                   obscure: true,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
                   label: "Confirm Password",
                   placeholder: "***********",
-                  mycontroller: confirmController,
+                  mycontroller: _confirmController,
                   obscure: true,
                 ),
                 const SizedBox(height: 10.0),
                 ErrorAlert(
-                  errorMessage: errorMessage,
-                  status: errorStatus,
+                  errorMessage: _errorMessage,
+                  status: _errorStatus,
                 ),
                 const SizedBox(height: 10.0),
                 Container(
@@ -162,54 +165,57 @@ class _RegisterState extends State<Register> {
                   ),
                   child: CupertinoButton(
                     color: dBlueBackground,
-                    child: buttonStatus(buttonState),
+                    child: buttonStatus(_buttonState, 'Register'),
                     onPressed: () async {
                       // Navigator.push(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => Selections()),
                       // );
                       setState(() {
-                        errorStatus = false;
-                        buttonState = 'loading';
+                        _errorStatus = false;
+                        _buttonState = 'loading';
                       });
 
-                      if (fnameController.text.length <= 0 ||
-                          lnameController.text.length <= 0) {
+                      if (_fnameController.text.length <= 0 ||
+                          _lnameController.text.length <= 0 ||
+                          _emailController.text.length <= 0 ||
+                          _passwordController.text.length <= 0 ||
+                          _confirmController.text.length <= 0) {
                         return setState(() {
-                          errorMessage = "Fill all fields.";
-                          errorStatus = true;
-                          buttonState = 'notloading';
+                          _errorMessage = "Fill all fields.";
+                          _errorStatus = true;
+                          _buttonState = 'notloading';
                         });
                       } else {
                         print("[+] All fields filled.");
                       }
 
-                      if (passwordController.text != confirmController.text) {
+                      if (_passwordController.text != _confirmController.text) {
                         print('[----] Passwords dont match');
                         return setState(() {
-                          errorMessage = "Password don\'t match!";
-                          errorStatus = true;
-                          buttonState = 'notloading';
+                          _errorMessage = "Password don\'t match!";
+                          _errorStatus = true;
+                          _buttonState = 'notloading';
                         });
                       } else {
                         print('[+] Passwords match!!!');
 
-                        if (passwordController.text == "password123" ||
-                            passwordController.text == "password") {
+                        if (_passwordController.text == "password123" ||
+                            _passwordController.text == "password") {
                           setState(() {
-                            buttonState = 'notloading';
+                            _buttonState = 'notloading';
                           });
                           FocusScope.of(context).requestFocus(FocusNode());
                           return _popup();
                         } else {
                           try {
                             bool createStatus = await createAccount(
-                              fnameController.text,
-                              lnameController.text,
+                              _fnameController.text,
+                              _lnameController.text,
                               "Hello, i love domestics",
                               "0000000000",
-                              passwordController.text,
-                              emailController.text,
+                              _passwordController.text,
+                              _emailController.text,
                             );
 
                             switch (createStatus) {
@@ -222,11 +228,11 @@ class _RegisterState extends State<Register> {
                             }
 
                             setState(() {
-                              buttonState = 'notloading';
+                              _buttonState = 'notloading';
                             });
                           } catch (e) {
                             setState(() {
-                              buttonState = 'notloading';
+                              _buttonState = 'notloading';
                             });
                             print(e);
                           }

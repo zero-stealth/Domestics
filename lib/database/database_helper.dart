@@ -75,7 +75,7 @@ class DatabaseHelper {
           _id INTEGER PRIMARY KEY,
           reffered TEXT NOT NULL,
           refferer TEXT NOT NULL,
-          refferal_id                                                     TEXT NOT NULL,
+          refferal_id TEXT NOT NULL,
         )
         ''');
   }
@@ -99,8 +99,7 @@ class DatabaseHelper {
   Future<int> update(Map<String, dynamic> row, mytable) async {
     Database? db = await instance.database;
     int id = row['_id'];
-    return await db!
-        .update(mytable, row, where: '_id = ?', whereArgs: [id]);
+    return await db!.update(mytable, row, where: '_id = ?', whereArgs: [id]);
   }
 
   Future<int> delete(int id, mytable) async {
