@@ -16,7 +16,7 @@ class ErrorAlert extends StatelessWidget {
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.redAccent,
+          color: Colors.redAccent.withOpacity(0.2),
           borderRadius: BorderRadius.circular(6.0),
         ),
         padding: EdgeInsets.all(15.0),
@@ -25,7 +25,7 @@ class ErrorAlert extends StatelessWidget {
             errorMessage,
             style: TextStyle(
               fontSize: 14.0,
-              color: dWhitePure,
+              color: Colors.redAccent,
             ),
           ),
         ),
