@@ -190,10 +190,29 @@ class _RegisterState extends State<Register> {
                         print("[+] All fields filled.");
                       }
 
+                      var usernameStatus = await checkusername(_fnameController.text, _lnameController.text);
+                      var emailStatus = await checkemail(_emailController.text);
+
+                      if(usernameStatus == false){
+                        return setState(() {
+                          _errorMessage = "The username ${_fnameController.text} ${_lnameController.text} has already been taken.";
+                          _errorStatus = true;
+                          _buttonState = 'notloading';
+                        });
+                      }
+
+                      if(emailStatus == false){
+                        return setState(() {
+                          _errorMessage = "Your email has already been taken.";
+                          _errorStatus = true;
+                          _buttonState = 'notloading';
+                        });
+                      }
+
                       if (_passwordController.text != _confirmController.text) {
                         print('[----] Passwords dont match');
                         return setState(() {
-                          _errorMessage = "Password don\'t match!";
+                          _errorMessage = "Your passwords don\'t match!";
                           _errorStatus = true;
                           _buttonState = 'notloading';
                         });

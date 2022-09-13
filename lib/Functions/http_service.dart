@@ -48,6 +48,53 @@ Future login(email, password) async {
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body);
+    
+
+    return true;
+  } else {
+    return false;
+    // throw "Unable to create account";
+  }
+}
+
+Future checkusername(fname, lname) async {
+  var data = {
+    "fname": fname,
+    "lname": lname
+  };
+
+  var encoded = jsonEncode(data);
+
+  var response = await http.post(
+    Uri.parse('$baseurl/users/checkusername'),
+    body: encoded,
+    encoding: Encoding.getByName('utf-8'),
+    headers: {"Content-Type": "application/json"},
+  );
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+    // throw "Unable to create account";
+  }
+}
+
+Future checkemail(email) async {
+  var data = {
+    "email": email
+  };
+
+  var encoded = jsonEncode(data);
+
+  var response = await http.post(
+    Uri.parse('$baseurl/users/checkemail'),
+    body: encoded,
+    encoding: Encoding.getByName('utf-8'),
+    headers: {"Content-Type": "application/json"},
+  );
+
+  if (response.statusCode == 200) {
     return true;
   } else {
     return false;
