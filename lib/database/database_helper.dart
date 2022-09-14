@@ -41,6 +41,7 @@ class DatabaseHelper {
           phone TEXT NOT NULL,
           email TEXT NOT NULL,
           imageUrl TEXT NOT NULL,
+          token TEXT NOT NULL
         )
         ''');
 
