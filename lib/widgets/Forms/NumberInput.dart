@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../data/colors.dart';
 
-class InputWidget extends StatefulWidget {
+class NumberInput extends StatefulWidget {
   final String label;
   final String placeholder;
   final TextEditingController mycontroller;
   final bool obscure;
 
-  InputWidget({
+  NumberInput({
     required this.label,
     required this.placeholder,
     required this.mycontroller,
@@ -17,10 +18,10 @@ class InputWidget extends StatefulWidget {
   });
 
   @override
-  State<InputWidget> createState() => _InputWidgetState();
+  State<NumberInput> createState() => _NumberInputState();
 }
 
-class _InputWidgetState extends State<InputWidget> {
+class _NumberInputState extends State<NumberInput> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,6 +43,24 @@ class _InputWidgetState extends State<InputWidget> {
             borderRadius: BorderRadius.circular(6.0),
           ),
           child: CupertinoTextField(
+            prefix: Container(
+              margin: EdgeInsets.only(right: 10.0),
+              padding: EdgeInsets.all(6.0),
+              decoration: BoxDecoration(
+                color: dBlueBackground,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Text(
+                "+254",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: dWhitePure,
+                  fontFamily: 'SFD-Bold',
+                ),
+              ),
+            ),
+            keyboardType: TextInputType.number,
+            autofocus: true,
             obscureText: widget.obscure,
             controller: widget.mycontroller,
             scrollPhysics: const BouncingScrollPhysics(),

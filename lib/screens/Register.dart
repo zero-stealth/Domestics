@@ -2,6 +2,7 @@ import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Selections.dart';
+import 'package:domestics/screens/Setup.dart';
 import 'package:domestics/widgets/Dialog.dart';
 import 'package:domestics/widgets/Forms/AuthBtn.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
@@ -190,18 +191,20 @@ class _RegisterState extends State<Register> {
                         print("[+] All fields filled.");
                       }
 
-                      var usernameStatus = await checkusername(_fnameController.text, _lnameController.text);
+                      var usernameStatus = await checkusername(
+                          _fnameController.text, _lnameController.text);
                       var emailStatus = await checkemail(_emailController.text);
 
-                      if(usernameStatus == false){
+                      if (usernameStatus == false) {
                         return setState(() {
-                          _errorMessage = "The username ${_fnameController.text} ${_lnameController.text} has already been taken.";
+                          _errorMessage =
+                              "The username ${_fnameController.text} ${_lnameController.text} has already been taken.";
                           _errorStatus = true;
                           _buttonState = 'notloading';
                         });
                       }
 
-                      if(emailStatus == false){
+                      if (emailStatus == false) {
                         return setState(() {
                           _errorMessage = "Your email has already been taken.";
                           _errorStatus = true;
@@ -241,6 +244,11 @@ class _RegisterState extends State<Register> {
                             switch (createStatus) {
                               case true:
                                 print('[+] Created successfully.');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Setup()),
+                                );
                                 break;
                               default:
                                 print('[--] Failed to create account');

@@ -20,6 +20,20 @@ Future postRequest(encoded, token, route) async {
   return response;
 }
 
+Future patchRequest(encoded, token, route) async {
+  var response = await http.patch(
+    Uri.parse('$baseurl$route'),
+    body: encoded,
+    encoding: Encoding.getByName('utf-8'),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    },
+  );
+
+  return response;
+}
+
 Future getRequest(token, route) async {
   var response = await http.get(
     Uri.parse('$baseurl$route'),
@@ -202,6 +216,21 @@ Future checkemail(email) async {
   }
 }
 
+Future checkphone(phone) async {
+  var data = {"phone": phone};
+
+  var encoded = jsonEncode(data);
+
+  var response = await noAuthPostRequest(encoded, '/users/checkphone');
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+    // throw "Unable to create account";
+  }
+}
+
 // tags should be an array
 Future uploadClientTags(tags, token) async {
   var data = {"tags": tags};
@@ -319,6 +348,19 @@ Future refferWorker(reffererId, refferedId, token) async {
   } else {
     return false;
     // throw "Unable to create account";
+  }
+}
+
+Future updateUserInfo(data, token) async {
+  var encoded = jsonEncode(data); 
+
+  var response = await patchRequest(encoded, token, "/users/me");
+
+  if(response.statusCode == 200){
+    await populateData(token);
+    return true;
+  } else {
+    return false;
   }
 }
 
