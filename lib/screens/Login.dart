@@ -66,18 +66,17 @@ class _LoginState extends State<Login> {
         });
   }
 
-  check() async {
-    var info = await _dbHelper.queryAllRows("userInfo");
-    var clientTags = await _dbHelper.queryAllRows("clientTags");
-    var reviews = await _dbHelper.queryAllRows("reviews");
+  // check() async {
+  //   var info = await _dbHelper.queryAllRows("userInfo");
+  //   var clientTags = await _dbHelper.queryAllRows("clientTags");
+  //   var reviews = await _dbHelper.queryAllRows("reviews");
 
-
-    print(info);
-    print('----------------');
-    print(reviews);
-    print('----------------');
-    print(clientTags);
-  }
+  //   print(info);
+  //   print('----------------');
+  //   print(reviews);
+  //   print('----------------');
+  //   print(clientTags);
+  // }
 
   @override
   void dispose() {
@@ -91,7 +90,6 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    check();
   }
 
   @override
@@ -180,32 +178,32 @@ class _LoginState extends State<Login> {
                       }
 
                       try {
-                            bool createStatus = await login(
-                               _emailController.text,
-                              _passwordController.text,
-                            );
+                        bool createStatus = await login(
+                          _emailController.text,
+                          _passwordController.text,
+                        );
 
-                            switch (createStatus) {
-                              case true:
-                                log('[+] Logged in successfully.');
-                                break;
-                              default:
-                                log('[--] Failed to login');
-                                break;
-                            }
+                        switch (createStatus) {
+                          case true:
+                            log('[+] Logged in successfully.');
+                            break;
+                          case false:
+                            setState(() {
+                              _errorMessage = "Login failed. Confirm your details or register a new account.";
+                              _errorStatus = true;
+                            });
+                        }
 
-                            setState(() {
-                              _buttonState = 'notloading';
-                            });
-                          } catch (e) {
-                            setState(() {
-                              _buttonState = 'notloading';
-                            });
-                            print(e);
-                          }
+                        setState(() {
+                          _buttonState = 'notloading';
+                        });
+                      } catch (e) {
+                        setState(() {
+                          _buttonState = 'notloading';
+                        });
+                        print(e);
+                      }
                     },
-
-                    
                   ),
                 ),
                 const SizedBox(height: 10.0),
