@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'package:domestics/data/UserData.dart';
+import 'package:domestics/database/database_helper.dart';
 import 'package:http/http.dart' as http;
 
 var baseurl = "http://192.168.0.19:3000";
@@ -8,6 +11,19 @@ Future postRequest(encoded, token, route) async {
     Uri.parse('$baseurl$route'),
     body: encoded,
     encoding: Encoding.getByName('utf-8'),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    },
+  );
+
+  return response;
+}
+
+Future getRequest(token, route) async {
+  var response = await http.get(
+    Uri.parse('$baseurl$route'),
+    //encoding: Encoding.getByName('utf-8'),
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer $token"
@@ -51,7 +67,65 @@ Future createAccount(fname, lname, bio, phone, password, email) async {
   }
 }
 
-Future login(email, password, token) async {
+Future populateData(token) async {
+  final _dbHelper = DatabaseHelper.instance;
+  var response = await getRequest(token, "/users/me");
+
+  log("Population response");
+  print(json.decode(response.body));
+
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body);
+    var workerTags = parsed['tagsWorker'];
+    var clientTags = parsed['tagsClient'];
+    var reviews = parsed['reviews'];
+    var refferedTo = parsed['refferedTo'];
+
+    log("Deleted tables successfully");
+
+    await _dbHelper.deleteTable("workerTags");
+    await _dbHelper.deleteTable("clientTags");
+    await _dbHelper.deleteTable("reviews");
+    await _dbHelper.deleteTable("refferals");
+
+    if (workerTags.length > 0) {
+      for (var i = 0; i < workerTags.length; i++) {
+        await addWorkerTag(workerTags[i]['tag'], workerTags[i]['_id']);
+      }
+    }
+
+    if (clientTags.length > 0) {
+      for (var i = 0; i < clientTags.length; i++) {
+        await addClientTag(clientTags[i]['tag'], clientTags[i]['_id']);
+      }
+    }
+
+    if (reviews.length > 0) {
+      for (var i = 0; i < reviews.length; i++) {
+        await addReview(
+          reviews[i]['reviewer_id'],
+          reviews[i]['message'],
+          reviews[i]['starsCount'],
+          reviews[i]['_id'],
+        );
+      }
+    }
+
+    if (refferedTo.length > 0) {
+      for (var i = 0; i < refferedTo.length; i++) {
+        await addRefferals(refferedTo['reffered'], refferedTo['refferer']);
+      }
+    }
+
+    log("Populated data successfully");
+  } else {
+    log("Population request failed");
+  }
+}
+
+Future login(email, password) async {
+  final _dbHelper = DatabaseHelper.instance;
+  await _dbHelper.deleteTable("userInfo");
   var data = {"password": password, "email": email};
 
   var encoded = jsonEncode(data);
@@ -60,6 +134,20 @@ Future login(email, password, token) async {
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body);
+
+    await addUserInfo(
+      parsed['user']['_id'],
+      parsed['user']['fname'],
+      parsed['user']['lname'],
+      parsed['user']['isWorker'],
+      parsed['user']['bio'],
+      parsed['user']['phone'],
+      parsed['user']['email'],
+      parsed['user']['imageUrl'],
+      parsed['token'],
+    );
+
+    await populateData(parsed['token']);
 
     return true;
   } else {
@@ -99,7 +187,7 @@ Future checkemail(email) async {
 }
 
 // tags should be an array
-Future addClientTags(tags, token) async {
+Future uploadClientTags(tags, token) async {
   var data = {"tags": tags};
 
   var encoded = jsonEncode(data);
@@ -114,7 +202,7 @@ Future addClientTags(tags, token) async {
   }
 }
 
-Future addWorkerTags(tags, token) async {
+Future uploadWorkerTags(tags, token) async {
   var data = {"tags": tags};
 
   var encoded = jsonEncode(data);
@@ -161,7 +249,7 @@ Future deleteWorkerTags(tagId, token) async {
 
 // userId is the ID of the
 // being reviewed
-Future addReview(userId, message, starsCount, token) async {
+Future uploadReview(userId, message, starsCount, token) async {
   var data = {
     "id": userId,
     "review": {

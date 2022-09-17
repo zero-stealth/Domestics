@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
+import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Register.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:domestics/screens/Who.dart';
@@ -27,6 +28,7 @@ class _LoginState extends State<Login> {
   bool _errorStatus = false;
   String _errorMessage = "";
   String _buttonState = 'notloading';
+  final _dbHelper = DatabaseHelper.instance;
 
   void _popup() {
     showDialog(
@@ -64,12 +66,32 @@ class _LoginState extends State<Login> {
         });
   }
 
+  check() async {
+    var info = await _dbHelper.queryAllRows("userInfo");
+    var clientTags = await _dbHelper.queryAllRows("clientTags");
+    var reviews = await _dbHelper.queryAllRows("reviews");
+
+
+    print(info);
+    print('----------------');
+    print(reviews);
+    print('----------------');
+    print(clientTags);
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    check();
   }
 
   @override

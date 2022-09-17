@@ -49,7 +49,7 @@ class DatabaseHelper {
         CREATE TABLE workerTags (
           _id INTEGER PRIMARY KEY,
           tag TEXT NOT NULL,
-          tag_id TEXT NOT NULL,
+          tag_id TEXT NOT NULL
         )
         ''');
 
@@ -57,7 +57,7 @@ class DatabaseHelper {
         CREATE TABLE clientTags (
           _id INTEGER PRIMARY KEY,
           tag TEXT NOT NULL,
-          tag_id TEXT NOT NULL,
+          tag_id TEXT NOT NULL
         )
         ''');
 
@@ -67,7 +67,7 @@ class DatabaseHelper {
           reviewer_id TEXT NOT NULL,
           message TEXT NOT NULL,
           stars_count INTEGER,
-          review_owner_id TEXT NOT NULL,
+          review_owner_id TEXT NOT NULL
         )
         ''');
 
@@ -75,8 +75,7 @@ class DatabaseHelper {
         CREATE TABLE refferals (
           _id INTEGER PRIMARY KEY,
           reffered TEXT NOT NULL,
-          refferer TEXT NOT NULL,
-          refferal_id TEXT NOT NULL,
+          refferer TEXT NOT NULL
         )
         ''');
   }
