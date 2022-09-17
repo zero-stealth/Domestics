@@ -44,14 +44,15 @@ Future noAuthPostRequest(encoded, route) async {
   return response;
 }
 
-Future createAccount(fname, lname, bio, phone, password, email) async {
+Future createAccount(fname, lname, bio, phone, password, email, imageUrl) async {
   var data = {
     "fname": fname,
     "lname": lname,
     "bio": bio,
     "phone": phone,
     "password": password,
-    "email": email
+    "email": email,
+    "imageUrl": imageUrl,
   };
 
   var encoded = jsonEncode(data);
@@ -60,6 +61,21 @@ Future createAccount(fname, lname, bio, phone, password, email) async {
 
   if (response.statusCode == 201) {
     final parsed = json.decode(response.body);
+
+    await addUserInfo(
+      parsed['user']['_id'],
+      parsed['user']['fname'],
+      parsed['user']['lname'],
+      parsed['user']['isWorker'],
+      parsed['user']['bio'],
+      parsed['user']['phone'],
+      parsed['user']['email'],
+      parsed['user']['imageUrl'],
+      parsed['token'],
+    );
+
+    await populateData(parsed['token']);
+
     return true;
   } else {
     return false;
