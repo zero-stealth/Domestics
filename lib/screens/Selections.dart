@@ -1,5 +1,8 @@
 import 'dart:developer';
+import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
+import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +13,15 @@ class Selections extends StatefulWidget {
 }
 
 class _SelectionsState extends State<Selections> {
+  final _dbHelper = DatabaseHelper.instance;
   // Contains values of all selected tabs
   List selected = [];
   // width of top progress bar
   var barWidth;
   // 25% of the total width of the barWidth at max width
   var value;
+
+  String _buttonState = 'notloading';
 
   // Adds and removes values inside the selected list
   selectedHandler(text, status) {
@@ -56,19 +62,15 @@ class _SelectionsState extends State<Selections> {
     switch (selected.length) {
       case 1:
         return 25;
-        break;
 
       case 2:
         return 50;
-        break;
 
       case 3:
         return 75;
-        break;
 
       case 4:
         return 100;
-        break;
       default:
         return 0;
     }
@@ -261,14 +263,8 @@ class _SelectionsState extends State<Selections> {
             padding: const EdgeInsets.all(20.0),
             child: CupertinoButton(
               color: dBlueBackground,
-              child: Text(
-                'Finish',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontFamily: 'SFD-Bold'),
-              ),
-              onPressed: () {
+              child: buttonStatus(_buttonState, 'Continue'),
+              onPressed: () async {
                 for (var m in selected) {
                   log(m);
                 }
@@ -276,10 +272,31 @@ class _SelectionsState extends State<Selections> {
                 if (selected.length < 1) {
                   _popup();
                 } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Dashboard()),
-                  );
+                  setState(() {
+                    _buttonState = "loading";
+                  });
+
+                  var info = await _dbHelper.queryAllRows("userInfo");
+
+                  var status =
+                      await uploadClientTags(selected, info[0]['token']);
+                  switch (status) {
+                    case true:
+                      setState(() {
+                        _buttonState = "notloading";
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Dashboard()),
+                      );
+                      break;
+                    case false:
+                      setState(() {
+                        _buttonState = "notloading";
+                      });
+                      log("Failed to add client tags");
+                      break;
+                  }
                 }
               },
             ),

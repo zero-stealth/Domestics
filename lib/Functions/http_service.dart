@@ -239,7 +239,8 @@ Future uploadClientTags(tags, token) async {
 
   var response = await postRequest(encoded, token, '/addClientTags');
 
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201) {
+    await populateData(token);
     return true;
   } else {
     return false;
@@ -254,7 +255,8 @@ Future uploadWorkerTags(tags, token) async {
 
   var response = await postRequest(encoded, token, '/addWorkerTags');
 
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201) {
+    await populateData(token);
     return true;
   } else {
     return false;

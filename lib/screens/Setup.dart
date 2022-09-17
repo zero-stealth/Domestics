@@ -4,6 +4,7 @@ import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
+import 'package:domestics/screens/Selections.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
@@ -171,10 +172,10 @@ class _SetupState extends State<Setup> {
                         }
                       }
 
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => Selections()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Selections()),
+                      );
                     },
                   ),
                 ),
