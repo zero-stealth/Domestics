@@ -4,6 +4,7 @@ import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
+import 'package:domestics/screens/Dashboard.dart';
 import 'package:domestics/screens/Register.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:domestics/screens/Who.dart';
@@ -178,7 +179,7 @@ class _LoginState extends State<Login> {
                       }
 
                       try {
-                        bool createStatus = await login(
+                        var createStatus = await login(
                           _emailController.text,
                           _passwordController.text,
                         );
@@ -186,10 +187,16 @@ class _LoginState extends State<Login> {
                         switch (createStatus) {
                           case true:
                             log('[+] Logged in successfully.');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Dashboard()),
+                            );
                             break;
                           case false:
                             setState(() {
-                              _errorMessage = "Login failed. Confirm your details or register a new account.";
+                              _errorMessage =
+                                  "Login failed. Confirm your details or register a new account.";
                               _errorStatus = true;
                             });
                         }

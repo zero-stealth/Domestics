@@ -1,8 +1,12 @@
 // ignore: file_names
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
+import 'package:domestics/database/database_helper.dart';
+import 'package:domestics/screens/Dashboard.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'Login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,31 +17,59 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final _dbHelper = DatabaseHelper.instance;
   bool loading = false;
   Widget loadingStuff = Container();
 
-  @override
-  void initState() {
-    super.initState();
+  checkToken() async {
+    var count = await _dbHelper.queryRowCount("userInfo");
 
-    Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        loadingStuff = Container(
-          margin: const EdgeInsets.only(bottom: 100.0),
-          child: const CupertinoActivityIndicator(
-            animating: true,
-            radius: 20.0,
-          ),
-        );
-      });
-
-      Future.delayed(const Duration(seconds: 2), (){
+    if (count! <= 0) {
+      return Future.delayed(const Duration(seconds: 4), () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Login()),
         );
       });
+    }
+
+    var info = await _dbHelper.queryAllRows("userInfo");
+    var response = await getRequest(info[0]['token'], "/users/me");
+
+    if (response.statusCode == 200) {
+      await populateData(info[0]['token']);
+      return Future.delayed(const Duration(seconds: 4), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Dashboard()),
+        );
+      });
+    } else {
+      return Future.delayed(const Duration(seconds: 4), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      });
+      // throw "Unable to create account";
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      loadingStuff = Container(
+        margin: const EdgeInsets.only(bottom: 100.0),
+        child: LoadingAnimationWidget.inkDrop(
+          color: dWhitePure,
+          size: 30.0,
+        ),
+      );
     });
+
+    checkToken();
   }
 
   @override

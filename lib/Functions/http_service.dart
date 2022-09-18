@@ -58,7 +58,8 @@ Future noAuthPostRequest(encoded, route) async {
   return response;
 }
 
-Future createAccount(fname, lname, bio, phone, password, email, imageUrl) async {
+Future createAccount(
+    fname, lname, bio, phone, password, email, imageUrl) async {
   var data = {
     "fname": fname,
     "lname": lname,
@@ -111,12 +112,27 @@ Future populateData(token) async {
     var reviews = parsed['reviews'];
     var refferedTo = parsed['refferedTo'];
 
-    log("Deleted tables successfully");
-
+    await _dbHelper.deleteTable("userInfo");
     await _dbHelper.deleteTable("workerTags");
     await _dbHelper.deleteTable("clientTags");
     await _dbHelper.deleteTable("reviews");
     await _dbHelper.deleteTable("refferals");
+
+    log("Deleted tables successfully");
+
+    await addUserInfo(
+      parsed['_id'],
+      parsed['fname'],
+      parsed['lname'],
+      parsed['isWorker'],
+      parsed['bio'],
+      parsed['phone'],
+      parsed['email'],
+      parsed['imageUrl'],
+      token,
+    );
+
+    log("Added user info");
 
     if (workerTags.length > 0) {
       for (var i = 0; i < workerTags.length; i++) {
@@ -354,11 +370,11 @@ Future refferWorker(reffererId, refferedId, token) async {
 }
 
 Future updateUserInfo(data, token) async {
-  var encoded = jsonEncode(data); 
+  var encoded = jsonEncode(data);
 
   var response = await patchRequest(encoded, token, "/users/me");
 
-  if(response.statusCode == 200){
+  if (response.statusCode == 200) {
     await populateData(token);
     return true;
   } else {
