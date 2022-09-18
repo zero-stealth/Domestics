@@ -18,18 +18,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // cupertinoOverrideTheme: const CupertinoThemeData(
-        //   brightness: Brightness.light,
-        // ),
-        // appBarTheme: AppBarTheme(
-        //   systemOverlayStyle: SystemUiOverlayStyle.dark,
-        //   // systemOverlayStyle: SystemUiOverlayStyle(
-        //   //   statusBarBrightness: Brightness.light,
-        //   //   systemNavigationBarColor: dBackgroundWhite,
-        //   //   statusBarColor: dBackgroundWhite,
-        //   //   systemNavigationBarDividerColor: dBackgroundWhite,
-        //   // ),
-        //),
+        brightness: Brightness.light,
+        primaryColor: dWhitePure,
+        appBarTheme: AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            systemNavigationBarColor: dWhitePure,
+            statusBarColor: dWhitePure,
+          ),
+        ),
       ),
       home: const SplashScreen(),
     );

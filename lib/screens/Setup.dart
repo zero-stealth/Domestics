@@ -88,6 +88,7 @@ class _SetupState extends State<Setup> {
                 ),
                 NumberInput(
                   label: "",
+                  focus: true,
                   placeholder: "757690940",
                   mycontroller: _phoneController,
                   obscure: false,

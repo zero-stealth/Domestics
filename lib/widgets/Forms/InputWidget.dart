@@ -36,7 +36,7 @@ class _InputWidgetState extends State<InputWidget> {
         ),
         SizedBox(height: 8.0),
         Container(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             color: dGreyFaded,
             borderRadius: BorderRadius.circular(6.0),

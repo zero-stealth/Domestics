@@ -1,16 +1,39 @@
-import 'package:domestics/Functions/SettingsFuncs.dart';
-import 'package:domestics/screens/Edit.dart';
+import 'package:domestics/data/colors.dart';
+import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+
+class Edit extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _EditState createState() => _EditState();
 }
 
-class _SettingsState extends State<Settings> {
+class _EditState extends State<Edit> {
+  final _dbHelper = DatabaseHelper.instance;
+  var data = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInfo();
+  }
+
+  getInfo() async {
+    var info = await _dbHelper.queryAllRows("userInfo");
+    setState(() {
+      data = info;
+    });
+  }
+
+  String capitalize(String s) {
+    return s[0].toUpperCase() + s.substring(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +43,7 @@ class _SettingsState extends State<Settings> {
           physics: const BouncingScrollPhysics(),
           slivers: [
             TopControl(
-              name: "Settings",
+              name: "Edit Profile",
               icon: CupertinoIcons.chevron_back,
               backgroundColor: Colors.transparent,
             ),
@@ -45,73 +68,61 @@ class _SettingsState extends State<Settings> {
                             InkWell(
                               onTap: () {
                                 // EditProfileModal(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Edit()),
-                                );
                               },
-                              child: SettingsItem(
-                                icon: CupertinoIcons.person,
-                                color: Color(0xff262626),
-                                name: 'Edit Profile',
-                                trailing: true,
+                              child: InfoItem(
+                                title: "First name",
+                                value: data.length == 0
+                                    ? "-"
+                                    : capitalize(data[0]['fname']),
                               ),
                             ),
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                securityModal(context);
+                                // EditProfileModal(context);
                               },
-                              child: SettingsItem(
-                                icon: CupertinoIcons.lock,
-                                color: Color(0xff262626),
-                                name: 'Security',
-                                trailing: true,
+                              child: InfoItem(
+                                title: "Last name",
+                                value: data.length == 0
+                                    ? "-"
+                                    : capitalize(data[0]['lname']),
                               ),
                             ),
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                referredModal(context);
+                                // EditProfileModal(context);
                               },
-                              child: SettingsItem(
-                                icon: CupertinoIcons.link,
-                                color: Color(0xff262626),
-                                name: 'Referred to me',
-                                trailing: true,
+                              child: InfoItem(
+                                title: "Email",
+                                value: data.length == 0
+                                    ? "-"
+                                    : capitalize(data[0]['email']),
                               ),
                             ),
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                statsModal(context);
+                                // EditProfileModal(context);
                               },
-                              child: SettingsItem(
-                                icon: CupertinoIcons.graph_square,
-                                color: Color(0xff262626),
-                                name: 'Stats',
-                                trailing: true,
+                              child: InfoItem(
+                                title: "Bio",
+                                value: data.length == 0
+                                    ? "-"
+                                    : capitalize(data[0]['bio']),
                               ),
                             ),
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                feedbackModal(context);
+                                // EditProfileModal(context);
                               },
-                              child: SettingsItem(
-                                icon: CupertinoIcons.chat_bubble,
-                                color: Color(0xff262626),
-                                name: 'Feedback',
-                                trailing: true,
+                              child: InfoItem(
+                                title: "Phone number",
+                                value: data.length == 0
+                                    ? "-"
+                                    :"+${data[0]['phone']}",
                               ),
-                            ),
-                            MyDivider(),
-                            SettingsItem(
-                              icon: CupertinoIcons.bag_badge_minus,
-                              color: Colors.redAccent,
-                              name: 'Logout',
-                              trailing: false,
                             ),
                           ],
                         ),
@@ -128,13 +139,62 @@ class _SettingsState extends State<Settings> {
   }
 }
 
-class SettingsItem extends StatelessWidget {
+class InfoItem extends StatelessWidget {
+  final String title;
+  final String value;
+
+  InfoItem({
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontFamily: 'SFNSR',
+                  color: dBlack,
+                  fontSize: 12.0,
+                ),
+              ),
+              SizedBox(height: 5.0),
+              Text(
+                value,
+                style: TextStyle(
+                  fontFamily: 'SFNSR',
+                  color: dBlack,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+          Icon(
+            CupertinoIcons.chevron_right,
+            color: dBlack,
+            size: 20.0,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EditItem extends StatelessWidget {
   final String name;
   final IconData icon;
   final Color color;
   final bool trailing;
 
-  SettingsItem({
+  EditItem({
     required this.name,
     required this.icon,
     required this.color,

@@ -9,12 +9,14 @@ class NumberInput extends StatefulWidget {
   final String placeholder;
   final TextEditingController mycontroller;
   final bool obscure;
+  final bool focus;
 
   NumberInput({
     required this.label,
     required this.placeholder,
     required this.mycontroller,
     required this.obscure,
+    required this.focus
   });
 
   @override
@@ -60,7 +62,7 @@ class _NumberInputState extends State<NumberInput> {
               ),
             ),
             keyboardType: TextInputType.number,
-            autofocus: true,
+            autofocus: widget.focus,
             obscureText: widget.obscure,
             controller: widget.mycontroller,
             scrollPhysics: const BouncingScrollPhysics(),
