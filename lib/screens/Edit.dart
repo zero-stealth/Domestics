@@ -5,7 +5,6 @@ import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
-import 'package:domestics/screens/EditField.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
@@ -113,6 +112,7 @@ class _EditState extends State<Edit> {
                       placeholder: "New first name",
                       mycontroller: _fnameController,
                       obscure: false,
+                      lines: 1,
                     ),
                     const SizedBox(height: 15.0),
                     InputWidget(
@@ -120,6 +120,7 @@ class _EditState extends State<Edit> {
                       placeholder: "New last name",
                       mycontroller: _lnameController,
                       obscure: false,
+                      lines: 1,
                     ),
                     SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
                     ErrorAlert(
@@ -166,7 +167,7 @@ class _EditState extends State<Edit> {
                               setState(() {
                                 _errorMessage = "";
                                 _errorStatus = false;
-                                _btnState = "loading";
+                                _btnState = "notloading";
                               });
 
                               Future.delayed(const Duration(seconds: 2), () {
@@ -392,7 +393,8 @@ class _EditState extends State<Edit> {
                                   Future.delayed(const Duration(seconds: 2),
                                       () {
                                     getInfo();
-                                    return Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    return successModal(context, "Updated bio successfully");
                                   });
                                   break;
                                 }
@@ -507,7 +509,7 @@ class _EditState extends State<Edit> {
                                   context,
                                   "Phone Number",
                                   "New phone number",
-                                  "Change your bio",
+                                  "Change your phone number",
                                   4,
                                   "number",
                                   data[0]['token'],

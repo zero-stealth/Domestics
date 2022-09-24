@@ -11,95 +11,123 @@ import 'package:flutter/material.dart';
 
 //
 
-feedbackModal(context) {
+feedbackModal(context, token) {
+  TextEditingController _messageController = TextEditingController();
+
+  bool _errorStatus = false;
+  String _errorMessage = "";
+  String _buttonState = 'notloading';
+
   showModalBottomSheet(
-    backgroundColor: dBackgroundWhite,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(15.0),
-      ),
-    ),
-    isScrollControlled: true,
-    context: context,
-    builder: (context) => Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50.0,
-                  height: 4.0,
-                  margin: EdgeInsets.only(top: 10.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
-                    color: const Color(0xff8e8e90).withOpacity(0.3),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15.0),
-            const Text(
-              'Feedback',
-              style: TextStyle(
-                fontFamily: 'AR',
-                color: Color(0xff262626),
-                fontSize: 22.0,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            const Text(
-              'Talk to us about your thoughts and ideas on Domestics.',
-              style: TextStyle(
-                fontFamily: 'SFNSR',
-                color: Color(0xff8e8e90),
-                fontSize: 14.0,
-              ),
-            ),
-            const SizedBox(height: 15.0),
-            CupertinoTextField(
-              padding: const EdgeInsets.all(20.0),
-              placeholder: 'Type something',
-              placeholderStyle: TextStyle(
-                fontFamily: "SFNSR",
-                color: dGrey,
-              ),
-              minLines: 4,
-              maxLines: 4,
-              decoration: BoxDecoration(
-                color: const Color(0xff8e8e90).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            const SizedBox(height: 20.0),
-            Container(
-              width: double.infinity,
-              child: CupertinoButton(
-                color: Colors.blueAccent,
-                child: const Text(
-                  'Send',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontFamily: 'AR',
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            const SizedBox(height: 30.0),
-          ],
+      backgroundColor: dBackgroundWhite,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
         ),
       ),
-    ),
-  );
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 50.0,
+                        height: 4.0,
+                        margin: EdgeInsets.only(top: 10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50.0),
+                          color: const Color(0xff8e8e90).withOpacity(0.3),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15.0),
+                  const Text(
+                    'Feedback',
+                    style: TextStyle(
+                      fontFamily: 'AR',
+                      color: Color(0xff262626),
+                      fontSize: 22.0,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  const Text(
+                    'Talk to us about your thoughts and ideas on Domestics.',
+                    style: TextStyle(
+                      fontFamily: 'SFNSR',
+                      color: Color(0xff8e8e90),
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  const SizedBox(height: 15.0),
+                  InputWidget(
+                    label: "Message",
+                    placeholder: "Talk to us",
+                    mycontroller: _messageController,
+                    obscure: false,
+                    lines: 4,
+                  ),
+                  SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
+                  ErrorAlert(
+                    errorMessage: _errorMessage,
+                    status: _errorStatus,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: CupertinoButton(
+                      color: Colors.blueAccent,
+                      child: buttonStatus(_buttonState, 'Update'),
+                      onPressed: () async {
+                        setState(() {
+                          _errorStatus = false;
+                          _buttonState = "loading";
+                        });
+
+                        if (_messageController.text.length == 0) {
+                          return setState(() {
+                            _errorMessage = "You can't send an empty message.";
+                            _errorStatus = true;
+                            _buttonState = "notloading";
+                          });
+                        }
+
+                        var status = await uploadFeedback(
+                            token, _messageController.text);
+
+                        if (status == false) {
+                          return setState(() {
+                            _errorMessage =
+                                "Failed to add feedback. Try again later!";
+                            _errorStatus = true;
+                            _buttonState = "notloading";
+                          });
+                        } else {
+                          Future.delayed(const Duration(seconds: 2), () {
+                            Navigator.pop(context);
+                            return successModal(context, "Sent successfully");
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 30.0),
+                ],
+              ),
+            ),
+          );
+        });
+      });
 }
 
 // EditProfileModal(context) async {
@@ -307,6 +335,7 @@ securityModal(context, token) {
                   placeholder: "Current password",
                   mycontroller: _confirmController,
                   obscure: true,
+                  lines: 1,
                 ),
                 const SizedBox(height: 20.0),
                 InputWidget(
@@ -314,6 +343,7 @@ securityModal(context, token) {
                   placeholder: "New password",
                   mycontroller: _passwordController,
                   obscure: true,
+                  lines: 1,
                 ),
                 SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
                 ErrorAlert(
@@ -488,7 +518,7 @@ statsModal(context) {
   );
 }
 
-successModal(context) {
+successModal(context, message) {
   showModalBottomSheet(
     backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
@@ -530,7 +560,7 @@ successModal(context) {
             ),
             const SizedBox(height: 20.0),
             Text(
-              "Updated sucessfully",
+              message,
               style: TextStyle(
                 fontFamily: 'SFNSR',
                 color: dBlack,
@@ -686,7 +716,7 @@ referredModal(context, refferals) {
           const SizedBox(height: 20.0),
           refferals.length == 0
               ? Center(
-                child: Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 20.0),
@@ -707,7 +737,7 @@ referredModal(context, refferals) {
                       const SizedBox(height: 50.0),
                     ],
                   ),
-              )
+                )
               : Container(
                   height: 300.0,
                   child: SingleChildScrollView(

@@ -8,12 +8,14 @@ class InputWidget extends StatefulWidget {
   final String placeholder;
   final TextEditingController mycontroller;
   final bool obscure;
+  final int lines;
 
   InputWidget({
     required this.label,
     required this.placeholder,
     required this.mycontroller,
     required this.obscure,
+    required this.lines,
   });
 
   @override
@@ -54,7 +56,7 @@ class _InputWidgetState extends State<InputWidget> {
               // print(text);
             },
             decoration: const BoxDecoration(color: Colors.transparent),
-            maxLines: 1,
+            maxLines: widget.lines,
             placeholder: widget.placeholder,
             placeholderStyle: TextStyle(
               color: Colors.grey.withOpacity(0.6),

@@ -132,6 +132,7 @@ class _LoginState extends State<Login> {
                   placeholder: "someone@gmail.com",
                   mycontroller: _emailController,
                   obscure: false,
+                  lines: 1,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
@@ -139,6 +140,7 @@ class _LoginState extends State<Login> {
                   placeholder: "***********",
                   mycontroller: _passwordController,
                   obscure: true,
+                  lines: 1,
                 ),
                 const SizedBox(height: 10.0),
                 ErrorAlert(

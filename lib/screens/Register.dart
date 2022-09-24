@@ -122,6 +122,7 @@ class _RegisterState extends State<Register> {
                   placeholder: "john",
                   mycontroller: _fnameController,
                   obscure: false,
+                  lines: 1,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
@@ -129,6 +130,7 @@ class _RegisterState extends State<Register> {
                   placeholder: "cena",
                   mycontroller: _lnameController,
                   obscure: false,
+                  lines: 1,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
@@ -136,6 +138,7 @@ class _RegisterState extends State<Register> {
                   placeholder: "johncena@gmail.com",
                   mycontroller: _emailController,
                   obscure: false,
+                  lines: 1,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
@@ -143,6 +146,7 @@ class _RegisterState extends State<Register> {
                   placeholder: "***********",
                   mycontroller: _passwordController,
                   obscure: true,
+                  lines: 1,
                 ),
                 const SizedBox(height: 15.0),
                 InputWidget(
@@ -150,6 +154,7 @@ class _RegisterState extends State<Register> {
                   placeholder: "***********",
                   mycontroller: _confirmController,
                   obscure: true,
+                  lines: 1,
                 ),
                 const SizedBox(height: 10.0),
                 ErrorAlert(

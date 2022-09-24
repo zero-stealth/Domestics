@@ -411,3 +411,20 @@ Future logoutAll(token) async {
     // throw "Unable to create account";
   }
 }
+
+Future uploadFeedback(token, message) async {
+  var data = {
+    "message": message
+  };
+
+  var encoded = jsonEncode(data);
+
+  var response = await postRequest(encoded, token, '/feedback');
+
+  if (response.statusCode == 201) {
+    return true;
+  } else {
+    return false;
+    // throw "Unable to create account";
+  }
+}

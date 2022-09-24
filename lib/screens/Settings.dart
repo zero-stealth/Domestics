@@ -118,7 +118,7 @@ class _SettingsState extends State<Settings> {
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                feedbackModal(context);
+                                feedbackModal(context, data[0]['token']);
                               },
                               child: SettingsItem(
                                 icon: CupertinoIcons.chat_bubble,
