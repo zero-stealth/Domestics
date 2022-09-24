@@ -1,5 +1,14 @@
+import 'dart:developer';
+
+import 'package:domestics/Functions/SettingsFuncs.dart';
+import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
+import 'package:domestics/screens/EditField.dart';
+import 'package:domestics/widgets/Forms/ErrorAlert.dart';
+import 'package:domestics/widgets/Forms/InputWidget.dart';
+import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,11 +32,384 @@ class _EditState extends State<Edit> {
     getInfo();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   getInfo() async {
     var info = await _dbHelper.queryAllRows("userInfo");
     setState(() {
       data = info;
     });
+  }
+
+  editNameModal(context, token) {
+    TextEditingController _fnameController = TextEditingController();
+    TextEditingController _lnameController = TextEditingController();
+
+    bool _errorStatus = false;
+    String _errorMessage = "";
+    String _btnState = 'notloading';
+
+    showModalBottomSheet(
+        backgroundColor: dBackgroundWhite,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15.0),
+          ),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (
+            BuildContext context,
+            StateSetter setState,
+          ) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 50.0,
+                          height: 4.0,
+                          margin: EdgeInsets.only(top: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: const Color(0xff8e8e90).withOpacity(0.3),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15.0),
+                    Text(
+                      "Edit Name",
+                      style: TextStyle(
+                        fontFamily: 'AR',
+                        color: Color(0xff262626),
+                        fontSize: 22.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      "Change your first and last name",
+                      style: TextStyle(
+                        fontFamily: 'SFNSR',
+                        color: Color(0xff8e8e90),
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    const SizedBox(height: 15.0),
+                    InputWidget(
+                      label: "First name",
+                      placeholder: "New first name",
+                      mycontroller: _fnameController,
+                      obscure: false,
+                    ),
+                    const SizedBox(height: 15.0),
+                    InputWidget(
+                      label: "Last name",
+                      placeholder: "New last name",
+                      mycontroller: _lnameController,
+                      obscure: false,
+                    ),
+                    SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
+                    ErrorAlert(
+                      errorMessage: _errorMessage,
+                      status: _errorStatus,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        color: Colors.blueAccent,
+                        child: buttonStatus(_btnState, 'Update'),
+                        onPressed: () async {
+                          setState(() {
+                            _errorStatus = false;
+                            _btnState = "loading";
+                          });
+
+                          var usernameStatus = await checkusername(
+                              _fnameController.text.toLowerCase(),
+                              _lnameController.text.toLowerCase());
+
+                          if (usernameStatus == false) {
+                            return setState(() {
+                              _errorMessage = "This name already exists";
+                              _errorStatus = true;
+                              _btnState = "notloading";
+                            });
+                          } else {
+                            var data = {
+                              "fname": "${_fnameController.text.toLowerCase()}",
+                              "lname": "${_lnameController.text.toLowerCase()}"
+                            };
+
+                            var updated = await updateUserInfo(data, token);
+
+                            if (updated == false) {
+                              return setState(() {
+                                _errorMessage =
+                                    "Update failed. Try again later";
+                                _errorStatus = true;
+                                _btnState = "notloading";
+                              });
+                            } else {
+                              setState(() {
+                                _errorMessage = "";
+                                _errorStatus = false;
+                                _btnState = "loading";
+                              });
+
+                              Future.delayed(const Duration(seconds: 2), () {
+                                getInfo();
+                                return Navigator.pop(context);
+                              });
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 30.0),
+                  ],
+                ),
+              ),
+            );
+          });
+        });
+  }
+
+  editModal(context, field, value, subtitle, lines, inputType, token) {
+    TextEditingController _myController = TextEditingController();
+
+    bool _errorStatus = false;
+    String _errorMessage = "";
+    String _buttonState = 'notloading';
+
+    showModalBottomSheet(
+        backgroundColor: dBackgroundWhite,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15.0),
+          ),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (
+              BuildContext context,
+              StateSetter setState,
+            ) {
+              return Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 50.0,
+                            height: 4.0,
+                            margin: EdgeInsets.only(top: 10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              color: const Color(0xff8e8e90).withOpacity(0.3),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15.0),
+                      Text(
+                        field,
+                        style: TextStyle(
+                          fontFamily: 'AR',
+                          color: Color(0xff262626),
+                          fontSize: 22.0,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          fontFamily: 'SFNSR',
+                          color: Color(0xff8e8e90),
+                          fontSize: 14.0,
+                        ),
+                      ),
+                      const SizedBox(height: 15.0),
+                      inputType == "text"
+                          ? CupertinoTextField(
+                              maxLines: lines,
+                              controller: _myController,
+                              minLines: lines,
+                              padding: const EdgeInsets.all(20.0),
+                              placeholder: value,
+                              placeholderStyle: TextStyle(
+                                fontFamily: "SFNSR",
+                                color: dGrey,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xff8e8e90).withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            )
+                          : NumberInput(
+                              label: "Phone number",
+                              placeholder: "New phone number",
+                              mycontroller: _myController,
+                              obscure: false,
+                              focus: false,
+                            ),
+                      SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
+                      ErrorAlert(
+                        errorMessage: _errorMessage,
+                        status: _errorStatus,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: CupertinoButton(
+                          color: Colors.blueAccent,
+                          child: buttonStatus(_buttonState, 'Update'),
+                          onPressed: () async {
+                            setState(() {
+                              _errorStatus = false;
+                              _buttonState = "loading";
+                            });
+                            switch (field) {
+                              case "Phone Number":
+                                if (_myController.text.length < 9) {
+                                  return setState(() {
+                                    _buttonState = "notloading";
+                                    _errorMessage = "The format is 757690940";
+                                    _errorStatus = true;
+                                  });
+                                }
+
+                                var status = await checkphone(
+                                    "254${_myController.text}");
+
+                                if (status == false) {
+                                  return setState(() {
+                                    _buttonState = "notloading";
+                                    _errorMessage =
+                                        "Phone number already exists";
+                                    _errorStatus = true;
+                                  });
+                                } else {
+                                  var data = {
+                                    "phone": "254${_myController.text}",
+                                  };
+
+                                  var updated =
+                                      await updateUserInfo(data, token);
+
+                                  if (updated == false) {
+                                    return setState(() {
+                                      _buttonState = "notloading";
+                                      _errorMessage = "Update failed";
+                                      _errorStatus = true;
+                                    });
+                                  } else {
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      getInfo();
+                                      return Navigator.pop(context);
+                                    });
+                                    break;
+                                  }
+                                }
+
+                              case "Email":
+                                if (_myController.text.length == 0) {
+                                  return;
+                                }
+                                var estatus =
+                                    await checkemail(_myController.text);
+
+                                if (estatus == false) {
+                                  return setState(() {
+                                    _buttonState = "notloading";
+                                    _errorMessage = "Email already exists";
+                                    _errorStatus = true;
+                                  });
+                                } else {
+                                  var data = {
+                                    "email": "${_myController.text}",
+                                  };
+
+                                  var updated =
+                                      await updateUserInfo(data, token);
+
+                                  if (updated == false) {
+                                    return setState(() {
+                                      _buttonState = "notloading";
+                                      _errorMessage =
+                                          "Update failed. Try again later";
+                                      _errorStatus = true;
+                                    });
+                                  } else {
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      getInfo();
+                                      return Navigator.pop(context);
+                                    });
+                                    break;
+                                  }
+                                }
+
+                              case "Bio":
+                                if (_myController.text.length == 0) {
+                                  return;
+                                }
+
+                                var data = {
+                                  "bio": "${_myController.text}",
+                                };
+
+                                var updated = await updateUserInfo(data, token);
+
+                                if (updated == false) {
+                                  return setState(() {
+                                    _buttonState = "notloading";
+                                    _errorMessage =
+                                        "Update failed. Try again later";
+                                    _errorStatus = true;
+                                  });
+                                } else {
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    getInfo();
+                                    return Navigator.pop(context);
+                                  });
+                                  break;
+                                }
+
+                              default:
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 30.0),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        });
   }
 
   String capitalize(String s) {
@@ -66,44 +448,46 @@ class _EditState extends State<Edit> {
                         child: Column(
                           children: [
                             InkWell(
-                              onTap: () {
-                                // EditProfileModal(context);
+                              onTap: () async {
+                                await editNameModal(context, data[0]['token']);
                               },
                               child: InfoItem(
-                                title: "First name",
+                                title: "Username",
                                 value: data.length == 0
                                     ? "-"
-                                    : capitalize(data[0]['fname']),
+                                    : "${capitalize(data[0]['fname'])} ${capitalize(data[0]['lname'])}",
                               ),
                             ),
                             MyDivider(),
                             InkWell(
-                              onTap: () {
-                                // EditProfileModal(context);
-                              },
-                              child: InfoItem(
-                                title: "Last name",
-                                value: data.length == 0
-                                    ? "-"
-                                    : capitalize(data[0]['lname']),
-                              ),
-                            ),
-                            MyDivider(),
-                            InkWell(
-                              onTap: () {
-                                // EditProfileModal(context);
+                              onTap: () async {
+                                await editModal(
+                                  context,
+                                  "Email",
+                                  "New email address",
+                                  "Change your email address",
+                                  1,
+                                  "text",
+                                  data[0]['token'],
+                                );
                               },
                               child: InfoItem(
                                 title: "Email",
-                                value: data.length == 0
-                                    ? "-"
-                                    : capitalize(data[0]['email']),
+                                value: data[0]['email'].toLowerCase(),
                               ),
                             ),
                             MyDivider(),
                             InkWell(
-                              onTap: () {
-                                // EditProfileModal(context);
+                              onTap: () async {
+                                await editModal(
+                                  context,
+                                  "Bio",
+                                  "New bio",
+                                  "Change your bio",
+                                  4,
+                                  "text",
+                                  data[0]['token'],
+                                );
                               },
                               child: InfoItem(
                                 title: "Bio",
@@ -114,14 +498,38 @@ class _EditState extends State<Edit> {
                             ),
                             MyDivider(),
                             InkWell(
-                              onTap: () {
-                                // EditProfileModal(context);
+                              onTap: () async {
+                                await editModal(
+                                  context,
+                                  "Phone Number",
+                                  "New phone number",
+                                  "Change your bio",
+                                  4,
+                                  "number",
+                                  data[0]['token'],
+                                );
+
+                                // await getInfo();
+
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => EditField(
+                                //       lines: 1,
+                                //       field: "Phone number",
+                                //       subtitle: "Change phone number",
+                                //       inputType: "number",
+                                //       value: "New phone nnumber",
+                                //       token: data[0]['token'],
+                                //     ),
+                                //   ),
+                                // ).then((value) => log("Happy happy"));
                               },
                               child: InfoItem(
                                 title: "Phone number",
                                 value: data.length == 0
                                     ? "-"
-                                    :"+${data[0]['phone']}",
+                                    : "+${data[0]['phone']}",
                               ),
                             ),
                           ],

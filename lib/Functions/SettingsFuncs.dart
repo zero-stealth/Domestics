@@ -1,10 +1,17 @@
+import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/widgets/Dashboard/UserTab.dart';
+import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+
+
+// 
 
 feedbackModal(context) {
   showModalBottomSheet(
@@ -49,14 +56,14 @@ feedbackModal(context) {
             ),
             const SizedBox(height: 8.0),
             const Text(
-              'Send us your thoughts, ideas or say hi. Life is too short.',
+              'Talk to us about your thoughts and ideas on Domestics.',
               style: TextStyle(
                 fontFamily: 'SFNSR',
                 color: Color(0xff8e8e90),
                 fontSize: 14.0,
               ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 15.0),
             CupertinoTextField(
               padding: const EdgeInsets.all(20.0),
               placeholder: 'Type something',
@@ -97,142 +104,142 @@ feedbackModal(context) {
   );
 }
 
-EditProfileModal(context) async {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _fnameController = TextEditingController();
-  TextEditingController _lnameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmController = TextEditingController();
+// EditProfileModal(context) async {
+//   TextEditingController _emailController = TextEditingController();
+//   TextEditingController _fnameController = TextEditingController();
+//   TextEditingController _lnameController = TextEditingController();
+//   TextEditingController _phoneController = TextEditingController();
+//   TextEditingController _passwordController = TextEditingController();
+//   TextEditingController _confirmController = TextEditingController();
 
-  final _dbHelper = DatabaseHelper.instance;
-  var info = await _dbHelper.queryAllRows("userInfo");
+//   final _dbHelper = DatabaseHelper.instance;
+//   var info = await _dbHelper.queryAllRows("userInfo");
 
-  showModalBottomSheet(
-    backgroundColor: dBackgroundWhite,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(15.0),
-      ),
-    ),
-    isScrollControlled: true,
-    context: context,
-    builder: (context) => FractionallySizedBox(
-      heightFactor: 0.9,
-      child: Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 50.0,
-                    height: 4.0,
-                    margin: EdgeInsets.only(top: 10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      color: const Color(0xff8e8e90).withOpacity(0.3),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40.0),
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 30.0),
-                    const Text(
-                      'Edit Profile',
-                      style: TextStyle(
-                        fontFamily: 'AR',
-                        color: Color(0xff262626),
-                        fontSize: 22.0,
-                      ),
-                    ),
-                    const SizedBox(height: 8.0),
-                    const Text(
-                      'Edit your credentials.',
-                      style: TextStyle(
-                        fontFamily: 'SFNSR',
-                        color: Color(0xff8e8e90),
-                        fontSize: 14.0,
-                      ),
-                    ),
-                    const SizedBox(height: 15.0),
-                    InputWidget(
-                      label: "First Name",
-                      placeholder: "john",
-                      mycontroller: _fnameController,
-                      obscure: false,
-                    ),
-                    const SizedBox(height: 15.0),
-                    InputWidget(
-                      label: "Last Name",
-                      placeholder: "cena",
-                      mycontroller: _lnameController,
-                      obscure: false,
-                    ),
-                    const SizedBox(height: 15.0),
-                    InputWidget(
-                      label: "Email",
-                      placeholder: "johncena@gmail.com",
-                      mycontroller: _emailController,
-                      obscure: false,
-                    ),
-                    const SizedBox(height: 15.0),
-                    InputWidget(
-                      label: "Bio",
-                      placeholder: "I like pineapple pizza",
-                      mycontroller: _emailController,
-                      obscure: false,
-                    ),
-                    const SizedBox(height: 15.0),
-                    NumberInput(
-                      label: "Phone",
-                      focus: false,
-                      placeholder: "757690940",
-                      mycontroller: _phoneController,
-                      obscure: false,
-                    ),
-                    // const SizedBox(height: 10.0),
-                    // ErrorAlert(
-                    //   errorMessage: _errorMessage,
-                    //   status: _errorStatus,
-                    // ),
-                    const SizedBox(height: 20.0),
-                    Container(
-                      width: double.infinity,
-                      child: CupertinoButton(
-                        color: Colors.blueAccent,
-                        child: const Text(
-                          'Save Changes',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontFamily: 'AR',
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 30.0),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
+//   showModalBottomSheet(
+//     backgroundColor: dBackgroundWhite,
+//     shape: RoundedRectangleBorder(
+//       borderRadius: BorderRadius.vertical(
+//         top: Radius.circular(15.0),
+//       ),
+//     ),
+//     isScrollControlled: true,
+//     context: context,
+//     builder: (context) => FractionallySizedBox(
+//       heightFactor: 0.9,
+//       child: Padding(
+//         padding: MediaQuery.of(context).viewInsets,
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//           child: Stack(
+//             children: [
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Container(
+//                     width: 50.0,
+//                     height: 4.0,
+//                     margin: EdgeInsets.only(top: 10.0),
+//                     decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(50.0),
+//                       color: const Color(0xff8e8e90).withOpacity(0.3),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//               const SizedBox(height: 40.0),
+//               SingleChildScrollView(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     const SizedBox(height: 30.0),
+//                     const Text(
+//                       'Edit Profile',
+//                       style: TextStyle(
+//                         fontFamily: 'AR',
+//                         color: Color(0xff262626),
+//                         fontSize: 22.0,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 8.0),
+//                     const Text(
+//                       'Edit your credentials.',
+//                       style: TextStyle(
+//                         fontFamily: 'SFNSR',
+//                         color: Color(0xff8e8e90),
+//                         fontSize: 14.0,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 15.0),
+//                     InputWidget(
+//                       label: "First Name",
+//                       placeholder: "john",
+//                       mycontroller: _fnameController,
+//                       obscure: false,
+//                     ),
+//                     const SizedBox(height: 15.0),
+//                     InputWidget(
+//                       label: "Last Name",
+//                       placeholder: "cena",
+//                       mycontroller: _lnameController,
+//                       obscure: false,
+//                     ),
+//                     const SizedBox(height: 15.0),
+//                     InputWidget(
+//                       label: "Email",
+//                       placeholder: "johncena@gmail.com",
+//                       mycontroller: _emailController,
+//                       obscure: false,
+//                     ),
+//                     const SizedBox(height: 15.0),
+//                     InputWidget(
+//                       label: "Bio",
+//                       placeholder: "I like pineapple pizza",
+//                       mycontroller: _emailController,
+//                       obscure: false,
+//                     ),
+//                     const SizedBox(height: 15.0),
+//                     NumberInput(
+//                       label: "Phone",
+//                       focus: false,
+//                       placeholder: "757690940",
+//                       mycontroller: _phoneController,
+//                       obscure: false,
+//                     ),
+//                     // const SizedBox(height: 10.0),
+//                     // ErrorAlert(
+//                     //   errorMessage: _errorMessage,
+//                     //   status: _errorStatus,
+//                     // ),
+//                     const SizedBox(height: 20.0),
+//                     Container(
+//                       width: double.infinity,
+//                       child: CupertinoButton(
+//                         color: Colors.blueAccent,
+//                         child: const Text(
+//                           'Save Changes',
+//                           style: TextStyle(
+//                             color: Colors.white,
+//                             fontSize: 16.0,
+//                             fontFamily: 'AR',
+//                           ),
+//                         ),
+//                         onPressed: () {
+//                           Navigator.pop(context);
+//                         },
+//                       ),
+//                     ),
+//                     const SizedBox(height: 30.0),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 securityModal(context) {
   showModalBottomSheet(

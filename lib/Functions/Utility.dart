@@ -10,7 +10,7 @@ buttonStatus(buttonState, text) {
         size: 20.0,
       );
 
-    default:
+    case "notloading":
       return Text(
         text,
         style: TextStyle(
