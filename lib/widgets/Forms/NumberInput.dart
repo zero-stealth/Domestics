@@ -11,13 +11,12 @@ class NumberInput extends StatefulWidget {
   final bool obscure;
   final bool focus;
 
-  NumberInput({
-    required this.label,
-    required this.placeholder,
-    required this.mycontroller,
-    required this.obscure,
-    required this.focus
-  });
+  NumberInput(
+      {required this.label,
+      required this.placeholder,
+      required this.mycontroller,
+      required this.obscure,
+      required this.focus});
 
   @override
   State<NumberInput> createState() => _NumberInputState();
@@ -34,6 +33,7 @@ class _NumberInputState extends State<NumberInput> {
           textAlign: TextAlign.start,
           style: TextStyle(
             color: dBlack,
+            fontFamily: 'SFNSR',
             fontSize: 12.0,
           ),
         ),
@@ -57,7 +57,7 @@ class _NumberInputState extends State<NumberInput> {
                 style: TextStyle(
                   fontSize: 16.0,
                   color: dWhitePure,
-                  fontFamily: 'SFD-Bold',
+                  fontFamily: 'AR',
                 ),
               ),
             ),
@@ -75,7 +75,10 @@ class _NumberInputState extends State<NumberInput> {
             decoration: const BoxDecoration(color: Colors.transparent),
             maxLines: 1,
             placeholder: widget.placeholder,
-            placeholderStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
+            placeholderStyle: TextStyle(
+              color: Colors.grey.withOpacity(0.6),
+              fontFamily: 'SFNSR',
+            ),
           ),
         ),
       ],

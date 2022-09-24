@@ -31,6 +31,7 @@ class _InputWidgetState extends State<InputWidget> {
           textAlign: TextAlign.start,
           style: TextStyle(
             color: dBlack,
+            fontFamily: 'SFNSR',
             fontSize: 12.0,
           ),
         ),
@@ -47,6 +48,7 @@ class _InputWidgetState extends State<InputWidget> {
             scrollPhysics: const BouncingScrollPhysics(),
             style: TextStyle(
               color: dBlack,
+              fontFamily: 'SFNSR',
             ),
             onChanged: (text) {
               // print(text);
@@ -54,7 +56,10 @@ class _InputWidgetState extends State<InputWidget> {
             decoration: const BoxDecoration(color: Colors.transparent),
             maxLines: 1,
             placeholder: widget.placeholder,
-            placeholderStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
+            placeholderStyle: TextStyle(
+              color: Colors.grey.withOpacity(0.6),
+              fontFamily: 'SFNSR',
+            ),
           ),
         ),
       ],

@@ -14,11 +14,14 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final _dbHelper = DatabaseHelper.instance;
   var data = [];
+  var refferals = [];
 
   getInfo() async {
     var info = await _dbHelper.queryAllRows("userInfo");
+    var reff = await _dbHelper.queryAllRows("refferals");
     setState(() {
       data = info;
+      refferals = reff;
     });
   }
 
@@ -91,7 +94,7 @@ class _SettingsState extends State<Settings> {
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                referredModal(context);
+                                referredModal(context, refferals);
                               },
                               child: SettingsItem(
                                 icon: CupertinoIcons.link,

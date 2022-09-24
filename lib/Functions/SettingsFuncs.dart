@@ -488,7 +488,82 @@ statsModal(context) {
   );
 }
 
-referredModal(context) {
+successModal(context) {
+  showModalBottomSheet(
+    backgroundColor: dBackgroundWhite,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(15.0),
+      ),
+    ),
+    isScrollControlled: true,
+    context: context,
+    builder: (context) => Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 50.0,
+                  height: 4.0,
+                  margin: EdgeInsets.only(top: 10.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                    color: const Color(0xff8e8e90).withOpacity(0.3),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30.0),
+            Center(
+              child: Icon(
+                CupertinoIcons.hand_thumbsup_fill,
+                color: dBlack,
+                size: 100.0,
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            Text(
+              "Updated sucessfully",
+              style: TextStyle(
+                fontFamily: 'SFNSR',
+                color: dBlack,
+                fontSize: 16.0,
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            Container(
+              width: double.infinity,
+              child: CupertinoButton(
+                color: const Color(0xff8e8e90).withOpacity(0.1),
+                child: Text(
+                  'Close',
+                  style: TextStyle(
+                    color: dBlueBackground,
+                    fontSize: 16.0,
+                    fontFamily: 'AR',
+                  ),
+                ),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            const SizedBox(height: 20.0),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+referredModal(context, refferals) {
   List clients = [
     {
       'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
@@ -598,7 +673,7 @@ referredModal(context) {
                 ),
                 const SizedBox(height: 8.0),
                 const Text(
-                  'People i have been suggested to for work.',
+                  'People who have been reffered to you.',
                   style: TextStyle(
                     fontFamily: 'SFNSR',
                     color: Color(0xff8e8e90),
@@ -609,25 +684,49 @@ referredModal(context) {
             ),
           ),
           const SizedBox(height: 20.0),
-          Container(
-            height: 300.0,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  for (var i in clients)
-                    UserTab(
-                      fname: i['fname'],
-                      tags: i['tag'],
-                      url: i['url'],
-                      bio: i['bio'],
-                      minutesAway: i['minutesAway'],
+          refferals.length == 0
+              ? Center(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20.0),
+                      // Icon(
+                      //   CupertinoIcons.search,
+                      //   size: 50.0,
+                      //   color: dBlack,
+                      // ),
+                      // const SizedBox(height: 20.0),
+                      Text(
+                        'No refferals yet.',
+                        style: TextStyle(
+                          fontFamily: 'SFNSR',
+                          color: Color(0xff8e8e90),
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      const SizedBox(height: 50.0),
+                    ],
+                  ),
+              )
+              : Container(
+                  height: 300.0,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      children: [
+                        for (var i in clients)
+                          UserTab(
+                            fname: i['fname'],
+                            tags: i['tag'],
+                            url: i['url'],
+                            bio: i['bio'],
+                            minutesAway: i['minutesAway'],
+                          ),
+                        const SizedBox(height: 30.0),
+                      ],
                     ),
-                  const SizedBox(height: 30.0),
-                ],
-              ),
-            ),
-          ),
+                  ),
+                ),
         ],
       ),
     ),
