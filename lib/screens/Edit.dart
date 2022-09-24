@@ -457,7 +457,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Username",
-                                value: data.length == 0
+                                value: data.length <= 0
                                     ? "-"
                                     : "${capitalize(data[0]['fname'])} ${capitalize(data[0]['lname'])}",
                               ),
@@ -477,7 +477,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Email",
-                                value: data[0]['email'].toLowerCase(),
+                                value: data.length <= 0 ? "-" : data[0]['email'].toLowerCase(),
                               ),
                             ),
                             MyDivider(),
@@ -495,7 +495,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Bio",
-                                value: data.length == 0
+                                value: data.length <= 0
                                     ? "-"
                                     : capitalize(data[0]['bio']),
                               ),
@@ -531,7 +531,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Phone number",
-                                value: data.length == 0
+                                value: data.length <= 0
                                     ? "-"
                                     : "+${data[0]['phone']}",
                               ),
