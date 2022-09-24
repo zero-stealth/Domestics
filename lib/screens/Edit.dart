@@ -413,7 +413,11 @@ class _EditState extends State<Edit> {
   }
 
   String capitalize(String s) {
-    return s[0].toUpperCase() + s.substring(1);
+    if(s.length == 0){
+      return s;
+    } else {
+      return s[0].toUpperCase() + s.substring(1);
+    }
   }
 
   @override

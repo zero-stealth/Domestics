@@ -1,4 +1,5 @@
 import 'package:domestics/Functions/SettingsFuncs.dart';
+import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Edit.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
@@ -11,6 +12,23 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final _dbHelper = DatabaseHelper.instance;
+  var data = [];
+
+  getInfo() async {
+    var info = await _dbHelper.queryAllRows("userInfo");
+    setState(() {
+      data = info;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +79,7 @@ class _SettingsState extends State<Settings> {
                             MyDivider(),
                             InkWell(
                               onTap: () {
-                                securityModal(context);
+                                securityModal(context, data[0]['token']);
                               },
                               child: SettingsItem(
                                 icon: CupertinoIcons.lock,

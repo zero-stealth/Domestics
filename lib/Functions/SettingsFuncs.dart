@@ -9,9 +9,7 @@ import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-
-// 
+//
 
 feedbackModal(context) {
   showModalBottomSheet(
@@ -241,7 +239,14 @@ feedbackModal(context) {
 //   );
 // }
 
-securityModal(context) {
+securityModal(context, token) {
+  TextEditingController _confirmController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  bool _errorStatus = false;
+  String _errorMessage = "";
+  String _buttonState = 'notloading';
+
   showModalBottomSheet(
     backgroundColor: dBackgroundWhite,
     shape: RoundedRectangleBorder(
@@ -251,116 +256,127 @@ securityModal(context) {
     ),
     isScrollControlled: true,
     context: context,
-    builder: (context) => Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    builder: (context) {
+      return StatefulBuilder(builder: (
+        BuildContext context,
+        StateSetter setState,
+      ) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 50.0,
-                  height: 4.0,
-                  margin: EdgeInsets.only(top: 10.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
-                    color: const Color(0xff8e8e90).withOpacity(0.3),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 50.0,
+                      height: 4.0,
+                      margin: EdgeInsets.only(top: 10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50.0),
+                        color: const Color(0xff8e8e90).withOpacity(0.3),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18.0),
+                const Text(
+                  'Security',
+                  style: TextStyle(
+                    fontFamily: 'AR',
+                    color: Color(0xff262626),
+                    fontSize: 22.0,
                   ),
                 ),
+                const SizedBox(height: 8.0),
+                const Text(
+                  'Change your password.',
+                  style: TextStyle(
+                    fontFamily: 'SFNSR',
+                    color: Color(0xff8e8e90),
+                    fontSize: 14.0,
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                InputWidget(
+                  label: "Current password",
+                  placeholder: "Current password",
+                  mycontroller: _confirmController,
+                  obscure: true,
+                ),
+                const SizedBox(height: 20.0),
+                InputWidget(
+                  label: "New password",
+                  placeholder: "New password",
+                  mycontroller: _passwordController,
+                  obscure: true,
+                ),
+                SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
+                ErrorAlert(
+                  errorMessage: _errorMessage,
+                  status: _errorStatus,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: CupertinoButton(
+                    color: Colors.blueAccent,
+                    child: buttonStatus(_buttonState, 'Update'),
+                    onPressed: () async {
+                      setState(() {
+                        _buttonState = "loading";
+                        _errorStatus = false;
+                      });
+
+                      if (_confirmController.text.length == 0 ||
+                          _passwordController.text.length == 0) {
+                        return setState(() {
+                          _buttonState = "notloading";
+                          _errorMessage = "Fill all fields";
+                          _errorStatus = true;
+                        });
+                      }
+
+                      if (_confirmController.text == _passwordController.text) {
+                        return setState(() {
+                          _buttonState = "notloading";
+                          _errorMessage =
+                              "You cannot change your password to the same password";
+                          _errorStatus = true;
+                        });
+                      }
+
+                      var data = {
+                        "password": "${_passwordController.text}",
+                      };
+
+                      var updated = await updateUserInfo(data, token);
+
+                      if (updated == false) {
+                        return setState(() {
+                          _buttonState = "notloading";
+                          _errorMessage = "Update failed";
+                          _errorStatus = true;
+                        });
+                      } else {
+                        Future.delayed(const Duration(seconds: 2), () {
+                          return Navigator.pop(context);
+                        });
+                      }
+                      // Navigator.pop(context);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 30.0),
               ],
             ),
-            const SizedBox(height: 18.0),
-            const Text(
-              'Security',
-              style: TextStyle(
-                fontFamily: 'AR',
-                color: Color(0xff262626),
-                fontSize: 22.0,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            const Text(
-              'Change critical account information.',
-              style: TextStyle(
-                fontFamily: 'SFNSR',
-                color: Color(0xff8e8e90),
-                fontSize: 14.0,
-              ),
-            ),
-            const SizedBox(height: 20.0),
-            Text(
-              'Email',
-              style: TextStyle(
-                fontFamily: 'SFNSR',
-                color: Color(0xff262626).withOpacity(0.5),
-                fontSize: 14.0,
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            CupertinoTextField(
-              padding: const EdgeInsets.all(15.0),
-              placeholder: 'naughtybullet@pubg.com',
-              placeholderStyle: TextStyle(
-                fontFamily: "SFNSR",
-                color: dGrey,
-              ),
-              minLines: 1,
-              maxLines: 1,
-              decoration: BoxDecoration(
-                  color: const Color(0xff8e8e90).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
-            const SizedBox(height: 13.0),
-            Text(
-              'Password',
-              style: TextStyle(
-                fontFamily: 'SFNSR',
-                color: Color(0xff262626).withOpacity(0.5),
-                fontSize: 14.0,
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            CupertinoTextField(
-              padding: const EdgeInsets.all(15.0),
-              placeholder: '***********',
-              placeholderStyle: TextStyle(
-                fontFamily: "SFNSR",
-                color: dGrey,
-              ),
-              obscureText: true,
-              minLines: 1,
-              maxLines: 1,
-              decoration: BoxDecoration(
-                  color: const Color(0xff8e8e90).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
-            const SizedBox(height: 20.0),
-            Container(
-              width: double.infinity,
-              child: CupertinoButton(
-                color: Colors.blueAccent,
-                child: const Text(
-                  'Save Changes',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontFamily: 'AR',
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            const SizedBox(height: 30.0),
-          ],
-        ),
-      ),
-    ),
+          ),
+        );
+      });
+    },
   );
 }
 
