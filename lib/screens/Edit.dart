@@ -10,6 +10,7 @@ import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
+import 'package:domestics/widgets/settings/StatusPill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,110 @@ class _EditState extends State<Edit> {
     setState(() {
       data = info;
     });
+  }
+
+  statusModal(context, token, isWorkr) {
+    showModalBottomSheet(
+        backgroundColor: dBackgroundWhite,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15.0),
+          ),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (
+            BuildContext context,
+            StateSetter setState,
+          ) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 50.0,
+                          height: 4.0,
+                          margin: EdgeInsets.only(top: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: const Color(0xff8e8e90).withOpacity(0.3),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15.0),
+                    Text(
+                      "Status",
+                      style: TextStyle(
+                        fontFamily: 'AR',
+                        color: Color(0xff262626),
+                        fontSize: 22.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      "Change your account type",
+                      style: TextStyle(
+                        fontFamily: 'SFNSR',
+                        color: Color(0xff8e8e90),
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    const SizedBox(height: 15.0),
+                    InkWell(
+                      onTap: () async {
+                        setState(() {
+                          isWorkr = 1;
+                        });
+
+                        var data = {"isWorker": isWorkr};
+
+                        await updateUserInfo(data, token);
+                        await getInfo();
+
+                        Navigator.pop(context);
+                      },
+                      child: StatusPill(
+                        isWorker: isWorkr == 0 ? false : true,
+                        tag: "Worker",
+                        desc: "I help people out",
+                      ),
+                    ),
+                    const SizedBox(height: 15.0),
+                    InkWell(
+                      onTap: () async {
+                        setState(() {
+                          isWorkr = 0;
+                        });
+
+                        var data = {"isWorker": isWorkr};
+
+                        await updateUserInfo(data, token);
+                        await getInfo();
+
+                        Navigator.pop(context);
+                      },
+                      child: StatusPill(
+                        isWorker: isWorkr == 0 ? false : true,
+                        tag: "Client",
+                        desc: "I am looking for people to help me out",
+                      ),
+                    ),
+                    const SizedBox(height: 30.0),
+                  ],
+                ),
+              ),
+            );
+          });
+        });
   }
 
   editNameModal(context, token) {
@@ -394,7 +499,8 @@ class _EditState extends State<Edit> {
                                       () {
                                     getInfo();
                                     Navigator.pop(context);
-                                    return successModal(context, "Updated bio successfully");
+                                    return successModal(
+                                        context, "Updated bio successfully");
                                   });
                                   break;
                                 }
@@ -415,10 +521,22 @@ class _EditState extends State<Edit> {
   }
 
   String capitalize(String s) {
-    if(s.length == 0){
+    if (s.length == 0) {
       return s;
     } else {
       return s[0].toUpperCase() + s.substring(1);
+    }
+  }
+
+  calcType() {
+    if (data.length <= 0) {
+      return "-";
+    } else {
+      if (data[0]['isWorker'] == 0) {
+        return "Client";
+      } else {
+        return "Worker";
+      }
     }
   }
 
@@ -479,7 +597,9 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Email",
-                                value: data.length <= 0 ? "-" : data[0]['email'].toLowerCase(),
+                                value: data.length <= 0
+                                    ? "-"
+                                    : data[0]['email'].toLowerCase(),
                               ),
                             ),
                             MyDivider(),
@@ -514,28 +634,26 @@ class _EditState extends State<Edit> {
                                   "number",
                                   data[0]['token'],
                                 );
-
-                                // await getInfo();
-
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => EditField(
-                                //       lines: 1,
-                                //       field: "Phone number",
-                                //       subtitle: "Change phone number",
-                                //       inputType: "number",
-                                //       value: "New phone nnumber",
-                                //       token: data[0]['token'],
-                                //     ),
-                                //   ),
-                                // ).then((value) => log("Happy happy"));
                               },
                               child: InfoItem(
                                 title: "Phone number",
                                 value: data.length <= 0
                                     ? "-"
                                     : "+${data[0]['phone']}",
+                              ),
+                            ),
+                            MyDivider(),
+                            InkWell(
+                              onTap: () async {
+                                await statusModal(
+                                  context,
+                                  data[0]['token'],
+                                  data[0]['isWorker'],
+                                );
+                              },
+                              child: InfoItem(
+                                title: "Account type",
+                                value: calcType(),
                               ),
                             ),
                           ],
