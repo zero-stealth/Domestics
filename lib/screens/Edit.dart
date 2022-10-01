@@ -8,6 +8,7 @@ import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
+import 'package:domestics/widgets/TagsView.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:domestics/widgets/settings/StatusPill.dart';
@@ -24,6 +25,8 @@ class Edit extends StatefulWidget {
 class _EditState extends State<Edit> {
   final _dbHelper = DatabaseHelper.instance;
   var data = [];
+  var workerTags = [];
+  var clientTags = [];
 
   @override
   void initState() {
@@ -40,9 +43,389 @@ class _EditState extends State<Edit> {
 
   getInfo() async {
     var info = await _dbHelper.queryAllRows("userInfo");
+    var wkr = await _dbHelper.queryAllRows("workerTags");
+    var clnt = await _dbHelper.queryAllRows("clientTags");
+
     setState(() {
       data = info;
+      workerTags = wkr;
+      clientTags = clnt;
     });
+  }
+
+  _clientTagsModal(context, token, workerTgs) {
+    TextEditingController _tagController = TextEditingController();
+    //var _pickedTags = workerTgs;
+    var _myTags = [...clientTags];
+    var _btnState = "notloading";
+    var _toDelete = [];
+    var _toAdd = [];
+
+    showModalBottomSheet(
+      backgroundColor: dBackgroundWhite,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
+        ),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (
+            BuildContext context,
+            StateSetter setState,
+          ) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 50.0,
+                          height: 4.0,
+                          margin: EdgeInsets.only(top: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: const Color(0xff8e8e90).withOpacity(0.3),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15.0),
+                    Text(
+                      "Add client tags",
+                      style: TextStyle(
+                        fontFamily: 'AR',
+                        color: Color(0xff262626),
+                        fontSize: 22.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      "Tags for the services you are looking for",
+                      style: TextStyle(
+                        fontFamily: 'SFNSR',
+                        color: Color(0xff8e8e90),
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    // TagsView(
+                    //   tags: _pickedTags.length <= 0 ? [] : _pickedTags,
+                    //   showMark: true,
+                    // ),
+                    // const SizedBox(height: 15.0),
+                    TagsView(
+                      tags: _myTags.length <= 0 ? [] : _myTags,
+                      showMark: true,
+                      token: token,
+                      toDelete: _toDelete,
+                    ),
+                    const SizedBox(height: 15.0),
+                    Container(
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: dGreyFaded,
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: CupertinoTextField(
+                        obscureText: false,
+                        controller: _tagController,
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        style: TextStyle(
+                          color: dBlack,
+                          fontFamily: 'SFNSR',
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                        ),
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _myTags.add({"tag": _tagController.text});
+                              _toAdd.add(_tagController.text);
+                              _tagController.text = "";
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 15.0,
+                              top: 5.0,
+                              bottom: 5.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: dBlueBackground,
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: Text(
+                              "Add",
+                              style: TextStyle(
+                                fontFamily: "AR",
+                                color: dWhitePure,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                            // Icon(
+                            //   CupertinoIcons.paperplane_fill,
+                            //   color: dWhitePure,
+                            //   size: 20.0,
+                            // ),
+                          ),
+                        ),
+                        maxLines: 1,
+                        placeholder: "painter",
+                        placeholderStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.6),
+                          fontFamily: 'SFNSR',
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        color: Colors.blueAccent,
+                        child: buttonStatus(_btnState, 'Update'),
+                        onPressed: () async {
+                          setState(() {
+                            _btnState = "loading";
+                          });
+
+                          for (var i = 0; i < _toDelete.length; i++) {
+                            var status = await deleteClientTags(
+                                _toDelete[i]['id'], token);
+
+                            if (status == false) {
+                              log("Failed to delete: ${_toDelete[i]['id']}");
+                            }
+                          }
+
+                          var status = await uploadClientTags(_toAdd, token);
+
+                          if (status == false) {
+                            log("Failed to delete: $_toAdd");
+                          }
+
+                          await populateData(token);
+                          await getInfo();
+
+                          setState((){
+                            _btnState = "notloading";
+                          });
+
+                          Navigator.pop(context);
+
+                          successModal(context, "Client tags updated successfully");
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 30.0),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  _workerTagsModal(context, token, workerTgs) {
+    TextEditingController _tagController = TextEditingController();
+    //var _pickedTags = workerTgs;
+    var _myTags = [...workerTags];
+    var _btnState = "notloading";
+    var _toDelete = [];
+    var _toAdd = [];
+
+    showModalBottomSheet(
+      backgroundColor: dBackgroundWhite,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
+        ),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (
+            BuildContext context,
+            StateSetter setState,
+          ) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 50.0,
+                          height: 4.0,
+                          margin: EdgeInsets.only(top: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: const Color(0xff8e8e90).withOpacity(0.3),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15.0),
+                    Text(
+                      "Add worker tags",
+                      style: TextStyle(
+                        fontFamily: 'AR',
+                        color: Color(0xff262626),
+                        fontSize: 22.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      "Tags for the services you offer",
+                      style: TextStyle(
+                        fontFamily: 'SFNSR',
+                        color: Color(0xff8e8e90),
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    // TagsView(
+                    //   tags: _pickedTags.length <= 0 ? [] : _pickedTags,
+                    //   showMark: true,
+                    // ),
+                    // const SizedBox(height: 15.0),
+                    TagsView(
+                      tags: _myTags.length <= 0 ? [] : _myTags,
+                      showMark: true,
+                      token: token,
+                      toDelete: _toDelete,
+                    ),
+                    const SizedBox(height: 15.0),
+                    Container(
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: dGreyFaded,
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: CupertinoTextField(
+                        obscureText: false,
+                        controller: _tagController,
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        style: TextStyle(
+                          color: dBlack,
+                          fontFamily: 'SFNSR',
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                        ),
+                        suffix: InkWell(
+                          onTap: () {
+                            print(_myTags);
+                            setState(() {
+                              _myTags.add({"tag": _tagController.text});
+                              _toAdd.add(_tagController.text);
+                              _tagController.text = "";
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 15.0,
+                              top: 5.0,
+                              bottom: 5.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: dBlueBackground,
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: Text(
+                              "Add",
+                              style: TextStyle(
+                                fontFamily: "AR",
+                                color: dWhitePure,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                            // Icon(
+                            //   CupertinoIcons.paperplane_fill,
+                            //   color: dWhitePure,
+                            //   size: 20.0,
+                            // ),
+                          ),
+                        ),
+                        maxLines: 1,
+                        placeholder: "painter",
+                        placeholderStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.6),
+                          fontFamily: 'SFNSR',
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        color: Colors.blueAccent,
+                        child: buttonStatus(_btnState, 'Update'),
+                        onPressed: () async {
+                          print(_myTags);
+                          print(_toDelete);
+
+                          setState(() {
+                            _btnState = "loading";
+                          });
+
+                          for (var i = 0; i < _toDelete.length; i++) {
+                            var status = await deleteWorkerTags(
+                                _toDelete[i]['id'], token);
+
+                            if (status == false) {
+                              log("Failed to delete: ${_toDelete[i]['id']}");
+                            }
+                          }
+
+                          var status = await uploadWorkerTags(_toAdd, token);
+
+                          if (status == false) {
+                            log("Failed to delete: $_toAdd");
+                          }
+
+                          await populateData(token);
+                          await getInfo();
+
+                          setState((){
+                            _btnState = "notloading";
+                          });
+
+                          Navigator.pop(context);
+
+                          successModal(context, "Worker tags updated successfully");
+                          
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 30.0),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   statusModal(context, token, isWorkr) {
@@ -159,7 +542,7 @@ class _EditState extends State<Edit> {
 
     showModalBottomSheet(
         backgroundColor: dBackgroundWhite,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(15.0),
           ),
@@ -185,7 +568,7 @@ class _EditState extends State<Edit> {
                         Container(
                           width: 50.0,
                           height: 4.0,
-                          margin: EdgeInsets.only(top: 10.0),
+                          margin: const EdgeInsets.only(top: 10.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50.0),
                             color: const Color(0xff8e8e90).withOpacity(0.3),
@@ -194,7 +577,7 @@ class _EditState extends State<Edit> {
                       ],
                     ),
                     const SizedBox(height: 15.0),
-                    Text(
+                    const Text(
                       "Edit Name",
                       style: TextStyle(
                         fontFamily: 'AR',
@@ -203,7 +586,7 @@ class _EditState extends State<Edit> {
                       ),
                     ),
                     const SizedBox(height: 8.0),
-                    Text(
+                    const Text(
                       "Change your first and last name",
                       style: TextStyle(
                         fontFamily: 'SFNSR',
@@ -255,8 +638,8 @@ class _EditState extends State<Edit> {
                             });
                           } else {
                             var data = {
-                              "fname": "${_fnameController.text.toLowerCase()}",
-                              "lname": "${_lnameController.text.toLowerCase()}"
+                              "fname": _fnameController.text.toLowerCase(),
+                              "lname": _lnameController.text.toLowerCase()
                             };
 
                             var updated = await updateUserInfo(data, token);
@@ -302,7 +685,7 @@ class _EditState extends State<Edit> {
 
     showModalBottomSheet(
         backgroundColor: dBackgroundWhite,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(15.0),
           ),
@@ -340,7 +723,7 @@ class _EditState extends State<Edit> {
                       const SizedBox(height: 15.0),
                       Text(
                         field,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'AR',
                           color: Color(0xff262626),
                           fontSize: 22.0,
@@ -349,7 +732,7 @@ class _EditState extends State<Edit> {
                       const SizedBox(height: 8.0),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'SFNSR',
                           color: Color(0xff8e8e90),
                           fontSize: 14.0,
@@ -439,7 +822,7 @@ class _EditState extends State<Edit> {
                                 }
 
                               case "Email":
-                                if (_myController.text.length == 0) {
+                                if (_myController.text.isEmpty) {
                                   return;
                                 }
                                 var estatus =
@@ -453,7 +836,7 @@ class _EditState extends State<Edit> {
                                   });
                                 } else {
                                   var data = {
-                                    "email": "${_myController.text}",
+                                    "email": _myController.text,
                                   };
 
                                   var updated =
@@ -477,12 +860,12 @@ class _EditState extends State<Edit> {
                                 }
 
                               case "Bio":
-                                if (_myController.text.length == 0) {
+                                if (_myController.text.isEmpty) {
                                   return;
                                 }
 
                                 var data = {
-                                  "bio": "${_myController.text}",
+                                  "bio": _myController.text,
                                 };
 
                                 var updated = await updateUserInfo(data, token);
@@ -521,7 +904,7 @@ class _EditState extends State<Edit> {
   }
 
   String capitalize(String s) {
-    if (s.length == 0) {
+    if (s.isEmpty) {
       return s;
     } else {
       return s[0].toUpperCase() + s.substring(1);
@@ -529,7 +912,7 @@ class _EditState extends State<Edit> {
   }
 
   calcType() {
-    if (data.length <= 0) {
+    if (data.isEmpty) {
       return "-";
     } else {
       if (data[0]['isWorker'] == 0) {
@@ -537,6 +920,44 @@ class _EditState extends State<Edit> {
       } else {
         return "Worker";
       }
+    }
+  }
+
+  calcWorkerService() {
+    if (data.isEmpty) {
+      return "-";
+    } else {
+      if (workerTags.isEmpty) {
+        return "None";
+      } else {
+        return "${workerTags[0]['tag']}...";
+      }
+    }
+  }
+
+  calcClientService() {
+    if (data.isEmpty) {
+      return "-";
+    } else {
+      if (clientTags.isEmpty) {
+        return "None";
+      } else {
+        return "${clientTags[0]['tag']}...";
+      }
+    }
+  }
+
+  _getTags(tags) async {
+    var newTags = [];
+
+    if (tags.length <= 0) {
+      return newTags;
+    } else {
+      for (var i = 0; i < tags.length; i++) {
+        newTags.add(tags[i]['tag']);
+      }
+
+      return newTags;
     }
   }
 
@@ -577,7 +998,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Username",
-                                value: data.length <= 0
+                                value: data.isEmpty
                                     ? "-"
                                     : "${capitalize(data[0]['fname'])} ${capitalize(data[0]['lname'])}",
                               ),
@@ -597,7 +1018,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Email",
-                                value: data.length <= 0
+                                value: data.isEmpty
                                     ? "-"
                                     : data[0]['email'].toLowerCase(),
                               ),
@@ -617,7 +1038,7 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Bio",
-                                value: data.length <= 0
+                                value: data.isEmpty
                                     ? "-"
                                     : capitalize(data[0]['bio']),
                               ),
@@ -637,9 +1058,8 @@ class _EditState extends State<Edit> {
                               },
                               child: InfoItem(
                                 title: "Phone number",
-                                value: data.length <= 0
-                                    ? "-"
-                                    : "+${data[0]['phone']}",
+                                value:
+                                    data.isEmpty ? "-" : "+${data[0]['phone']}",
                               ),
                             ),
                             MyDivider(),
@@ -654,6 +1074,34 @@ class _EditState extends State<Edit> {
                               child: InfoItem(
                                 title: "Account type",
                                 value: calcType(),
+                              ),
+                            ),
+                            MyDivider(),
+                            InkWell(
+                              onTap: () async {
+                                await _workerTagsModal(
+                                  context,
+                                  data[0]['token'],
+                                  workerTags,
+                                );
+                              },
+                              child: InfoItem(
+                                title: "Services you offer",
+                                value: calcWorkerService(),
+                              ),
+                            ),
+                            MyDivider(),
+                            InkWell(
+                              onTap: () async {
+                                await _clientTagsModal(
+                                  context,
+                                  data[0]['token'],
+                                  clientTags,
+                                );
+                              },
+                              child: InfoItem(
+                                title: "Services you are looking for",
+                                value: calcClientService(),
                               ),
                             ),
                           ],
@@ -698,7 +1146,7 @@ class InfoItem extends StatelessWidget {
                   fontSize: 12.0,
                 ),
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               Text(
                 value,
                 style: TextStyle(
@@ -760,7 +1208,7 @@ class EditItem extends StatelessWidget {
             ],
           ),
           trailing == true
-              ? Icon(
+              ? const Icon(
                   CupertinoIcons.chevron_right,
                   size: 20.0,
                   color: Color(0xff262626),

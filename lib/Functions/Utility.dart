@@ -14,7 +14,7 @@ buttonStatus(buttonState, text) {
       return Text(
         text,
         style: TextStyle(
-            color: dWhitePure, fontSize: 16.0, fontFamily: 'SFD-Bold'),
+            color: dWhitePure, fontSize: 16.0, fontFamily: 'AR'),
       );
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/widgets/Dashboard/Star.dart';
+import 'package:domestics/widgets/TagsView.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
@@ -142,41 +144,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      Wrap(
-                        spacing: 10.0,
-                        runSpacing: 10.0,
-                        direction: Axis.horizontal,
-                        children: [
-                          for (var i = 0; i < widget.tags.length; i++)
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 6.0,
-                                    bottom: 6.0,
-                                    left: 20.0,
-                                    right: 20.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xff8e8e90).withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      widget.tags[i],
-                                      style: TextStyle(
-                                        fontFamily: 'SFNSR',
-                                        color: Color(0xff262626),
-                                        fontSize: 14.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                        ],
-                      ),
+                      TagsView(tags: widget.tags),
                       const SizedBox(height: 20.0),
                       Container(
                         width: double.infinity,
@@ -415,3 +383,4 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
+
