@@ -17,7 +17,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   List posts = [
     {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
+      'tags': [{ "tag": "Thief" },{ "tag": "Hunter" },{ "tag": "Dealer" },],
       'fname': 'Levin Adams',
       'minutesAway': '2 min away',
       'stars': 4,
@@ -27,7 +27,7 @@ class _DashboardState extends State<Dashboard> {
           'https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjB0ZWFjaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
+      'tags': [{ "tag": "Thief" },{ "tag": "Hunter" },{ "tag": "Dealer" },],
       'fname': 'Lily Colt',
       'stars': 2,
       'minutesAway': '1 min away',
@@ -37,7 +37,7 @@ class _DashboardState extends State<Dashboard> {
           'https://images.unsplash.com/photo-1510832842230-87253f48d74f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFpbnRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
+      'tags': [{ "tag": "Thief" },{ "tag": "Hunter" },{ "tag": "Dealer" },],
       'fname': 'Sarah Payne',
       'stars': 1,
       'minutesAway': '1 min away',
@@ -47,7 +47,7 @@ class _DashboardState extends State<Dashboard> {
           'https://images.unsplash.com/photo-1534806391029-791d2695c38b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBiYWJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
+      'tags': [{ "tag": "Thief" },{ "tag": "Hunter" },{ "tag": "Dealer" },],
       'fname': 'Brad Philips',
       'stars': 4,
       'minutesAway': '1 min away',
@@ -57,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
           'https://images.unsplash.com/photo-1583954964358-1bd7215b6f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
+      'tags': [{ "tag": "Thief" },{ "tag": "Hunter" },{ "tag": "Dealer" },],
       'fname': 'Karl Gibson',
       'stars': 3,
       'minutesAway': '1 min away',
@@ -67,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
           'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
     },
     {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
+      'tags': [{ "tag": "Thief" },{ "tag": "Hunter" },{ "tag": "Dealer" },],
       'fname': 'Colleen',
       'stars': 4,
       'minutesAway': '1 min away',
@@ -108,7 +108,7 @@ class _DashboardState extends State<Dashboard> {
               actions: [
                 Padding(
                   padding: const EdgeInsets.only(
-                    top: 10.0,
+                    top: 0.0,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -128,7 +128,7 @@ class _DashboardState extends State<Dashboard> {
                 const SizedBox(width: 32.0),
                 Padding(
                   padding: const EdgeInsets.only(
-                    top: 10.0,
+                    top: 0.0,
                     right: 20.0,
                   ),
                   child: GestureDetector(
@@ -148,7 +148,7 @@ class _DashboardState extends State<Dashboard> {
               ],
               title: Padding(
                 padding: const EdgeInsets.only(
-                  top: 10.0,
+                  top: 0.0,
                   left: 5.0,
                 ),
                 child: Text(
@@ -180,7 +180,7 @@ class _DashboardState extends State<Dashboard> {
                     //   ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 15.0,
+                        top: 5.0,
                         left: 20.0,
                         right: 20.0,
                       ),

@@ -46,6 +46,20 @@ class DatabaseHelper {
         ''');
 
     await db.execute('''
+        CREATE TABLE workers (
+          _id INTEGER PRIMARY KEY,
+          prod_id TEXT NOT NULL,
+          fname TEXT NOT NULL,
+          lname TEXT NOT NULL,
+          bio TEXT NOT NULL,
+          isWorker BOOLEAN,
+          phone TEXT NOT NULL,
+          email TEXT NOT NULL,
+          imageUrl TEXT NOT NULL
+        )
+        ''');
+
+    await db.execute('''
         CREATE TABLE workerTags (
           _id INTEGER PRIMARY KEY,
           tag TEXT NOT NULL,

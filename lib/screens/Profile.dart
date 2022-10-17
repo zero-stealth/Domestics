@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 class Profile extends StatefulWidget {
   final String username;
   final String url;
-  final List<String> tags;
+  final tags;
   final String bio;
   final String minutesAway;
 
@@ -144,7 +144,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      TagsView(tags: widget.tags),
+                      TagsView(tags: widget.tags, showMark: false,),
                       const SizedBox(height: 20.0),
                       Container(
                         width: double.infinity,

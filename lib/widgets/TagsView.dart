@@ -38,7 +38,6 @@ class _TagsViewState extends State<TagsView> {
         for (var i = 0; i < widget.tags.length; i++)
           InkWell(
             onTap: () async {
-              
                 setState(() {
                   widget.toDelete?.add({ "id": widget.tags[i]['tag_id'] });
                   widget.tags.removeAt(i);
