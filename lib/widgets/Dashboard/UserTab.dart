@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class UserTab extends StatelessWidget {
   final String fname;
-  final List<String> tags;
+  final tags;
   final String url;
   final String bio;
   final String minutesAway;
@@ -80,7 +80,7 @@ class UserTab extends StatelessWidget {
                         ),
                         const SizedBox(height: 8.0),
                         Text(
-                          tags[0],
+                          tags[0]['tag'],
                           style: TextStyle(
                             fontFamily: 'SFNSR',
                             color: Color(0xff262626),

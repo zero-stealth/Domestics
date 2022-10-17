@@ -2,7 +2,7 @@ import 'package:domestics/screens/Profile.dart';
 import 'package:flutter/material.dart';
 
 class PopularCard extends StatelessWidget {
-  final List<String> tags;
+  final tags;
   final String url;
   final String fname;
   final String minutesAway;
@@ -79,7 +79,7 @@ class PopularCard extends StatelessWidget {
                           // ),
                           const SizedBox(width: 6.0),
                           Text(
-                            tags[0],
+                            tags[0]['tag'],
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12.0,
