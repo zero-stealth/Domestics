@@ -70,7 +70,7 @@ class _TagsViewState extends State<TagsView> {
                           style: TextStyle(
                             fontFamily: 'SFNSR',
                             color: Color(0xff262626),
-                            fontSize: 16.0,
+                            fontSize: 14.0,
                           ),
                         ),
                         SizedBox(width: 15.0),

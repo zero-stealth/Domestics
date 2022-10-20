@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:domestics/Functions/http_service.dart';
+import 'package:domestics/Functions/requests.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Dashboard.dart';
@@ -38,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (response.statusCode == 200) {
       await populateData(info[0]['token']);
+      await getWorkers();
       return Future.delayed(const Duration(seconds: 4), () {
         Navigator.push(
           context,

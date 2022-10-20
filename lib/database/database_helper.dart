@@ -52,9 +52,7 @@ class DatabaseHelper {
           fname TEXT NOT NULL,
           lname TEXT NOT NULL,
           bio TEXT NOT NULL,
-          isWorker BOOLEAN,
           phone TEXT NOT NULL,
-          email TEXT NOT NULL,
           imageUrl TEXT NOT NULL
         )
         ''');
@@ -108,6 +106,11 @@ class DatabaseHelper {
     Database? db = await instance.database;
     return Sqflite.firstIntValue(
         await db!.rawQuery('SELECT COUNT(*) FROM $mytable'));
+  }
+
+  deleteAll(table) async {
+    Database? db = await instance.database;
+    return await db!.rawDelete("DELETE FROM $table");
   }
 
   Future<int> update(Map<String, dynamic> row, mytable) async {

@@ -41,6 +41,21 @@ addClientTag(tag, tagId) async {
   return;
 }
 
+addWorkers(prodid, fname, lname, bio, phone, imageUrl) async {
+  await dbHelper.deleteAll("workers");
+  Map<String, dynamic> row = {
+    "prod_id": prodid,
+    "fname": fname,
+    "lname": lname,
+    "bio": bio,
+    "phone": phone,
+    "imageUrl": imageUrl,
+  };
+
+  await dbHelper.insert(row, "workers");
+  return;
+}
+
 addReview(reviewerId, message, starsCount, reviewOwnerId) async {
   Map<String, dynamic> row = {
     "reviewer_id": reviewerId,

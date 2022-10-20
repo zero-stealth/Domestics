@@ -274,10 +274,10 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(
                                       fontFamily: 'AR',
                                       color: Color(0xff262626),
-                                      fontSize: 16.0,
+                                      fontSize: 14.0,
                                     ),
                                   ),
-                                  const SizedBox(height: 6.0),
+                                  const SizedBox(height: 2.0),
                                   Text(
                                     'Very good services',
                                     overflow: TextOverflow.clip,
@@ -313,10 +313,10 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(
                                       fontFamily: 'AR',
                                       color: Color(0xff262626),
-                                      fontSize: 16.0,
+                                      fontSize: 14.0,
                                     ),
                                   ),
-                                  const SizedBox(height: 6.0),
+                                  const SizedBox(height: 2.0),
                                   Text(
                                     'I love what you do and appreciate your attention to detail',
                                     overflow: TextOverflow.clip,
@@ -352,10 +352,10 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(
                                       fontFamily: 'AR',
                                       color: Color(0xff262626),
-                                      fontSize: 16.0,
+                                      fontSize: 14.0,
                                     ),
                                   ),
-                                  const SizedBox(height: 6.0),
+                                  const SizedBox(height: 2.0),
                                   Text(
                                     'I love what you do and appreciate your attention to detail',
                                     overflow: TextOverflow.clip,

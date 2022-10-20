@@ -362,9 +362,7 @@ Future logoutAll(token) async {
 }
 
 Future uploadFeedback(token, message) async {
-  var data = {
-    "message": message
-  };
+  var data = {"message": message};
 
   var encoded = jsonEncode(data);
 
@@ -376,4 +374,50 @@ Future uploadFeedback(token, message) async {
     return false;
     // throw "Unable to create account";
   }
+}
+
+Future _getToken() async {
+  final dbHelper = DatabaseHelper.instance;
+  var user = await dbHelper.queryAllRows("userInfo");
+  return user[0]["token"];
+}
+
+Future getWorkers() async {
+  var token = await _getToken();
+  var res = await getRequest(token, "/users/workers");
+  if (res.statusCode == 200) {
+    final parsed = json.decode(res.body);
+    log("WORKERS $parsed");
+    for (var i = 0; i < parsed.length; i++) {
+      await addWorkers(
+        parsed[i]["_id"],
+        parsed[i]["fname"],
+        parsed[i]["lname"],
+        parsed[i]["bio"],
+        parsed[i]["phone"],
+        parsed[i]["imageUrl"],
+      );
+    }
+    return;
+  } else {
+    return;
+  }
+}
+
+Future getAllTags() async {
+  var token = await _getToken();
+  final dbHelper = DatabaseHelper.instance;
+  var res = await dbHelper.queryAllRows("workers");  
+  var tags = [];
+
+  for (var i = 0; i < res.length; i++) {
+    var workerInfo = await getRequest(token, "/users/worker?workerid=${res[i]['prod_id']}");
+    final parsed = json.decode(workerInfo.body);
+    tags.add({
+      "userid": parsed[0]["_id"],
+      "tags": parsed[0]['tagsWorker'],
+    });
+  }
+
+  return tags;
 }

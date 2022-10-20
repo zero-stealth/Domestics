@@ -5,6 +5,7 @@ class PopularCard extends StatelessWidget {
   final tags;
   final String url;
   final String fname;
+  final String lname;
   final String minutesAway;
   final String bio;
 
@@ -12,6 +13,7 @@ class PopularCard extends StatelessWidget {
     required this.tags,
     required this.url,
     required this.fname,
+    required this.lname,
     required this.minutesAway,
     required this.bio,
   });
@@ -96,7 +98,7 @@ class PopularCard extends StatelessWidget {
           ),
           const SizedBox(height: 15.0),
           Text(
-            fname,
+            "$fname $lname",
             style: TextStyle(
               fontFamily: 'AR',
               color: Color(0xff262626),
