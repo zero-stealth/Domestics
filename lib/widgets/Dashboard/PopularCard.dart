@@ -1,5 +1,11 @@
+import 'dart:developer';
+
+import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class PopularCard extends StatelessWidget {
   final tags;
@@ -21,7 +27,7 @@ class PopularCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -57,48 +63,91 @@ class PopularCard extends StatelessWidget {
               padding: EdgeInsets.all(15.0),
               child: Stack(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                        top: 6.0,
-                        bottom: 6.0,
-                        left: 12.0,
-                        right: 12.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xff278fe9),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Icon(
-                          //   CupertinoIcons.star_fill,
-                          //   size: 12.0,
-                          //   color: Color(0xff262626),
-                          // ),
-                          const SizedBox(width: 6.0),
-                          Text(
-                            tags[0]['tag'],
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.0,
-                              fontFamily: 'AR',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: Container(
+                  //     padding: const EdgeInsets.only(
+                  //       top: 6.0,
+                  //       bottom: 6.0,
+                  //       left: 6.0,
+                  //       right: 6.0,
+                  //     ),
+                  //     decoration: BoxDecoration(
+                  //       color: const Color(0xff278fe9),
+                  //       borderRadius: BorderRadius.circular(50.0),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         // Icon(
+                  //         //   CupertinoIcons.star_fill,
+                  //         //   size: 12.0,
+                  //         //   color: Color(0xff262626),
+                  //         // ),
+                  //         const SizedBox(width: 6.0),
+                  //         Text(
+                  //           tags[0]['tag'],
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: 12.0,
+                  //             fontFamily: 'AR',
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 15.0),
+          Container(
+            width: 230.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(
+                    top: 5.0,
+                    bottom: 5.0,
+                    left: 10.0,
+                    right: 10.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xff278fe9),
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  child: Text(
+                    capitalize(tags[0]['tag']),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: 'AR',
+                      color: Colors.white,
+                      fontSize: 10.0,
+                    ),
+                  ),
+                ),
+                RatingBar.builder(
+                  unratedColor: dGreyFadedPlus,
+                  initialRating: 4,
+                  itemSize: 14.0,
+                  itemCount: 5,
+                  itemBuilder: (context, _) => Icon(
+                    CupertinoIcons.star_fill,
+                    color: Color(0xff278fe9),
+                  ),
+                  onRatingUpdate: (rating){
+                    log("$rating");
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 9.0),
           Text(
-            "$fname $lname",
+            "${capitalize('$fname')} ${capitalize('$lname')}",
             style: TextStyle(
               fontFamily: 'AR',
               color: Color(0xff262626),

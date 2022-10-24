@@ -903,13 +903,7 @@ class _EditState extends State<Edit> {
         });
   }
 
-  String capitalize(String s) {
-    if (s.isEmpty) {
-      return s;
-    } else {
-      return s[0].toUpperCase() + s.substring(1);
-    }
-  }
+ 
 
   calcType() {
     if (data.isEmpty) {

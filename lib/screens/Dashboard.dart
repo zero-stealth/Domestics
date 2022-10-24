@@ -112,6 +112,8 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
     // stuff();
     _workers();
+    getWorkers();
+    _workers();
   }
 
   // stuff() async {
