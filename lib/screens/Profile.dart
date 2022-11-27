@@ -8,6 +8,7 @@ import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Profile extends StatefulWidget {
   final String username;
@@ -95,7 +96,7 @@ class _ProfileState extends State<Profile> {
                             width: MediaQuery.of(context).size.width - 40,
                             height: 200.0,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
+                              borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: NetworkImage(
@@ -230,147 +231,30 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      Text(
-                        'Reviews',
-                        style: TextStyle(
-                          fontFamily: 'AR',
-                          color: Color(0xff262626),
-                          fontSize: 14.0,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Reviews',
+                            style: TextStyle(
+                              fontFamily: 'AR',
+                              color: Color(0xff262626),
+                              fontSize: 14.0,
+                            ),
+                          ),
+                           Text(
+                            'Add a review',
+                            style: TextStyle(
+                              fontFamily: 'SFNSR',
+                              color: dBlueBackground,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 15.0),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: dBackgroundWhite,
-                          border: Border.all(
-                            color: dGreyFaded,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Star(),
-                                      const Star(),
-                                      const Star(),
-                                      const Star(),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
-                                    'Mullah',
-                                    style: TextStyle(
-                                      fontFamily: 'AR',
-                                      color: Color(0xff262626),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2.0),
-                                  Text(
-                                    'Very good services',
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                      fontFamily: 'SFNSR',
-                                      color: Color(0xff262626),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            MyDivider(),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Star(),
-                                      const Star(),
-                                      const Star(),
-                                      const Star(),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
-                                    'Pauline ',
-                                    style: TextStyle(
-                                      fontFamily: 'AR',
-                                      color: Color(0xff262626),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2.0),
-                                  Text(
-                                    'I love what you do and appreciate your attention to detail',
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                      fontFamily: 'SFNSR',
-                                      color: Color(0xff262626),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            MyDivider(),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Star(),
-                                      const Star(),
-                                      const Star(),
-                                      const Star(),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
-                                    'Pauline ',
-                                    style: TextStyle(
-                                      fontFamily: 'AR',
-                                      color: Color(0xff262626),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2.0),
-                                  Text(
-                                    'I love what you do and appreciate your attention to detail',
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                      fontFamily: 'SFNSR',
-                                      color: Color(0xff262626),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      ReviewsContainer(),
                       const SizedBox(height: 80.0),
                     ],
                   ),
@@ -380,6 +264,109 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ReviewsContainer extends StatelessWidget {
+  const ReviewsContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: dBackgroundWhite,
+        border: Border.all(
+          color: dGreyFaded,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Review(
+              username: "Piko",
+              review: "Hated your services",
+              ratingCount: 2,
+            ),
+          ),
+          MyDivider(),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Review(
+              username: "Piko",
+              ratingCount: 2,
+              review: "Hated your services",
+            ),
+          ),
+          MyDivider(),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Review(
+              username: "Piko",
+              ratingCount: 4,
+              review: "Hated your services",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Review extends StatelessWidget {
+  final String username;
+  final String review;
+  final int ratingCount;
+
+  Review({ required this.username, required this.review, required this.ratingCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RatingBar.builder(
+          unratedColor: dGreyFadedPlus,
+          initialRating: 4, 
+          itemSize: 14.0,
+          itemCount: ratingCount,
+          itemBuilder: (context, _) => Icon(
+            CupertinoIcons.star_fill,
+            color: Color(0xff278fe9),
+          ),
+          onRatingUpdate: (rating){
+            log("$rating");
+          },
+        ),
+        const SizedBox(height: 8.0),
+        Text(
+          username,
+          style: TextStyle(
+            fontFamily: 'AR',
+            color: Color(0xff262626),
+            fontSize: 14.0,
+          ),
+        ),
+        const SizedBox(height: 2.0),
+        Text(
+          review,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontFamily: 'SFNSR',
+            color: Color(0xff262626),
+            fontSize: 14.0,
+          ),
+        ),
+      ],
     );
   }
 }

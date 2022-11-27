@@ -5,7 +5,7 @@ import 'package:domestics/data/UserData.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:http/http.dart' as http;
 
-var baseurl = "http://192.168.0.19:3000";
+var baseurl = "http://192.168.0.22:3000";
 
 Future createAccount(
     fname, lname, bio, phone, password, email, imageUrl) async {
@@ -181,12 +181,12 @@ Future checkemail(email) async {
   }
 }
 
-Future checkphone(phone) async {
+Future checkphone(phone, token) async {
   var data = {"phone": phone};
 
   var encoded = jsonEncode(data);
 
-  var response = await noAuthPostRequest(encoded, '/users/checkphone');
+  var response = await postRequest(encoded, token, '/users/checkphone');
 
   if (response.statusCode == 200) {
     return true;

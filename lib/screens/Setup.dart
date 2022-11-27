@@ -140,7 +140,7 @@ class _SetupState extends State<Setup> {
                           "phone": myPhone,
                         };
 
-                        var valid = await checkphone(myPhone);
+                        var valid = await checkphone(myPhone, info[0]['token']);
 
                         if (valid == false) {
                           return setState(() {
