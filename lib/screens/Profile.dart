@@ -31,10 +31,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   showTags() {
-    log("LENGTH ${widget.tags.length}");
+    // log("LENGTH ${widget.tags.length}");
 
     for (var i = 0; i < widget.tags.length; i++) {
-      log(widget.tags[i]);
+      // log(widget.tags[i]);
       return Container(
         margin: EdgeInsets.only(
           right: 10.0,
@@ -51,7 +51,7 @@ class _ProfileState extends State<Profile> {
         ),
         child: Center(
           child: Text(
-            widget.tags[i],
+            widget.tags[i]['tag'],
             style: TextStyle(
               fontFamily: 'SFNSR',
               color: Color(0xff262626),
@@ -145,7 +145,10 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      TagsView(tags: widget.tags, showMark: false,),
+                      TagsView(
+                        tags: widget.tags,
+                        showMark: false,
+                      ),
                       const SizedBox(height: 20.0),
                       Container(
                         width: double.infinity,
@@ -243,7 +246,7 @@ class _ProfileState extends State<Profile> {
                               fontSize: 14.0,
                             ),
                           ),
-                           Text(
+                          Text(
                             'Add a review',
                             style: TextStyle(
                               fontFamily: 'SFNSR',
@@ -325,7 +328,10 @@ class Review extends StatelessWidget {
   final String review;
   final int ratingCount;
 
-  Review({ required this.username, required this.review, required this.ratingCount});
+  Review(
+      {required this.username,
+      required this.review,
+      required this.ratingCount});
 
   @override
   Widget build(BuildContext context) {
@@ -335,14 +341,14 @@ class Review extends StatelessWidget {
       children: [
         RatingBar.builder(
           unratedColor: dGreyFadedPlus,
-          initialRating: 4, 
+          initialRating: 4,
           itemSize: 14.0,
           itemCount: ratingCount,
           itemBuilder: (context, _) => Icon(
             CupertinoIcons.star_fill,
             color: Color(0xff278fe9),
           ),
-          onRatingUpdate: (rating){
+          onRatingUpdate: (rating) {
             log("$rating");
           },
         ),
@@ -370,4 +376,3 @@ class Review extends StatelessWidget {
     );
   }
 }
-

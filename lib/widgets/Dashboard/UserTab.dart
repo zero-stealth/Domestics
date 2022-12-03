@@ -1,8 +1,10 @@
+import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/screens/Profile.dart';
 import 'package:flutter/material.dart';
 
 class UserTab extends StatelessWidget {
   final String fname;
+  final String lname;
   final tags;
   final String url;
   final String bio;
@@ -10,6 +12,7 @@ class UserTab extends StatelessWidget {
 
   UserTab({
     required this.fname,
+    required this.lname,
     required this.tags,
     required this.url,
     required this.bio,
@@ -24,7 +27,7 @@ class UserTab extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Profile(
-              username: fname,
+              username: "${capitalize(fname)} ${capitalize(lname)}",
               tags: tags,
               url: url,
               minutesAway: minutesAway,
@@ -37,11 +40,7 @@ class UserTab extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-              left: 20.0,
-              right: 20.0,
-              top: 15.0,
-              bottom: 15.0
-            ),
+                left: 20.0, right: 20.0, top: 15.0, bottom: 15.0),
             padding: EdgeInsets.all(0.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
@@ -71,7 +70,7 @@ class UserTab extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          fname,
+                          "${capitalize('$fname')} ${capitalize('$lname')}",
                           style: TextStyle(
                             fontFamily: 'AR',
                             color: Color(0xff262626),

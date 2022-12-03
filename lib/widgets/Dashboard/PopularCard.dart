@@ -32,7 +32,7 @@ class PopularCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Profile(
-              username: fname,
+              username: "${capitalize(fname)} ${capitalize(lname)}",
               tags: tags,
               url: url,
               minutesAway: minutesAway,
@@ -45,8 +45,8 @@ class PopularCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(
-              right: 20.0,
+            margin: const EdgeInsets.only(
+              left: 20.0,
             ),
             width: 230.0,
             height: 150.0,
@@ -60,7 +60,7 @@ class PopularCard extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               child: Stack(
                 children: [
                   // Align(
@@ -104,6 +104,9 @@ class PopularCard extends StatelessWidget {
           ),
           const SizedBox(height: 15.0),
           Container(
+            padding: EdgeInsets.only(
+              left: 20.0,
+            ),
             width: 230.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,7 +141,7 @@ class PopularCard extends StatelessWidget {
                     CupertinoIcons.star_fill,
                     color: Color(0xff278fe9),
                   ),
-                  onRatingUpdate: (rating){
+                  onRatingUpdate: (rating) {
                     log("$rating");
                   },
                 ),
@@ -146,21 +149,32 @@ class PopularCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 9.0),
-          Text(
-            "${capitalize('$fname')} ${capitalize('$lname')}",
-            style: TextStyle(
-              fontFamily: 'AR',
-              color: Color(0xff262626),
-              fontSize: 16.0,
+          Container(
+            padding: EdgeInsets.only(
+              left: 20.0,
             ),
-          ),
-          const SizedBox(height: 5.0),
-          Text(
-            minutesAway,
-            style: TextStyle(
-              fontFamily: 'SFNSR',
-              color: Color(0xff262626),
-              fontSize: 12.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${capitalize('$fname')} ${capitalize('$lname')}",
+                  style: TextStyle(
+                    fontFamily: 'AR',
+                    color: Color(0xff262626),
+                    fontSize: 16.0,
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Text(
+                  minutesAway,
+                  style: TextStyle(
+                    fontFamily: 'SFNSR',
+                    color: Color(0xff262626),
+                    fontSize: 12.0,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

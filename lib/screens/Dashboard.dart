@@ -10,6 +10,10 @@ import 'package:domestics/widgets/Dashboard/UserTab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import '../controllers/workers_controller.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -17,6 +21,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final controller = Get.put(Controller());
+
   final _dbHelper = DatabaseHelper.instance;
   List posts = [
     {
@@ -111,9 +117,9 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     // stuff();
-    _workers();
     getWorkers();
     _workers();
+    // _workers();
   }
 
   // stuff() async {
@@ -130,20 +136,39 @@ class _DashboardState extends State<Dashboard> {
   }
 
   _popular() {
-    if (_allWorkers.length <= 0 || _tags.length <= 0) {
-      log("TAGS $_tags");
+    if (controller.workers.isEmpty) {
       return Text("nothing");
     } else {
-      for (var i = 0; i < _allWorkers.length; i++) {
-        return PopularCard(
-          tags: _tags[i]["tags"],
-          url: _allWorkers[i]["imageUrl"],
-          fname: _allWorkers[i]["fname"],
-          lname: _allWorkers[i]["lname"],
-          minutesAway: "2 mins away",
-          bio: _allWorkers[i]["bio"],
-        );
-      }
+      // for (var i = 0; i < controller.workers.length; i++) {
+      //   return PopularCard(
+      //     tags: controller.workers[i]['tags'][0],
+      //     url: controller.workers[i]['imageUrl'],
+      //     fname: controller.workers[i]['fname'],
+      //     lname: controller.workers[i]['lname'],
+      //     minutesAway: "2 mins away",
+      //     bio: controller.workers[i]['bio'],
+      //   );
+      // }
+
+      return Container(
+        // padding: EdgeInsets.only(left: 20.0, right: 20.0),
+        height: 240.0,
+        child: ListView.builder(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: controller.workers.length,
+            itemBuilder: (_, index) {
+              return PopularCard(
+                tags: controller.workers[index]['tags'],
+                url: controller.workers[index]['imageUrl'],
+                fname: controller.workers[index]['fname'],
+                lname: controller.workers[index]['lname'],
+                minutesAway: "2 mins away",
+                bio: controller.workers[index]['bio'],
+              );
+            }),
+      );
     }
   }
 
@@ -198,6 +223,8 @@ class _DashboardState extends State<Dashboard> {
                           context,
                           MaterialPageRoute(builder: (context) => Settings()),
                         );
+
+                        // Get.to(Settings());
                       },
                       child: Icon(
                         CupertinoIcons.settings_solid,
@@ -266,19 +293,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       const SizedBox(height: 26.0),
-                      SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          right: 20.0,
-                        ),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            _popular(),
-                          ],
-                        ),
-                      ),
+                      _popular(),
                       SizedBox(height: 30.0),
                       Padding(
                         padding: const EdgeInsets.only(
@@ -319,13 +334,14 @@ class _DashboardState extends State<Dashboard> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            for (var i in posts)
+                            for (var i in controller.workers)
                               UserTab(
                                 fname: i['fname'],
+                                lname: i['lname'],
                                 tags: i['tags'],
-                                url: i['url'],
+                                url: i['imageUrl'],
                                 bio: i['bio'],
-                                minutesAway: i['minutesAway'],
+                                minutesAway: "2",
                               ),
                           ],
                         ),

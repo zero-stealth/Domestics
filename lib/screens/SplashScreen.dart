@@ -7,7 +7,10 @@ import 'package:domestics/screens/Dashboard.dart';
 import 'package:domestics/screens/Selections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../controllers/workers_controller.dart';
 import 'Login.dart';
 
 class SplashScreen extends StatefulWidget {

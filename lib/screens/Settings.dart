@@ -6,6 +6,8 @@ import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../Functions/http_service.dart';
+
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -30,6 +32,7 @@ class _SettingsState extends State<Settings> {
     // TODO: implement initState
     super.initState();
     getInfo();
+    getWorkers();
   }
 
   @override

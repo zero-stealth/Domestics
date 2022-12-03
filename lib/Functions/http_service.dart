@@ -3,7 +3,14 @@ import 'dart:developer';
 import 'package:domestics/Functions/requests.dart';
 import 'package:domestics/data/UserData.dart';
 import 'package:domestics/database/database_helper.dart';
+import 'package:domestics/models/tags_model.dart';
+import 'package:domestics/models/worker_model.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:ui';
+
+import '../controllers/workers_controller.dart';
 
 var baseurl = "http://192.168.0.22:3000";
 
@@ -383,6 +390,8 @@ Future _getToken() async {
 }
 
 Future getWorkers() async {
+  final controller = Get.put(Controller());
+  controller.deleteWorkers();
   var token = await _getToken();
   var res = await getRequest(token, "/users/workers");
   if (res.statusCode == 200) {
@@ -397,6 +406,25 @@ Future getWorkers() async {
         parsed[i]["phone"],
         parsed[i]["imageUrl"],
       );
+
+      // var data = WorkerModel(
+      //   prod_id: parsed[i]['_id'],
+      //   fname: parsed[i]["fname"],
+      //   lname: parsed[i]["lname"],
+      //   bio: parsed[i]["bio"],
+      //   phone: parsed[i]["phone"],
+      //   imageUrl: parsed[i]["imageUrl"],
+      // );
+
+      controller.addWorker({
+        "prod_id": parsed[i]['_id'],
+        "fname": parsed[i]['fname'],
+        "lname": parsed[i]['lname'],
+        "bio": parsed[i]['bio'],
+        "phone": parsed[i]['phone'],
+        "imageUrl": parsed[i]['imageUrl'],
+        "tags": parsed[i]['tagsWorker'],
+      });
     }
     return;
   } else {
@@ -407,16 +435,22 @@ Future getWorkers() async {
 Future getAllTags() async {
   var token = await _getToken();
   final dbHelper = DatabaseHelper.instance;
-  var res = await dbHelper.queryAllRows("workers");  
+  var res = await dbHelper.queryAllRows("workers");
   var tags = [];
 
   for (var i = 0; i < res.length; i++) {
-    var workerInfo = await getRequest(token, "/users/worker?workerid=${res[i]['prod_id']}");
+    var workerInfo =
+        await getRequest(token, "/users/worker?workerid=${res[i]['prod_id']}");
     final parsed = json.decode(workerInfo.body);
     tags.add({
       "userid": parsed[0]["_id"],
       "tags": parsed[0]['tagsWorker'],
     });
+
+    // var data =
+    //     TagsModel(userid: parsed[0]['_id'], tags: parsed[0]['tagsWorker']);
+
+    // context.read<WorkerProvider>().addTags(data);
   }
 
   return tags;

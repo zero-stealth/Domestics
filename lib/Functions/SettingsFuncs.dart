@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 
 //
 
-
 feedbackModal(context, token) {
   TextEditingController _messageController = TextEditingController();
 
@@ -599,7 +598,8 @@ referredModal(context, refferals) {
   List clients = [
     {
       'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
-      'fname': 'Levin Adams',
+      'fname': 'Levin',
+      'lname': "Adams",
       'minutesAway': '2 min away',
       'stars': 4,
       'bio':
@@ -609,47 +609,8 @@ referredModal(context, refferals) {
     },
     {
       'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
-      'fname': 'Lily Colt',
-      'stars': 2,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a painter in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1510832842230-87253f48d74f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFpbnRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
-      'fname': 'Sarah Payne',
-      'stars': 1,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a baby sitter and pet sitter in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1534806391029-791d2695c38b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBiYWJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
-      'fname': 'Brad Philips',
-      'stars': 4,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a mechanic in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1583954964358-1bd7215b6f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
-      'fname': 'Karl Gibson',
-      'stars': 3,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a electrician in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': ['Thief', 'Preacher', 'Tutor', 'Teacher'],
       'fname': 'Colleen',
+      'lname': "Adams",
       'stars': 4,
       'minutesAway': '1 min away',
       'bio':
@@ -749,6 +710,7 @@ referredModal(context, refferals) {
                         for (var i in clients)
                           UserTab(
                             fname: i['fname'],
+                            lname: i['lname'],
                             tags: i['tag'],
                             url: i['url'],
                             bio: i['bio'],
