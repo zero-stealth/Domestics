@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class UserTab extends StatelessWidget {
   final String fname;
@@ -9,6 +14,7 @@ class UserTab extends StatelessWidget {
   final String url;
   final String bio;
   final String minutesAway;
+  final double starsCount;
 
   UserTab({
     required this.fname,
@@ -17,6 +23,7 @@ class UserTab extends StatelessWidget {
     required this.url,
     required this.bio,
     required this.minutesAway,
+    required this.starsCount,
   });
 
   @override
@@ -32,6 +39,7 @@ class UserTab extends StatelessWidget {
               url: url,
               minutesAway: minutesAway,
               bio: bio,
+              starsCount: starsCount,
             ),
           ),
         );
@@ -69,20 +77,43 @@ class UserTab extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "${capitalize('$fname')} ${capitalize('$lname')}",
-                          style: TextStyle(
-                            fontFamily: 'AR',
-                            color: Color(0xff262626),
-                            fontSize: 16.0,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 190,
+                              child: Text(
+                                "${capitalize('$fname')} ${capitalize('$lname')}",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: 'AR',
+                                  color: Color(0xff262626),
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                            RatingBar.builder(
+                              unratedColor: dGreyFadedPlus,
+                              initialRating: starsCount,
+                              itemSize: 14.0,
+                              itemCount: 5,
+                              updateOnDrag: false,
+                              itemBuilder: (context, _) => Icon(
+                                CupertinoIcons.star_fill,
+                                color: Color(0xff278fe9),
+                              ),
+                              onRatingUpdate: (rating) {
+                                log("$rating");
+                              },
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8.0),
+                        const SizedBox(height: 5.0),
                         Text(
                           tags[0]['tag'],
                           style: TextStyle(
                             fontFamily: 'SFNSR',
-                            color: Color(0xff262626),
+                            color: dGrey,
                             fontSize: 14.0,
                           ),
                         ),

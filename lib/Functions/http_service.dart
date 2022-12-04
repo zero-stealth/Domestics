@@ -416,6 +416,16 @@ Future getWorkers() async {
       //   imageUrl: parsed[i]["imageUrl"],
       // );
 
+      int starsCount = 0;
+
+      if (parsed[i]['reviews'].length > 0) {
+        for (var n = 0; n < parsed[i]['reviews'].length; n++) {
+          log("RAN $n");
+          starsCount =
+              starsCount + int.parse(parsed[i]['reviews'][n]['starsCount']);
+        }
+      }
+
       controller.addWorker({
         "prod_id": parsed[i]['_id'],
         "fname": parsed[i]['fname'],
@@ -424,6 +434,9 @@ Future getWorkers() async {
         "phone": parsed[i]['phone'],
         "imageUrl": parsed[i]['imageUrl'],
         "tags": parsed[i]['tagsWorker'],
+        "starsCount": starsCount == 0
+            ? starsCount.toDouble()
+            : starsCount / parsed[i]['reviews'].length
       });
     }
     return;

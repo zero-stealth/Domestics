@@ -14,6 +14,7 @@ class PopularCard extends StatelessWidget {
   final String lname;
   final String minutesAway;
   final String bio;
+  final double starsCount;
 
   PopularCard({
     required this.tags,
@@ -22,6 +23,7 @@ class PopularCard extends StatelessWidget {
     required this.lname,
     required this.minutesAway,
     required this.bio,
+    required this.starsCount,
   });
 
   @override
@@ -37,6 +39,7 @@ class PopularCard extends StatelessWidget {
               url: url,
               minutesAway: minutesAway,
               bio: bio,
+              starsCount: starsCount,
             ),
           ),
         );
@@ -47,6 +50,7 @@ class PopularCard extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(
               left: 20.0,
+              right: 10.0,
             ),
             width: 230.0,
             height: 150.0,
@@ -134,9 +138,11 @@ class PopularCard extends StatelessWidget {
                 ),
                 RatingBar.builder(
                   unratedColor: dGreyFadedPlus,
-                  initialRating: 4,
+                  initialRating: starsCount,
                   itemSize: 14.0,
                   itemCount: 5,
+                  updateOnDrag: false,
+                  ignoreGestures: true,
                   itemBuilder: (context, _) => Icon(
                     CupertinoIcons.star_fill,
                     color: Color(0xff278fe9),

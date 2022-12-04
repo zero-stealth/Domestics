@@ -16,6 +16,7 @@ class Profile extends StatefulWidget {
   final tags;
   final String bio;
   final String minutesAway;
+  final double starsCount;
 
   Profile({
     required this.username,
@@ -23,6 +24,7 @@ class Profile extends StatefulWidget {
     required this.tags,
     required this.bio,
     required this.minutesAway,
+    required this.starsCount,
   });
 
   @override
@@ -73,7 +75,7 @@ class _ProfileState extends State<Profile> {
           physics: const BouncingScrollPhysics(),
           slivers: [
             TopControl(
-              name: "Dashboard",
+              name: "Profile",
               icon: CupertinoIcons.chevron_back,
               backgroundColor: dBackgroundWhite,
             ),
@@ -108,14 +110,19 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                       const SizedBox(height: 20.0),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Star(),
-                          const Star(),
-                          const Star(),
-                          const Star(),
-                        ],
+                      RatingBar.builder(
+                        unratedColor: dGreyFadedPlus,
+                        initialRating: widget.starsCount,
+                        itemSize: 14.0,
+                        itemCount: 5,
+                        updateOnDrag: false,
+                        itemBuilder: (context, _) => Icon(
+                          CupertinoIcons.star_fill,
+                          color: Color(0xff278fe9),
+                        ),
+                        onRatingUpdate: (rating) {
+                          log("$rating");
+                        },
                       ),
                       const SizedBox(height: 10.0),
                       Text(

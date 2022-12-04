@@ -22,6 +22,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final controller = Get.put(Controller());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
 
   final _dbHelper = DatabaseHelper.instance;
   List posts = [
@@ -117,7 +119,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     // stuff();
-    getWorkers();
+    // getWorkers();
     _workers();
     // _workers();
   }
@@ -133,6 +135,12 @@ class _DashboardState extends State<Dashboard> {
       _allWorkers = workers;
       _tags = workertags;
     });
+  }
+
+  Future<Null> _refresh() async {
+    log("Shit happened");
+    return await getWorkers();
+    // return setState(() => {});
   }
 
   _popular() {
@@ -166,6 +174,7 @@ class _DashboardState extends State<Dashboard> {
                 lname: controller.workers[index]['lname'],
                 minutesAway: "2 mins away",
                 bio: controller.workers[index]['bio'],
+                starsCount: controller.workers[index]['starsCount'],
               );
             }),
       );
@@ -179,226 +188,229 @@ class _DashboardState extends State<Dashboard> {
       child: Scaffold(
         // backgroundColor: const Color(0xffefefef),
         backgroundColor: dBackgroundWhite,
-        body: Stack(children: [
-          CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: dBackgroundWhite,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
-                elevation: 0.0,
-                centerTitle: false,
-                automaticallyImplyLeading: false,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 0.0,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Notifications()),
-                        );
-                      },
-                      child: Icon(
-                        CupertinoIcons.bell,
-                        color: dBlack,
-                        size: 25.0,
+        body: Stack(
+          children: [
+            CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: dBackgroundWhite,
+                    statusBarIconBrightness: Brightness.dark,
+                  ),
+                  elevation: 0.0,
+                  centerTitle: false,
+                  automaticallyImplyLeading: false,
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 0.0,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Notifications()),
+                          );
+                        },
+                        child: Icon(
+                          CupertinoIcons.bell,
+                          color: dBlack,
+                          size: 25.0,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 32.0),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 0.0,
-                      right: 20.0,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Settings()),
-                        );
+                    const SizedBox(width: 32.0),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 0.0,
+                        right: 20.0,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Settings()),
+                          );
 
-                        // Get.to(Settings());
-                      },
-                      child: Icon(
-                        CupertinoIcons.settings_solid,
+                          // Get.to(Settings());
+                        },
+                        child: Icon(
+                          CupertinoIcons.settings_solid,
+                          color: dBlack,
+                          size: 25.0,
+                        ),
+                      ),
+                    )
+                  ],
+                  title: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 0.0,
+                      left: 5.0,
+                    ),
+                    child: Text(
+                      'Domestics',
+                      style: TextStyle(
+                        fontFamily: 'AR',
                         color: dBlack,
-                        size: 25.0,
+                        fontSize: 20.0,
                       ),
                     ),
-                  )
-                ],
-                title: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 0.0,
-                    left: 5.0,
                   ),
-                  child: Text(
-                    'Domestics',
-                    style: TextStyle(
-                      fontFamily: 'AR',
-                      color: dBlack,
-                      fontSize: 20.0,
-                    ),
-                  ),
+                  backgroundColor: dBackgroundWhite,
+                  // expandedHeight: 100.0,
+                  floating: true,
+                  pinned: false,
                 ),
-                backgroundColor: dBackgroundWhite,
-                // expandedHeight: 100.0,
-                floating: true,
-                pinned: false,
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // for (var i in posts)
-                      //   DashboardItem(
-                      //     tag: i['tag'],
-                      //     fname: i['fname'],
-                      //     minutesAway: i['minutesAway'],
-                      //     url: i['url'],
-                      //     stars: i['stars']
-                      //   ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 5.0,
-                          left: 20.0,
-                          right: 20.0,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Popular Nearby',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontFamily: 'AR',
-                                color: dBlack,
-                                fontSize: 14.0,
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // for (var i in posts)
+                        //   DashboardItem(
+                        //     tag: i['tag'],
+                        //     fname: i['fname'],
+                        //     minutesAway: i['minutesAway'],
+                        //     url: i['url'],
+                        //     stars: i['stars']
+                        //   ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 5.0,
+                            left: 20.0,
+                            right: 20.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Popular Nearby',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontFamily: 'AR',
+                                  color: dBlack,
+                                  fontSize: 14.0,
+                                ),
                               ),
-                            ),
-                            // Icon(
-                            //   CupertinoIcons.arrow_right,
-                            //   size: 20.0,
-                            //   color: dBlack,
-                            // ),
-                          ],
+                              // Icon(
+                              //   CupertinoIcons.arrow_right,
+                              //   size: 20.0,
+                              //   color: dBlack,
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 26.0),
-                      _popular(),
-                      SizedBox(height: 30.0),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          right: 20.0,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Recommended',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontFamily: 'AR',
-                                color: dBlack,
-                                fontSize: 14.0,
+                        const SizedBox(height: 20.0),
+                        _popular(),
+                        SizedBox(height: 30.0),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Recommended',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontFamily: 'AR',
+                                  color: dBlack,
+                                  fontSize: 14.0,
+                                ),
                               ),
-                            ),
-                            // Icon(
-                            //   CupertinoIcons.arrow_right,
-                            //   size: 20.0,
-                            //   color: dBlack,
-                            // ),
-                          ],
+                              // Icon(
+                              //   CupertinoIcons.arrow_right,
+                              //   size: 20.0,
+                              //   color: dBlack,
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 0.0),
-                      Container(
-                        margin: const EdgeInsets.all(0.0),
-                        padding: const EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
+                        const SizedBox(height: 0.0),
+                        Container(
+                          margin: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.only(
+                            top: 5.0,
+                            bottom: 10.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: dBackgroundWhite,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (var i in controller.workers)
+                                UserTab(
+                                  fname: i['fname'],
+                                  lname: i['lname'],
+                                  tags: i['tags'],
+                                  url: i['imageUrl'],
+                                  bio: i['bio'],
+                                  minutesAway: "2",
+                                  starsCount: i['starsCount'],
+                                ),
+                            ],
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: dBackgroundWhite,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (var i in controller.workers)
-                              UserTab(
-                                fname: i['fname'],
-                                lname: i['lname'],
-                                tags: i['tags'],
-                                url: i['imageUrl'],
-                                bio: i['bio'],
-                                minutesAway: "2",
-                              ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 50.0),
-                    ],
-                  ),
-                ]),
-              ),
-            ],
-          ),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child: ClipRRect(
-          //     child: BackdropFilter(
-          //       filter: ImageFilter.blur(
-          //         sigmaX: 3,
-          //         sigmaY: 3,
-          //       ),
-          //       child: Container(
-          //         padding: const EdgeInsets.only(
-          //           top: 12.0,
-          //           bottom: 12.0,
-          //           left: 30.0,
-          //           right: 30.0,
-          //         ),
-          //         width: double.infinity,
-          //         decoration: BoxDecoration(
-          //           border: Border(
-          //             top: BorderSide(
-          //               width: 1,
-          //               color: Color(0xff8e8e90).withOpacity(0.1),
-          //             ),
-          //           ),
-          //           gradient: LinearGradient(
-          //             colors: [
-          //               dBackgroundWhite.withOpacity(0.9),
-          //               dBackgroundWhite.withOpacity(0.9),
-          //             ],
-          //             begin: AlignmentDirectional.topStart,
-          //             end: AlignmentDirectional.bottomEnd,
-          //           ),
-          //         ),
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           children: [
-          //             Icon(CupertinoIcons.bag_fill, color: dBlueBackground, size: 26.0),
-          //             Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
-          //             Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
-          //             Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ]),
+                        SizedBox(height: 50.0),
+                      ],
+                    ),
+                  ]),
+                ),
+              ],
+            ),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: ClipRRect(
+            //     child: BackdropFilter(
+            //       filter: ImageFilter.blur(
+            //         sigmaX: 3,
+            //         sigmaY: 3,
+            //       ),
+            //       child: Container(
+            //         padding: const EdgeInsets.only(
+            //           top: 12.0,
+            //           bottom: 12.0,
+            //           left: 30.0,
+            //           right: 30.0,
+            //         ),
+            //         width: double.infinity,
+            //         decoration: BoxDecoration(
+            //           border: Border(
+            //             top: BorderSide(
+            //               width: 1,
+            //               color: Color(0xff8e8e90).withOpacity(0.1),
+            //             ),
+            //           ),
+            //           gradient: LinearGradient(
+            //             colors: [
+            //               dBackgroundWhite.withOpacity(0.9),
+            //               dBackgroundWhite.withOpacity(0.9),
+            //             ],
+            //             begin: AlignmentDirectional.topStart,
+            //             end: AlignmentDirectional.bottomEnd,
+            //           ),
+            //         ),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Icon(CupertinoIcons.bag_fill, color: dBlueBackground, size: 26.0),
+            //             Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
+            //             Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
+            //             Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
