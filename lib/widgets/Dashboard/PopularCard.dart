@@ -15,6 +15,7 @@ class PopularCard extends StatelessWidget {
   final String minutesAway;
   final String bio;
   final double starsCount;
+  final reviews;
 
   PopularCard({
     required this.tags,
@@ -24,6 +25,7 @@ class PopularCard extends StatelessWidget {
     required this.minutesAway,
     required this.bio,
     required this.starsCount,
+    required this.reviews,
   });
 
   @override
@@ -40,6 +42,7 @@ class PopularCard extends StatelessWidget {
               minutesAway: minutesAway,
               bio: bio,
               starsCount: starsCount,
+              reviews: reviews,
             ),
           ),
         );

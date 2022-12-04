@@ -716,6 +716,7 @@ referredModal(context, refferals) {
                             bio: i['bio'],
                             minutesAway: i['minutesAway'],
                             starsCount: 3,
+                            reviews: [],
                           ),
                         const SizedBox(height: 30.0),
                       ],

@@ -17,6 +17,7 @@ class Profile extends StatefulWidget {
   final String bio;
   final String minutesAway;
   final double starsCount;
+  final reviews;
 
   Profile({
     required this.username,
@@ -25,6 +26,7 @@ class Profile extends StatefulWidget {
     required this.bio,
     required this.minutesAway,
     required this.starsCount,
+    required this.reviews,
   });
 
   @override
@@ -113,6 +115,7 @@ class _ProfileState extends State<Profile> {
                       RatingBar.builder(
                         unratedColor: dGreyFadedPlus,
                         initialRating: widget.starsCount,
+                        ignoreGestures: true,
                         itemSize: 14.0,
                         itemCount: 5,
                         updateOnDrag: false,
@@ -264,7 +267,32 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                       const SizedBox(height: 15.0),
-                      ReviewsContainer(),
+                      widget.reviews.length == 0
+                          ? Container(
+                              margin: EdgeInsets.only(top: 20.0),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.chat_bubble,
+                                      color: dGreyFaded,
+                                      size: 60.0,
+                                    ),
+                                    SizedBox(height: 10.0),
+                                    Text(
+                                      "No reviews yet",
+                                      style: TextStyle(
+                                        color: dGrey,
+                                        fontFamily: "SFSNR",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : ReviewsContainer(
+                              reviews: widget.reviews,
+                            ),
                       const SizedBox(height: 80.0),
                     ],
                   ),
@@ -279,9 +307,11 @@ class _ProfileState extends State<Profile> {
 }
 
 class ReviewsContainer extends StatelessWidget {
-  const ReviewsContainer({
-    Key? key,
-  }) : super(key: key);
+  final reviews;
+
+  ReviewsContainer({
+    required this.reviews,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -298,32 +328,17 @@ class ReviewsContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Review(
-              username: "Piko",
-              review: "Hated your services",
-              ratingCount: 2,
+          for (var i in reviews)
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Review(
+                username: i['username'],
+                review: i["message"],
+                ratingCount: double.parse(i["starsCount"]),
+                totalReviewsCount: reviews.length,
+                position: reviews.length,
+              ),
             ),
-          ),
-          MyDivider(),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Review(
-              username: "Piko",
-              ratingCount: 2,
-              review: "Hated your services",
-            ),
-          ),
-          MyDivider(),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Review(
-              username: "Piko",
-              ratingCount: 4,
-              review: "Hated your services",
-            ),
-          ),
         ],
       ),
     );
@@ -333,53 +348,63 @@ class ReviewsContainer extends StatelessWidget {
 class Review extends StatelessWidget {
   final String username;
   final String review;
-  final int ratingCount;
+  final double ratingCount;
+  final int totalReviewsCount;
+  final position;
 
-  Review(
-      {required this.username,
-      required this.review,
-      required this.ratingCount});
+  Review({
+    required this.username,
+    required this.review,
+    required this.ratingCount,
+    required this.totalReviewsCount,
+    required this.position,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RatingBar.builder(
-          unratedColor: dGreyFadedPlus,
-          initialRating: 4,
-          itemSize: 14.0,
-          itemCount: ratingCount,
-          itemBuilder: (context, _) => Icon(
-            CupertinoIcons.star_fill,
-            color: Color(0xff278fe9),
+    return Container(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RatingBar.builder(
+            unratedColor: dGreyFadedPlus,
+            initialRating: ratingCount,
+            ignoreGestures: true,
+            itemSize: 14.0,
+            itemCount: 5,
+            itemBuilder: (context, _) => Icon(
+              CupertinoIcons.star_fill,
+              color: Color(0xff278fe9),
+            ),
+            onRatingUpdate: (rating) {
+              log("$rating");
+            },
           ),
-          onRatingUpdate: (rating) {
-            log("$rating");
-          },
-        ),
-        const SizedBox(height: 8.0),
-        Text(
-          username,
-          style: TextStyle(
-            fontFamily: 'AR',
-            color: Color(0xff262626),
-            fontSize: 14.0,
+          const SizedBox(height: 8.0),
+          Text(
+            username,
+            style: TextStyle(
+              fontFamily: 'AR',
+              color: Color(0xff262626),
+              fontSize: 15.0,
+            ),
           ),
-        ),
-        const SizedBox(height: 2.0),
-        Text(
-          review,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontFamily: 'SFNSR',
-            color: Color(0xff262626),
-            fontSize: 14.0,
+          const SizedBox(height: 2.0),
+          Text(
+            review,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontFamily: 'SFNSR',
+              color: Color.fromARGB(255, 65, 65, 65),
+              fontSize: 14.0,
+            ),
           ),
-        ),
-      ],
+          // position < totalReviewsCount ? MyDivider() : Container(),
+        ],
+      ),
     );
   }
 }

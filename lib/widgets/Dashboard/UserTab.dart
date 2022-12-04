@@ -15,6 +15,7 @@ class UserTab extends StatelessWidget {
   final String bio;
   final String minutesAway;
   final double starsCount;
+  final reviews;
 
   UserTab({
     required this.fname,
@@ -24,6 +25,7 @@ class UserTab extends StatelessWidget {
     required this.bio,
     required this.minutesAway,
     required this.starsCount,
+    required this.reviews,
   });
 
   @override
@@ -40,6 +42,7 @@ class UserTab extends StatelessWidget {
               minutesAway: minutesAway,
               bio: bio,
               starsCount: starsCount,
+              reviews: reviews,
             ),
           ),
         );

@@ -389,6 +389,17 @@ Future _getToken() async {
   return user[0]["token"];
 }
 
+Future getWorkerById(id) async {
+  var token = await _getToken();
+  var res = await getRequest(token, "/users/worker?workerid=$id");
+  if (res.statusCode == 200) {
+    final parsed = json.decode(res.body);
+    return "${parsed[0]['fname']} ${parsed[0]['lname']}";
+  } else {
+    return "Deleted";
+  }
+}
+
 Future getWorkers() async {
   final controller = Get.put(Controller());
   controller.deleteWorkers();
@@ -424,6 +435,11 @@ Future getWorkers() async {
           starsCount =
               starsCount + int.parse(parsed[i]['reviews'][n]['starsCount']);
         }
+
+        for (var r = 0; r < parsed[i]['reviews'].length; r++) {
+          parsed[i]['reviews'][r]['username'] =
+              await getWorkerById(parsed[i]['reviews'][r]["reviewer_id"]);
+        }
       }
 
       controller.addWorker({
@@ -436,7 +452,8 @@ Future getWorkers() async {
         "tags": parsed[i]['tagsWorker'],
         "starsCount": starsCount == 0
             ? starsCount.toDouble()
-            : starsCount / parsed[i]['reviews'].length
+            : starsCount / parsed[i]['reviews'].length,
+        "reviews": parsed[i]['reviews'],
       });
     }
     return;
