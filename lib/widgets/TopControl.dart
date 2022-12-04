@@ -38,7 +38,7 @@ class TopControl extends StatelessWidget {
       ),
       title: Padding(
         padding: const EdgeInsets.only(
-          top: 10.0,
+          top: 7.0,
         ),
         child: Text(
           name,
