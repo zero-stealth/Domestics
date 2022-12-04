@@ -38,14 +38,14 @@ class TopControl extends StatelessWidget {
       ),
       title: Padding(
         padding: const EdgeInsets.only(
-          top: 7.0,
+          top: 5.0,
         ),
         child: Text(
           name,
           style: TextStyle(
             fontFamily: 'AR',
             color: Color(0xff262626),
-            fontSize: 18.0,
+            fontSize: 20.0,
           ),
         ),
       ),
