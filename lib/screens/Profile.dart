@@ -18,6 +18,7 @@ class Profile extends StatefulWidget {
   final String minutesAway;
   final double starsCount;
   final reviews;
+  final String location;
 
   Profile({
     required this.username,
@@ -27,6 +28,7 @@ class Profile extends StatefulWidget {
     required this.minutesAway,
     required this.starsCount,
     required this.reviews,
+    required this.location,
   });
 
   @override
@@ -112,29 +114,44 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                       const SizedBox(height: 20.0),
-                      RatingBar.builder(
-                        unratedColor: dGreyFadedPlus,
-                        initialRating: widget.starsCount,
-                        ignoreGestures: true,
-                        itemSize: 14.0,
-                        itemCount: 5,
-                        updateOnDrag: false,
-                        itemBuilder: (context, _) => Icon(
-                          CupertinoIcons.star_fill,
-                          color: Color(0xff278fe9),
-                        ),
-                        onRatingUpdate: (rating) {
-                          log("$rating");
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        widget.minutesAway,
-                        style: TextStyle(
-                          fontFamily: 'AR',
-                          color: Color(0xff262626),
-                          fontSize: 12.0,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                CupertinoIcons.location_fill,
+                                size: 14.0,
+                                color: dBlueBackground,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text(
+                                widget.location,
+                                style: TextStyle(
+                                  fontFamily: 'AR',
+                                  color: dBlueBackground,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          RatingBar.builder(
+                            unratedColor: dGreyFadedPlus,
+                            initialRating: widget.starsCount,
+                            ignoreGestures: true,
+                            itemSize: 14.0,
+                            itemCount: 5,
+                            updateOnDrag: false,
+                            itemBuilder: (context, _) => Icon(
+                              CupertinoIcons.star_fill,
+                              color: Color(0xff278fe9),
+                            ),
+                            onRatingUpdate: (rating) {
+                              log("$rating");
+                            },
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10.0),
                       Text(
@@ -320,9 +337,9 @@ class ReviewsContainer extends StatelessWidget {
         color: dBackgroundWhite,
         border: Border.all(
           color: dGreyFaded,
-          width: 2.0,
+          width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(6.0),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -370,6 +387,7 @@ class Review extends StatelessWidget {
         children: [
           RatingBar.builder(
             unratedColor: dGreyFadedPlus,
+            allowHalfRating: true,
             initialRating: ratingCount,
             ignoreGestures: true,
             itemSize: 14.0,
