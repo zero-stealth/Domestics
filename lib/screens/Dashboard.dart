@@ -174,6 +174,7 @@ class _DashboardState extends State<Dashboard> {
                 lname: controller.workers[index]['lname'],
                 minutesAway: "2 mins away",
                 bio: controller.workers[index]['bio'],
+                location: controller.workers[index]['location'],
                 starsCount: controller.workers[index]['starsCount'],
                 reviews: controller.workers[index]['reviews'],
               );
@@ -354,6 +355,7 @@ class _DashboardState extends State<Dashboard> {
                                   bio: i['bio'],
                                   minutesAway: "2",
                                   starsCount: i['starsCount'],
+                                  location: i['location'],
                                   reviews: i['reviews'],
                                 ),
                             ],

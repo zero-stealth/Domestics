@@ -717,6 +717,7 @@ referredModal(context, refferals) {
                             minutesAway: i['minutesAway'],
                             starsCount: 3,
                             reviews: [],
+                            location: "Donholm",
                           ),
                         const SizedBox(height: 30.0),
                       ],

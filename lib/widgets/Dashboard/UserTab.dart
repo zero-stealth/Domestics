@@ -16,6 +16,7 @@ class UserTab extends StatelessWidget {
   final String minutesAway;
   final double starsCount;
   final reviews;
+  final String location;
 
   UserTab({
     required this.fname,
@@ -26,6 +27,7 @@ class UserTab extends StatelessWidget {
     required this.minutesAway,
     required this.starsCount,
     required this.reviews,
+    required this.location,
   });
 
   @override
@@ -43,6 +45,7 @@ class UserTab extends StatelessWidget {
               bio: bio,
               starsCount: starsCount,
               reviews: reviews,
+              location: location,
             ),
           ),
         );
@@ -96,6 +99,7 @@ class UserTab extends StatelessWidget {
                               ),
                             ),
                             RatingBar.builder(
+                              allowHalfRating: true,
                               unratedColor: dGreyFadedPlus,
                               initialRating: starsCount,
                               itemSize: 14.0,

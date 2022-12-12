@@ -16,6 +16,7 @@ class PopularCard extends StatelessWidget {
   final String bio;
   final double starsCount;
   final reviews;
+  final String location;
 
   PopularCard({
     required this.tags,
@@ -26,6 +27,7 @@ class PopularCard extends StatelessWidget {
     required this.bio,
     required this.starsCount,
     required this.reviews,
+    required this.location,
   });
 
   @override
@@ -43,6 +45,7 @@ class PopularCard extends StatelessWidget {
               bio: bio,
               starsCount: starsCount,
               reviews: reviews,
+              location: location,
             ),
           ),
         );
@@ -140,6 +143,7 @@ class PopularCard extends StatelessWidget {
                   ),
                 ),
                 RatingBar.builder(
+                  allowHalfRating: true,
                   unratedColor: dGreyFadedPlus,
                   initialRating: starsCount,
                   itemSize: 14.0,
@@ -176,10 +180,10 @@ class PopularCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5.0),
                 Text(
-                  minutesAway,
+                  location,
                   style: TextStyle(
                     fontFamily: 'SFNSR',
-                    color: Color(0xff262626),
+                    color: dGrey,
                     fontSize: 12.0,
                   ),
                 ),
