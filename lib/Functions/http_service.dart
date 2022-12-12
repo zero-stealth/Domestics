@@ -266,7 +266,7 @@ Future deleteWorkerTags(tagId, token) async {
   }
 }
 
-// userId is the ID of the
+// userId is the ID of the user
 // being reviewed
 Future uploadReview(userId, message, starsCount, token) async {
   var data = {
@@ -418,15 +418,6 @@ Future getWorkers() async {
         parsed[i]["imageUrl"],
       );
 
-      // var data = WorkerModel(
-      //   prod_id: parsed[i]['_id'],
-      //   fname: parsed[i]["fname"],
-      //   lname: parsed[i]["lname"],
-      //   bio: parsed[i]["bio"],
-      //   phone: parsed[i]["phone"],
-      //   imageUrl: parsed[i]["imageUrl"],
-      // );
-
       int starsCount = 0;
 
       if (parsed[i]['reviews'].length > 0) {
@@ -450,6 +441,7 @@ Future getWorkers() async {
         "phone": parsed[i]['phone'],
         "imageUrl": parsed[i]['imageUrl'],
         "tags": parsed[i]['tagsWorker'],
+        "location": parsed[i]['location'],
         "starsCount": starsCount == 0
             ? starsCount.toDouble()
             : starsCount / parsed[i]['reviews'].length,
