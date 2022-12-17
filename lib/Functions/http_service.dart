@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dart:ui';
 
+import '../controllers/user_controller.dart';
 import '../controllers/workers_controller.dart';
 
 var baseurl = "http://192.168.0.22:3000";
@@ -55,6 +56,7 @@ Future createAccount(
 }
 
 Future populateData(token) async {
+  final _controller = Get.put(UserController());
   final _dbHelper = DatabaseHelper.instance;
   var response = await getRequest(token, "/users/me");
 
@@ -87,6 +89,18 @@ Future populateData(token) async {
       parsed['imageUrl'],
       token,
     );
+
+    _controller.addUser({
+      "prod_id": parsed['_id'],
+      "fname": parsed['fname'],
+      "lname": parsed['lname'],
+      "bio": parsed['bio'],
+      "isWorker": parsed['isWorker'],
+      "phone": parsed['phone'],
+      "email": parsed['email'],
+      "imageUrl": parsed['imageUrl'],
+      "token": token,
+    });
 
     log("Added user info");
 
@@ -401,7 +415,7 @@ Future getWorkerById(id) async {
 }
 
 Future getWorkers() async {
-  final controller = Get.put(Controller());
+  final controller = Get.put(WorkersController());
   controller.deleteWorkers();
   var token = await _getToken();
   var res = await getRequest(token, "/users/workers");

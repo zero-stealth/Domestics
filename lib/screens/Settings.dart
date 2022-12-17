@@ -32,7 +32,7 @@ class _SettingsState extends State<Settings> {
     // TODO: implement initState
     super.initState();
     getInfo();
-    getWorkers();
+    // getWorkers();
   }
 
   @override

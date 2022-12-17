@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/data/colors.dart';
@@ -9,6 +11,10 @@ import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:domestics/widgets/settings/StatusPill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+
+import '../controllers/user_controller.dart';
 
 //
 
@@ -718,6 +724,7 @@ referredModal(context, refferals) {
                             starsCount: 3,
                             reviews: [],
                             location: "Donholm",
+                            userId: '56',
                           ),
                         const SizedBox(height: 30.0),
                       ],
@@ -728,4 +735,189 @@ referredModal(context, refferals) {
       ),
     ),
   );
+}
+
+reviewModal(context, userId) {
+  final _usercontroller = Get.put(UserController());
+  TextEditingController _myController = TextEditingController();
+
+  bool _errorStatus = false;
+  String _errorMessage = "";
+  String _buttonState = 'notloading';
+  double _ratingCount = 0;
+  var token = _usercontroller.user[0]['token'];
+
+  showModalBottomSheet(
+      backgroundColor: dBackgroundWhite,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
+        ),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (
+            BuildContext context,
+            StateSetter setState,
+          ) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 50.0,
+                          height: 4.0,
+                          margin: EdgeInsets.only(top: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: const Color(0xff8e8e90).withOpacity(0.3),
+                          ),
+                        ),
+                      ],
+                    ),
+                    userId == _usercontroller.user[0]['prod_id']
+                        ? Container(
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 30.0),
+                                Container(
+                                  padding: EdgeInsets.all(20.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(999.0),
+                                    color: dGreyFaded,
+                                  ),
+                                  child: Icon(
+                                    CupertinoIcons.lock_fill,
+                                    size: 60.0,
+                                    color: dBlueBackground,
+                                  ),
+                                ),
+                                SizedBox(height: 20.0),
+                                Text(
+                                  "Hold it!",
+                                  style: TextStyle(
+                                    fontFamily: "AR",
+                                    fontSize: 18.0,
+                                    color: dBlueBackground,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+                                Text(
+                                  "You cannot review yourself.",
+                                  style: TextStyle(
+                                    fontFamily: "SFNSR",
+                                    fontSize: 16.0,
+                                    color: dGrey,
+                                  ),
+                                ),
+                                SizedBox(height: 15.0),
+                                Container(
+                                  width: double.infinity,
+                                  child: CupertinoButton(
+                                    color: Colors.blueAccent,
+                                    child: buttonStatus(
+                                        _buttonState, 'Never mind'),
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              const SizedBox(height: 30.0),
+                              Container(
+                                child: Center(
+                                  child: Text(
+                                    "Select the stars to rate",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: "AR",
+                                      fontSize: 12.0,
+                                      color: dBlueBackground,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 15.0),
+                              Container(
+                                child: Center(
+                                  child: RatingBar.builder(
+                                    unratedColor: Colors.grey.withOpacity(0.2),
+                                    glow: false,
+                                    initialRating: _ratingCount,
+                                    ignoreGestures: false,
+                                    allowHalfRating: true,
+                                    itemSize: 50.0,
+                                    itemCount: 5,
+                                    updateOnDrag: true,
+                                    itemBuilder: (context, _) => Icon(
+                                      CupertinoIcons.star_fill,
+                                      color: Color(0xff278fe9),
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      log("$rating");
+                                      setState(() {
+                                        _ratingCount = rating;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              InputWidget(
+                                label: "",
+                                placeholder: "Add a comment",
+                                mycontroller: _myController,
+                                obscure: false,
+                                lines: 3,
+                              ),
+                              const SizedBox(height: 20.0),
+                              // SizedBox(height: _errorStatus == true ? 5.0 : 20.0),
+                              // ErrorAlert(
+                              //   errorMessage: _errorMessage,
+                              //   status: _errorStatus,
+                              // ),
+                              Container(
+                                width: double.infinity,
+                                child: CupertinoButton(
+                                  color: Colors.blueAccent,
+                                  child: buttonStatus(_buttonState, 'Review'),
+                                  onPressed: () async {
+                                    log("Rating $_ratingCount -- ${_myController.text}");
+                                    var status = await uploadReview(
+                                      userId,
+                                      _myController.text,
+                                      _ratingCount,
+                                      token,
+                                    );
+
+                                    status == false
+                                        ? Navigator.pop(context)
+                                        : log("Failed");
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                    const SizedBox(height: 20.0),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      });
 }

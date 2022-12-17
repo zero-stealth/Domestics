@@ -14,6 +14,7 @@ import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:domestics/widgets/settings/StatusPill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
@@ -217,13 +218,14 @@ class _EditState extends State<Edit> {
                           await populateData(token);
                           await getInfo();
 
-                          setState((){
+                          setState(() {
                             _btnState = "notloading";
                           });
 
                           Navigator.pop(context);
 
-                          successModal(context, "Client tags updated successfully");
+                          successModal(
+                              context, "Client tags updated successfully");
                         },
                       ),
                     ),
@@ -406,14 +408,14 @@ class _EditState extends State<Edit> {
                           await populateData(token);
                           await getInfo();
 
-                          setState((){
+                          setState(() {
                             _btnState = "notloading";
                           });
 
                           Navigator.pop(context);
 
-                          successModal(context, "Worker tags updated successfully");
-                          
+                          successModal(
+                              context, "Worker tags updated successfully");
                         },
                       ),
                     ),
@@ -903,8 +905,6 @@ class _EditState extends State<Edit> {
         });
   }
 
- 
-
   calcType() {
     if (data.isEmpty) {
       return "-";
@@ -959,15 +959,46 @@ class _EditState extends State<Edit> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffefefef),
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Color(0xffefefef),
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        // leadingWidth: 2.0,
+        leading: Padding(
+          padding: const EdgeInsets.only(
+            left: 16.0,
+          ),
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(CupertinoIcons.chevron_back),
+            color: dBlack,
+          ),
+        ),
+        backgroundColor: Color(0xffefefef),
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text(
+          'Edit profile',
+          style: TextStyle(
+            fontFamily: 'AR',
+            color: dBlack,
+            fontSize: 20.0,
+          ),
+        ),
+        actions: [],
+      ),
       body: SafeArea(
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            TopControl(
-              name: "Edit Profile",
-              icon: CupertinoIcons.chevron_back,
-              backgroundColor: Colors.transparent,
-            ),
+            // TopControl(
+            //   name: "Edit Profile",
+            //   icon: CupertinoIcons.chevron_back,
+            //   backgroundColor: Colors.transparent,
+            // ),
             SliverList(
               delegate: SliverChildListDelegate([
                 Padding(
@@ -979,6 +1010,39 @@ class _EditState extends State<Edit> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        width: double.infinity,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10.0),
+                              Container(
+                                width: 150.0,
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(999.0),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      "https://images.unsplash.com/photo-1671127568852-793346ad11bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20.0),
+                              Text(
+                                "Change profile picture",
+                                style: TextStyle(
+                                  fontFamily: 'SFNSR',
+                                  fontSize: 16.0,
+                                  color: dBlueBackground,
+                                ),
+                              ),
+                              SizedBox(height: 25.0),
+                            ],
+                          ),
+                        ),
+                      ),
                       Container(
                         decoration: BoxDecoration(
                           color: const Color(0xfffafafa),
@@ -1101,6 +1165,7 @@ class _EditState extends State<Edit> {
                           ],
                         ),
                       ),
+                      SizedBox(height: 50.0),
                     ],
                   ),
                 ),

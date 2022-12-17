@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../controllers/workers_controller.dart';
 
@@ -21,106 +22,28 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final controller = Get.put(Controller());
+  var controller = Get.put(WorkersController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
+  late GlobalKey<ScaffoldState> _scaffoldKey;
+  late List<String> _demoData;
+
   final _dbHelper = DatabaseHelper.instance;
-  List posts = [
-    {
-      'tags': [
-        {"tag": "Thief"},
-        {"tag": "Hunter"},
-        {"tag": "Dealer"},
-      ],
-      'fname': 'Levin Adams',
-      'minutesAway': '2 min away',
-      'stars': 4,
-      'bio':
-          'Hello, i am a tutor in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjB0ZWFjaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': [
-        {"tag": "Thief"},
-        {"tag": "Hunter"},
-        {"tag": "Dealer"},
-      ],
-      'fname': 'Lily Colt',
-      'stars': 2,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a painter in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1510832842230-87253f48d74f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFpbnRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': [
-        {"tag": "Thief"},
-        {"tag": "Hunter"},
-        {"tag": "Dealer"},
-      ],
-      'fname': 'Sarah Payne',
-      'stars': 1,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a baby sitter and pet sitter in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1534806391029-791d2695c38b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBiYWJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': [
-        {"tag": "Thief"},
-        {"tag": "Hunter"},
-        {"tag": "Dealer"},
-      ],
-      'fname': 'Brad Philips',
-      'stars': 4,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a mechanic in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1583954964358-1bd7215b6f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': [
-        {"tag": "Thief"},
-        {"tag": "Hunter"},
-        {"tag": "Dealer"},
-      ],
-      'fname': 'Karl Gibson',
-      'stars': 3,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am a electrician in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBlbGVjdHJpY2lhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      'tags': [
-        {"tag": "Thief"},
-        {"tag": "Hunter"},
-        {"tag": "Dealer"},
-      ],
-      'fname': 'Colleen',
-      'stars': 4,
-      'minutesAway': '1 min away',
-      'bio':
-          'Hello, i am an IT support in nairobi contact me for business and enquiries.',
-      'url':
-          'https://images.unsplash.com/photo-1617042375876-a13e36732a04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjBwcm9ncmFtbWVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    },
-  ];
   var _allWorkers = [];
   var _tags = [];
 
   @override
   void initState() {
-    super.initState();
     // stuff();
+    log("Reload dashboard state");
     // getWorkers();
+    _demoData = [
+      "Flutter",
+    ];
+    _scaffoldKey = GlobalKey();
     _workers();
+    super.initState();
     // _workers();
   }
 
@@ -161,24 +84,30 @@ class _DashboardState extends State<Dashboard> {
       return Container(
         // padding: EdgeInsets.only(left: 20.0, right: 20.0),
         height: 240.0,
-        child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: controller.workers.length,
-            itemBuilder: (_, index) {
-              return PopularCard(
-                tags: controller.workers[index]['tags'],
-                url: controller.workers[index]['imageUrl'],
-                fname: controller.workers[index]['fname'],
-                lname: controller.workers[index]['lname'],
-                minutesAway: "2 mins away",
-                bio: controller.workers[index]['bio'],
-                location: controller.workers[index]['location'],
-                starsCount: controller.workers[index]['starsCount'],
-                reviews: controller.workers[index]['reviews'],
-              );
-            }),
+        child: controller.workers.length == 0
+            ? Text("Notinh")
+            : Obx(
+                () => ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: controller.workers.length,
+                    itemBuilder: (_, index) {
+                      log('${controller.workers.length}');
+                      return PopularCard(
+                        userId: controller.workers[index]['prod_id'],
+                        tags: controller.workers[index]['tags'],
+                        url: controller.workers[index]['imageUrl'],
+                        fname: controller.workers[index]['fname'],
+                        lname: controller.workers[index]['lname'],
+                        minutesAway: "2 mins away",
+                        bio: controller.workers[index]['bio'],
+                        location: controller.workers[index]['location'],
+                        starsCount: controller.workers[index]['starsCount'],
+                        reviews: controller.workers[index]['reviews'],
+                      );
+                    }),
+              ),
       );
     }
   }
@@ -190,241 +119,250 @@ class _DashboardState extends State<Dashboard> {
       child: Scaffold(
         // backgroundColor: const Color(0xffefefef),
         backgroundColor: dBackgroundWhite,
-        body: Stack(
-          children: [
-            CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverAppBar(
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: dBackgroundWhite,
-                    statusBarIconBrightness: Brightness.dark,
-                  ),
-                  elevation: 0.0,
-                  centerTitle: false,
-                  automaticallyImplyLeading: false,
-                  actions: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 0.0,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Notifications()),
-                          );
-                        },
-                        child: Icon(
-                          CupertinoIcons.bell,
-                          color: dBlack,
-                          size: 25.0,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 32.0),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 0.0,
-                        right: 20.0,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Settings()),
-                          );
-
-                          // Get.to(Settings());
-                        },
-                        child: Icon(
-                          CupertinoIcons.settings_solid,
-                          color: dBlack,
-                          size: 25.0,
-                        ),
-                      ),
-                    )
-                  ],
-                  title: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 0.0,
-                      left: 5.0,
-                    ),
-                    child: Text(
-                      'Domestics',
-                      style: TextStyle(
-                        fontFamily: 'AR',
-                        color: dBlack,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                  backgroundColor: dBackgroundWhite,
-                  // expandedHeight: 100.0,
-                  floating: true,
-                  pinned: false,
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // for (var i in posts)
-                        //   DashboardItem(
-                        //     tag: i['tag'],
-                        //     fname: i['fname'],
-                        //     minutesAway: i['minutesAway'],
-                        //     url: i['url'],
-                        //     stars: i['stars']
-                        //   ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 5.0,
-                            left: 20.0,
-                            right: 20.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Popular Nearby',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontFamily: 'AR',
-                                  color: dBlack,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              // Icon(
-                              //   CupertinoIcons.arrow_right,
-                              //   size: 20.0,
-                              //   color: dBlack,
-                              // ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20.0),
-                        _popular(),
-                        SizedBox(height: 30.0),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 20.0,
-                            right: 20.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Recommended',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontFamily: 'AR',
-                                  color: dBlack,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              // Icon(
-                              //   CupertinoIcons.arrow_right,
-                              //   size: 20.0,
-                              //   color: dBlack,
-                              // ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 0.0),
-                        Container(
-                          margin: const EdgeInsets.all(0.0),
-                          padding: const EdgeInsets.only(
-                            top: 5.0,
-                            bottom: 10.0,
-                          ),
-                          decoration: BoxDecoration(
-                            color: dBackgroundWhite,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (var i in controller.workers)
-                                UserTab(
-                                  fname: i['fname'],
-                                  lname: i['lname'],
-                                  tags: i['tags'],
-                                  url: i['imageUrl'],
-                                  bio: i['bio'],
-                                  minutesAway: "2",
-                                  starsCount: i['starsCount'],
-                                  location: i['location'],
-                                  reviews: i['reviews'],
-                                ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 50.0),
-                      ],
-                    ),
-                  ]),
-                ),
-              ],
+        appBar: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: dBackgroundWhite,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+          leadingWidth: 2.0,
+          leading: Container(),
+          backgroundColor: dBackgroundWhite,
+          elevation: 0.0,
+          centerTitle: false,
+          title: Text(
+            'Domestics',
+            style: TextStyle(
+              fontFamily: 'AR',
+              color: dBlack,
+              fontSize: 20.0,
             ),
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: ClipRRect(
-            //     child: BackdropFilter(
-            //       filter: ImageFilter.blur(
-            //         sigmaX: 3,
-            //         sigmaY: 3,
-            //       ),
-            //       child: Container(
-            //         padding: const EdgeInsets.only(
-            //           top: 12.0,
-            //           bottom: 12.0,
-            //           left: 30.0,
-            //           right: 30.0,
-            //         ),
-            //         width: double.infinity,
-            //         decoration: BoxDecoration(
-            //           border: Border(
-            //             top: BorderSide(
-            //               width: 1,
-            //               color: Color(0xff8e8e90).withOpacity(0.1),
-            //             ),
-            //           ),
-            //           gradient: LinearGradient(
-            //             colors: [
-            //               dBackgroundWhite.withOpacity(0.9),
-            //               dBackgroundWhite.withOpacity(0.9),
-            //             ],
-            //             begin: AlignmentDirectional.topStart,
-            //             end: AlignmentDirectional.bottomEnd,
-            //           ),
-            //         ),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             Icon(CupertinoIcons.bag_fill, color: dBlueBackground, size: 26.0),
-            //             Icon(CupertinoIcons.search, color: dBlack, size: 26.0),
-            //             Icon(CupertinoIcons.bell, color: dBlack, size: 26.0),
-            //             Icon(CupertinoIcons.person, color: dBlack, size: 26.0),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 0.0,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Notifications()),
+                  );
+                },
+                child: Icon(
+                  CupertinoIcons.bell,
+                  color: dBlack,
+                  size: 25.0,
+                ),
+              ),
+            ),
+            const SizedBox(width: 32.0),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 0.0,
+                right: 20.0,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Settings()),
+                  );
+
+                  // Get.to(Settings());
+                },
+                child: Icon(
+                  CupertinoIcons.settings_solid,
+                  color: dBlack,
+                  size: 25.0,
+                ),
+              ),
+            ),
           ],
+        ),
+        body: RefreshIndicator(
+          color: dBlueBackground,
+          backgroundColor: dBackgroundWhite,
+          onRefresh: () async {
+            return Future.delayed(
+              Duration(seconds: 1),
+              () async {
+                /// adding elements in list after [1 seconds] delay
+                /// to mimic network call
+                ///
+                /// Remember: [setState] is necessary so that
+                /// build method will run again otherwise
+                /// list will not show all elements
+                // setState(() {
+                //   _demoData.addAll(["Ionic", "Xamarin"]);
+                // });
+                await getWorkers();
+                // setState(() {});
+                // showing snackbar
+                log("RELOADED");
+              },
+            );
+          },
+          child: ListView.builder(
+            itemBuilder: (ctx, idx) {
+              // List Item
+              return SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: 1 != 1
+                    ? Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          children: [
+                            SkeletonItem(
+                              child: Column(
+                                children: [
+                                  SkeletonParagraph(
+                                    style: SkeletonParagraphStyle(
+                                      lines: 2,
+                                      spacing: 5.0,
+                                      lineStyle: SkeletonLineStyle(
+                                          randomLength: true,
+                                          height: 10.0,
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                          maxLength: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              150),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  SkeletonItem(
+                                    child: SkeletonAvatar(
+                                      style: SkeletonAvatarStyle(
+                                        width: double.infinity,
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        height: 100.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // for (var i in posts)
+                          //   DashboardItem(
+                          //     tag: i['tag'],
+                          //     fname: i['fname'],
+                          //     minutesAway: i['minutesAway'],
+                          //     url: i['url'],
+                          //     stars: i['stars']
+                          //   ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 5.0,
+                              left: 20.0,
+                              right: 20.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Popular Nearby',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontFamily: 'AR',
+                                    color: dBlack,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                // Icon(
+                                //   CupertinoIcons.arrow_right,
+                                //   size: 20.0,
+                                //   color: dBlack,
+                                // ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                          _popular(),
+                          SizedBox(height: 30.0),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20.0,
+                              right: 20.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Recommended',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontFamily: 'AR',
+                                    color: dBlack,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                // Icon(
+                                //   CupertinoIcons.arrow_right,
+                                //   size: 20.0,
+                                //   color: dBlack,
+                                // ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 0.0),
+                          Container(
+                            margin: const EdgeInsets.all(0.0),
+                            padding: const EdgeInsets.only(
+                              top: 5.0,
+                              bottom: 10.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: dBackgroundWhite,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: controller.workers.length == 0
+                                ? Text("None")
+                                : Obx(
+                                    () => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        for (var i in controller.workers)
+                                          UserTab(
+                                            fname: i['fname'],
+                                            lname: i['lname'],
+                                            tags: i['tags'],
+                                            url: i['imageUrl'],
+                                            bio: i['bio'],
+                                            minutesAway: "2",
+                                            starsCount: i['starsCount'],
+                                            location: i['location'],
+                                            reviews: i['reviews'],
+                                            userId: i['prod_id'],
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                          ),
+                          SizedBox(height: 50.0),
+                        ],
+                      ),
+              );
+            },
+
+            // Length of the list
+            itemCount: _demoData.length,
+
+            // To make listView scrollable
+            // even if there is only a single item.
+            physics: const AlwaysScrollableScrollPhysics(),
+          ),
         ),
       ),
     );
   }
 }
-
-// #968f8e
-
-// Image.network(
-//                         'https://images.unsplash.com/photo-1570980375900-3128d4f11fac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGJsYWNrJTIwbWVjaGFuaWN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-//                         height: 230.0,
-//                         width: double.infinity,
-//                         fit: BoxFit.cover,
-//                       ),

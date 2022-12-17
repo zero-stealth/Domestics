@@ -17,18 +17,19 @@ class PopularCard extends StatelessWidget {
   final double starsCount;
   final reviews;
   final String location;
+  final String userId;
 
-  PopularCard({
-    required this.tags,
-    required this.url,
-    required this.fname,
-    required this.lname,
-    required this.minutesAway,
-    required this.bio,
-    required this.starsCount,
-    required this.reviews,
-    required this.location,
-  });
+  PopularCard(
+      {required this.tags,
+      required this.url,
+      required this.fname,
+      required this.lname,
+      required this.minutesAway,
+      required this.bio,
+      required this.starsCount,
+      required this.reviews,
+      required this.location,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,7 @@ class PopularCard extends StatelessWidget {
               starsCount: starsCount,
               reviews: reviews,
               location: location,
+              userId: userId,
             ),
           ),
         );

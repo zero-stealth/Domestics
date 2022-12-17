@@ -17,6 +17,7 @@ class UserTab extends StatelessWidget {
   final double starsCount;
   final reviews;
   final String location;
+  final String userId;
 
   UserTab({
     required this.fname,
@@ -28,6 +29,7 @@ class UserTab extends StatelessWidget {
     required this.starsCount,
     required this.reviews,
     required this.location,
+    required this.userId,
   });
 
   @override
@@ -46,6 +48,7 @@ class UserTab extends StatelessWidget {
               starsCount: starsCount,
               reviews: reviews,
               location: location,
+              userId: userId,
             ),
           ),
         );

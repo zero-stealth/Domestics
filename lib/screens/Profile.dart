@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../Functions/SettingsFuncs.dart';
+
 class Profile extends StatefulWidget {
   final String username;
   final String url;
@@ -19,6 +21,7 @@ class Profile extends StatefulWidget {
   final double starsCount;
   final reviews;
   final String location;
+  final String userId;
 
   Profile({
     required this.username,
@@ -29,6 +32,7 @@ class Profile extends StatefulWidget {
     required this.starsCount,
     required this.reviews,
     required this.location,
+    required this.userId,
   });
 
   @override
@@ -140,6 +144,7 @@ class _ProfileState extends State<Profile> {
                             unratedColor: dGreyFadedPlus,
                             initialRating: widget.starsCount,
                             ignoreGestures: true,
+                            allowHalfRating: true,
                             itemSize: 14.0,
                             itemCount: 5,
                             updateOnDrag: false,
@@ -273,12 +278,17 @@ class _ProfileState extends State<Profile> {
                               fontSize: 14.0,
                             ),
                           ),
-                          Text(
-                            'Add a review',
-                            style: TextStyle(
-                              fontFamily: 'SFNSR',
-                              color: dBlueBackground,
-                              fontSize: 14.0,
+                          InkWell(
+                            onTap: () {
+                              reviewModal(context, widget.userId);
+                            },
+                            child: Text(
+                              'Add a review',
+                              style: TextStyle(
+                                fontFamily: 'SFNSR',
+                                color: dBlueBackground,
+                                fontSize: 14.0,
+                              ),
                             ),
                           ),
                         ],
