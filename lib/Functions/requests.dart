@@ -1,12 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:domestics/Functions/Utility.dart';
 import 'package:http/http.dart' as http;
-
-var baseurl = "http://192.168.0.22:3000";
 
 Future postRequest(encoded, token, route) async {
   var response = await http.post(
-    Uri.parse('$baseurl$route'),
+    Uri.parse('$baseUrl$route'),
     body: encoded,
     encoding: Encoding.getByName('utf-8'),
     headers: {
@@ -18,9 +18,21 @@ Future postRequest(encoded, token, route) async {
   return response;
 }
 
+Future uploadImageRequest(filepath, token) async {
+  var request =
+      http.MultipartRequest('POST', Uri.parse('$baseUrl/users/profileImage'));
+  request.files.add(await http.MultipartFile.fromPath('image', filepath));
+  request.headers.addAll(
+    {"Content-Type": "application/json", "Authorization": "Bearer $token"},
+  );
+  var res = await request.send();
+  print(res.reasonPhrase);
+  return true;
+}
+
 Future patchRequest(encoded, token, route) async {
   var response = await http.patch(
-    Uri.parse('$baseurl$route'),
+    Uri.parse('$baseUrl$route'),
     body: encoded,
     encoding: Encoding.getByName('utf-8'),
     headers: {
@@ -34,7 +46,7 @@ Future patchRequest(encoded, token, route) async {
 
 Future getRequest(token, route) async {
   var response = await http.get(
-    Uri.parse('$baseurl$route'),
+    Uri.parse('$baseUrl$route'),
     //encoding: Encoding.getByName('utf-8'),
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +59,7 @@ Future getRequest(token, route) async {
 
 Future noAuthPostRequest(encoded, route) async {
   var response = await http.post(
-    Uri.parse('$baseurl$route'),
+    Uri.parse('$baseUrl$route'),
     body: encoded,
     encoding: Encoding.getByName('utf-8'),
     headers: {"Content-Type": "application/json"},

@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:domestics/Functions/SettingsFuncs.dart';
 import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/Functions/http_service.dart';
+import 'package:domestics/Functions/requests.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
@@ -15,8 +17,13 @@ import 'package:domestics/widgets/settings/StatusPill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+
+import '../controllers/user_controller.dart';
 
 class Edit extends StatefulWidget {
   @override
@@ -25,9 +32,12 @@ class Edit extends StatefulWidget {
 
 class _EditState extends State<Edit> {
   final _dbHelper = DatabaseHelper.instance;
+  var controller = Get.put(UserController());
   var data = [];
   var workerTags = [];
   var clientTags = [];
+  ImagePicker picker = ImagePicker();
+  XFile? image;
 
   @override
   void initState() {
@@ -1016,26 +1026,117 @@ class _EditState extends State<Edit> {
                           child: Column(
                             children: [
                               SizedBox(height: 10.0),
-                              Container(
-                                width: 150.0,
-                                height: 150.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(999.0),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      "https://images.unsplash.com/photo-1671127568852-793346ad11bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                              image?.length != null
+                                  ? Container(
+                                      width: 150.0,
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(999.0),
+                                      ),
+                                      child: image == null
+                                          ? Container()
+                                          : Image.file(File(image!.path)),
+                                    )
+                                  : Container(
+                                      width: 150.0,
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(999.0),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                            data.length == 0
+                                                ? "https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjB3YWxsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                                                : "$baseUrl/users/profileImage?id=${data[0]['prod_id']}",
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
                               SizedBox(height: 20.0),
-                              Text(
-                                "Change profile picture",
-                                style: TextStyle(
-                                  fontFamily: 'SFNSR',
-                                  fontSize: 16.0,
-                                  color: dBlueBackground,
+                              image != null
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            // upload image to server and pop user
+                                            // off of this page
+
+                                            var status =
+                                                await uploadImageRequest(
+                                                    image!.path,
+                                                    controller.user[0]
+                                                        ['token']);
+                                            log("STATUS: $status");
+
+                                            await updateUserInfo({
+                                              "imageUrl": controller.user[0]
+                                                  ['prod_id'],
+                                            }, controller.user[0]['token']);
+
+                                            Navigator.pop(context);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(12.0),
+                                            decoration: BoxDecoration(
+                                                color: dBlueBackground
+                                                    .withOpacity(0.1),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        50.0)),
+                                            child: Icon(
+                                              CupertinoIcons.check_mark,
+                                              color: dBlueBackground,
+                                              size: 20.0,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 20.0),
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              image = null;
+                                            });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(12.0),
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    Colors.red.withOpacity(0.1),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        50.0)),
+                                            child: Icon(
+                                              CupertinoIcons.xmark,
+                                              color: Colors.red,
+                                              size: 20.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
+                              image != null
+                                  ? SizedBox(
+                                      height: 20.0,
+                                    )
+                                  : Container(),
+                              InkWell(
+                                onTap: () async {
+                                  image = await picker.pickImage(
+                                      source: ImageSource.gallery);
+                                  setState(() {});
+                                },
+                                child: Text(
+                                  "Change profile picture",
+                                  style: TextStyle(
+                                    fontFamily: 'SFNSR',
+                                    fontSize: 16.0,
+                                    color: dBlueBackground,
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 25.0),

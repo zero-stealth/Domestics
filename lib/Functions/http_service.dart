@@ -13,8 +13,6 @@ import 'dart:ui';
 import '../controllers/user_controller.dart';
 import '../controllers/workers_controller.dart';
 
-var baseurl = "http://192.168.0.22:3000";
-
 Future createAccount(
     fname, lname, bio, phone, password, email, imageUrl) async {
   var data = {
@@ -60,9 +58,6 @@ Future populateData(token) async {
   final _dbHelper = DatabaseHelper.instance;
   var response = await getRequest(token, "/users/me");
 
-  log("Population response");
-  print(json.decode(response.body));
-
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body);
     var workerTags = parsed['tagsWorker'];
@@ -75,8 +70,6 @@ Future populateData(token) async {
     await _dbHelper.deleteTable("clientTags");
     await _dbHelper.deleteTable("reviews");
     await _dbHelper.deleteTable("refferals");
-
-    log("Deleted tables successfully");
 
     await addUserInfo(
       parsed['_id'],
@@ -101,8 +94,6 @@ Future populateData(token) async {
       "imageUrl": parsed['imageUrl'],
       "token": token,
     });
-
-    log("Added user info");
 
     if (workerTags.length > 0) {
       for (var i = 0; i < workerTags.length; i++) {
@@ -132,8 +123,6 @@ Future populateData(token) async {
         await addRefferals(refferedTo['reffered'], refferedTo['refferer']);
       }
     }
-
-    log("Populated data successfully");
   } else {
     log("Population request failed");
   }
@@ -420,8 +409,8 @@ Future getWorkers() async {
   var token = await _getToken();
   var res = await getRequest(token, "/users/workers");
   if (res.statusCode == 200) {
+    log("FINISHED REQUEST");
     final parsed = json.decode(res.body);
-    log("WORKERS $parsed");
     for (var i = 0; i < parsed.length; i++) {
       await addWorkers(
         parsed[i]["_id"],
@@ -432,11 +421,12 @@ Future getWorkers() async {
         parsed[i]["imageUrl"],
       );
 
+      log("ADDED WORKERS");
+
       int starsCount = 0;
 
       if (parsed[i]['reviews'].length > 0) {
         for (var n = 0; n < parsed[i]['reviews'].length; n++) {
-          log("RAN $n");
           starsCount =
               starsCount + int.parse(parsed[i]['reviews'][n]['starsCount']);
         }
@@ -446,6 +436,8 @@ Future getWorkers() async {
               await getWorkerById(parsed[i]['reviews'][r]["reviewer_id"]);
         }
       }
+
+      log("SET REVIEWS WORKERS");
 
       controller.addWorker({
         "prod_id": parsed[i]['_id'],

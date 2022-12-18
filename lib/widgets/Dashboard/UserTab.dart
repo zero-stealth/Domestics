@@ -77,7 +77,7 @@ class UserTab extends StatelessWidget {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            url,
+                            "http://192.168.0.22:3000/users/profileImage?id=${userId}",
                           ),
                         ),
                       ),

@@ -2,6 +2,8 @@ import 'package:domestics/data/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+const baseUrl = "http://192.168.0.22:3000";
+
 buttonStatus(buttonState, text) {
   switch (buttonState) {
     case "loading":
@@ -13,16 +15,15 @@ buttonStatus(buttonState, text) {
     case "notloading":
       return Text(
         text,
-        style: TextStyle(
-            color: dWhitePure, fontSize: 16.0, fontFamily: 'AR'),
+        style: TextStyle(color: dWhitePure, fontSize: 16.0, fontFamily: 'AR'),
       );
   }
 }
 
- String capitalize(String s) {
-    if (s.isEmpty) {
-      return s;
-    } else {
-      return s[0].toUpperCase() + s.substring(1);
-    }
+String capitalize(String s) {
+  if (s.isEmpty) {
+    return s;
+  } else {
+    return s[0].toUpperCase() + s.substring(1);
   }
+}

@@ -35,8 +35,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    // stuff();
-    log("Reload dashboard state");
     // getWorkers();
     _demoData = [
       "Flutter",
@@ -58,12 +56,6 @@ class _DashboardState extends State<Dashboard> {
       _allWorkers = workers;
       _tags = workertags;
     });
-  }
-
-  Future<Null> _refresh() async {
-    log("Shit happened");
-    return await getWorkers();
-    // return setState(() => {});
   }
 
   _popular() {

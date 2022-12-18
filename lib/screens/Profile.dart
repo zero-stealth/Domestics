@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:ffi';
 
+import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/widgets/Dashboard/Star.dart';
 import 'package:domestics/widgets/TagsView.dart';
@@ -110,7 +111,7 @@ class _ProfileState extends State<Profile> {
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: NetworkImage(
-                                  widget.url,
+                                  "$baseUrl/users/profileImage?id=${widget.userId}",
                                 ),
                               ),
                             ),
