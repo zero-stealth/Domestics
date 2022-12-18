@@ -43,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (response.statusCode == 200) {
       await populateData(info[0]['token']);
       await getWorkers();
+      await getAllUsers();
       return Future.delayed(const Duration(seconds: 4), () {
         Navigator.push(
           context,

@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:domestics/Functions/Utility.dart';
+import 'package:domestics/Functions/http_service.dart';
+import 'package:domestics/controllers/clients_controller.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/widgets/Dashboard/Star.dart';
 import 'package:domestics/widgets/TagsView.dart';
@@ -10,6 +12,7 @@ import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 import '../Functions/SettingsFuncs.dart';
 
@@ -72,6 +75,160 @@ class _ProfileState extends State<Profile> {
         ),
       );
     }
+  }
+
+  _referalModal(context, username) {
+    var controller = Get.put(ClientsController());
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: dBackgroundWhite,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
+        ),
+      ),
+      context: context,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.9,
+          child: StatefulBuilder(
+            builder: (
+              BuildContext context,
+              StateSetter setState,
+            ) {
+              return Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 50.0,
+                              height: 4.0,
+                              margin: EdgeInsets.only(top: 10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0),
+                                color: const Color(0xff8e8e90).withOpacity(0.3),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                        Text(
+                          "Pick a client",
+                          style: TextStyle(
+                            fontFamily: 'AR',
+                            color: Color(0xff262626),
+                            fontSize: 22.0,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          "Select a client to refer to $username",
+                          style: TextStyle(
+                            fontFamily: 'SFNSR',
+                            color: Color(0xff8e8e90),
+                            fontSize: 14.0,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        for (var i in controller.clients)
+                          i['prod_id'] == widget.userId
+                              ? Container(height: 0.0)
+                              : Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 0.0,
+                                          right: 0.0,
+                                          top: 15.0,
+                                          bottom: 15.0),
+                                      padding: EdgeInsets.all(0.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: const Color(0xfffafafa),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 60.0,
+                                                height: 60.0,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50.0),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                      "$baseUrl/users/profileImage?id=${i['prod_id']}",
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 18.0),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${capitalize('${i['fname']}')} ${capitalize('${i['lname']}')}",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontFamily: 'AR',
+                                                      color: Color(0xff262626),
+                                                      fontSize: 16.0,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5.0),
+                                                  Text(
+                                                    "${i['bio']}",
+                                                    style: TextStyle(
+                                                      fontFamily: 'SFNSR',
+                                                      color: dGrey,
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        const SizedBox(height: 30.0),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    getAllUsers();
+    super.initState();
   }
 
   @override
@@ -239,24 +396,29 @@ class _ProfileState extends State<Profile> {
                             right: 0.0,
                           ),
                           color: dBackgroundWhite,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Icon(
-                              //   CupertinoIcons.bookmark,
-                              //   color: dBlack,
-                              //   size: 18.0,
-                              // ),
-                              // const SizedBox(width: 15.0),
-                              Text(
-                                'Refer me to someone',
-                                style: TextStyle(
-                                  fontFamily: 'SFNSR',
-                                  color: dBlueBackground,
-                                  fontSize: 16.0,
+                          child: InkWell(
+                            onTap: () {
+                              _referalModal(context, widget.username);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Icon(
+                                //   CupertinoIcons.bookmark,
+                                //   color: dBlack,
+                                //   size: 18.0,
+                                // ),
+                                // const SizedBox(width: 15.0),
+                                Text(
+                                  'Refer me to someone',
+                                  style: TextStyle(
+                                    fontFamily: 'SFNSR',
+                                    color: dBlueBackground,
+                                    fontSize: 16.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           onPressed: () {
                             // Navigator.push(

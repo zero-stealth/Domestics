@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:domestics/Functions/requests.dart';
+import 'package:domestics/controllers/clients_controller.dart';
 import 'package:domestics/data/UserData.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/models/tags_model.dart';
@@ -403,26 +404,35 @@ Future getWorkerById(id) async {
   }
 }
 
+Future getAllUsers() async {
+  final controller = Get.put(ClientsController());
+  var token = await _getToken();
+  controller.deleteClients();
+  var res = await getRequest(token, "/users/all");
+  if (res.statusCode == 200) {
+    final parsed = json.decode(res.body);
+
+    for (var i = 0; i < parsed.length; i++) {
+      controller.addClient({
+        "prod_id": parsed[i]['_id'],
+        "fname": parsed[i]['fname'],
+        "lname": parsed[i]['lname'],
+        "bio": parsed[i]['bio'],
+      });
+    }
+
+    return;
+  }
+}
+
 Future getWorkers() async {
   final controller = Get.put(WorkersController());
   controller.deleteWorkers();
   var token = await _getToken();
   var res = await getRequest(token, "/users/workers");
   if (res.statusCode == 200) {
-    log("FINISHED REQUEST");
     final parsed = json.decode(res.body);
     for (var i = 0; i < parsed.length; i++) {
-      await addWorkers(
-        parsed[i]["_id"],
-        parsed[i]["fname"],
-        parsed[i]["lname"],
-        parsed[i]["bio"],
-        parsed[i]["phone"],
-        parsed[i]["imageUrl"],
-      );
-
-      log("ADDED WORKERS");
-
       int starsCount = 0;
 
       if (parsed[i]['reviews'].length > 0) {
@@ -437,7 +447,7 @@ Future getWorkers() async {
         }
       }
 
-      log("SET REVIEWS WORKERS");
+      log("${parsed[i]['_id']}");
 
       controller.addWorker({
         "prod_id": parsed[i]['_id'],

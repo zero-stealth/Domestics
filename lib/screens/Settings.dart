@@ -107,18 +107,18 @@ class _SettingsState extends State<Settings> {
                               ),
                             ),
                             MyDivider(),
-                            InkWell(
-                              onTap: () {
-                                statsModal(context);
-                              },
-                              child: SettingsItem(
-                                icon: CupertinoIcons.graph_square,
-                                color: Color(0xff262626),
-                                name: 'Stats',
-                                trailing: true,
-                              ),
-                            ),
-                            MyDivider(),
+                            // InkWell(
+                            //   onTap: () {
+                            //     statsModal(context);
+                            //   },
+                            //   child: SettingsItem(
+                            //     icon: CupertinoIcons.graph_square,
+                            //     color: Color(0xff262626),
+                            //     name: 'Stats',
+                            //     trailing: true,
+                            //   ),
+                            // ),
+                            // MyDivider(),
                             InkWell(
                               onTap: () {
                                 feedbackModal(context, data[0]['token']);
