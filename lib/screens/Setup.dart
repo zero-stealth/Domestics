@@ -112,7 +112,8 @@ class _SetupState extends State<Setup> {
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
 
-                      if (_phoneController.text.length < 9) {
+                      if (_phoneController.text.length < 9 ||
+                          _phoneController.text.length > 9) {
                         return setState(() {
                           _buttonState = "notloading";
                           _errorMessage = "The format is 757690940";
@@ -140,7 +141,7 @@ class _SetupState extends State<Setup> {
                           "phone": myPhone,
                         };
 
-                        var valid = await checkphone(myPhone, info[0]['token']);
+                        var valid = await checkphone(myPhone);
 
                         if (valid == false) {
                           return setState(() {
@@ -150,8 +151,7 @@ class _SetupState extends State<Setup> {
                           });
                         }
 
-                        var status =
-                            await updateUserInfo(data, info[0]['token']);
+                        var status = await updateUserInfo(data);
 
                         switch (status) {
                           case false:

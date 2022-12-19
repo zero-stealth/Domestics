@@ -14,8 +14,7 @@ import 'dart:ui';
 import '../controllers/user_controller.dart';
 import '../controllers/workers_controller.dart';
 
-Future createAccount(
-    fname, lname, bio, phone, password, email, imageUrl) async {
+Future createAccount(fname, lname, bio, phone, password, email) async {
   var data = {
     "fname": fname,
     "lname": lname,
@@ -23,7 +22,6 @@ Future createAccount(
     "phone": phone,
     "password": password,
     "email": email,
-    "imageUrl": imageUrl,
   };
 
   var encoded = jsonEncode(data);
@@ -197,7 +195,8 @@ Future checkemail(email) async {
   }
 }
 
-Future checkphone(phone, token) async {
+Future checkphone(phone) async {
+  var token = await _getToken();
   var data = {"phone": phone};
 
   var encoded = jsonEncode(data);
@@ -334,7 +333,8 @@ Future refferWorker(reffererId, refferedId, token) async {
   }
 }
 
-Future updateUserInfo(data, token) async {
+Future updateUserInfo(data) async {
+  var token = await _getToken();
   var encoded = jsonEncode(data);
 
   var response = await patchRequest(encoded, token, "/users/me");
@@ -424,6 +424,7 @@ Future getAllUsers() async {
         "fname": parsed[i]['fname'],
         "lname": parsed[i]['lname'],
         "bio": parsed[i]['bio'],
+        "imageUrl": parsed[i]['imageUrl']
       });
     }
 
@@ -443,8 +444,8 @@ Future getWorkers() async {
 
       if (parsed[i]['reviews'].length > 0) {
         for (var n = 0; n < parsed[i]['reviews'].length; n++) {
-          starsCount =
-              starsCount + int.parse(parsed[i]['reviews'][n]['starsCount']);
+          starsCount = starsCount.floor() +
+              int.parse(parsed[i]['reviews'][n]['starsCount']);
         }
 
         for (var r = 0; r < parsed[i]['reviews'].length; r++) {

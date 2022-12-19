@@ -73,34 +73,36 @@ class _DashboardState extends State<Dashboard> {
       //   );
       // }
 
-      return Container(
-        // padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        height: 240.0,
-        child: controller.workers.length == 0
-            ? Text("Notinh")
-            : Obx(
-                () => ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: controller.workers.length,
-                    itemBuilder: (_, index) {
-                      log('${controller.workers.length}');
-                      return PopularCard(
-                        userId: controller.workers[index]['prod_id'],
-                        tags: controller.workers[index]['tags'],
-                        url: controller.workers[index]['imageUrl'],
-                        fname: controller.workers[index]['fname'],
-                        lname: controller.workers[index]['lname'],
-                        minutesAway: "2 mins away",
-                        bio: controller.workers[index]['bio'],
-                        phone: controller.workers[index]['phone'],
-                        location: controller.workers[index]['location'],
-                        starsCount: controller.workers[index]['starsCount'],
-                        reviews: controller.workers[index]['reviews'],
-                      );
-                    }),
-              ),
+      return Obx(
+        () => Container(
+          // padding: EdgeInsets.only(left: 20.0, right: 20.0),
+          height: 240.0,
+          child: controller.workers.length == 0
+              ? Text("Notinh")
+              : Obx(
+                  () => ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: controller.workers.length,
+                      itemBuilder: (_, index) {
+                        log('${controller.workers.length}');
+                        return PopularCard(
+                          userId: controller.workers[index]['prod_id'],
+                          tags: controller.workers[index]['tags'],
+                          url: controller.workers[index]['imageUrl'],
+                          fname: controller.workers[index]['fname'],
+                          lname: controller.workers[index]['lname'],
+                          minutesAway: "2 mins away",
+                          bio: controller.workers[index]['bio'],
+                          phone: controller.workers[index]['phone'],
+                          location: controller.workers[index]['location'],
+                          starsCount: controller.workers[index]['starsCount'],
+                          reviews: controller.workers[index]['reviews'],
+                        );
+                      }),
+                ),
+        ),
       );
     }
   }

@@ -390,7 +390,7 @@ securityModal(context, token) {
                         "password": "${_passwordController.text}",
                       };
 
-                      var updated = await updateUserInfo(data, token);
+                      var updated = await updateUserInfo(data);
 
                       if (updated == false) {
                         return setState(() {
@@ -561,7 +561,7 @@ successModal(context, message) {
             Center(
               child: Icon(
                 CupertinoIcons.hand_thumbsup_fill,
-                color: dBlack,
+                color: dBlueBackground,
                 size: 100.0,
               ),
             ),
@@ -861,7 +861,7 @@ reviewModal(context, userId) {
                                     glow: false,
                                     initialRating: _ratingCount,
                                     ignoreGestures: false,
-                                    allowHalfRating: true,
+                                    allowHalfRating: false,
                                     itemSize: 50.0,
                                     itemCount: 5,
                                     updateOnDrag: true,
@@ -904,6 +904,10 @@ reviewModal(context, userId) {
                                       _ratingCount,
                                       token,
                                     );
+
+                                    await populateData();
+                                    await getWorkers();
+                                    await getAllUsers();
 
                                     status == false
                                         ? Navigator.pop(context)

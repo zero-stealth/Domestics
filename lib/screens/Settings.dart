@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:domestics/Functions/SettingsFuncs.dart';
+import 'package:domestics/data/UserData.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Edit.dart';
 import 'package:domestics/screens/Login.dart';
@@ -137,6 +138,7 @@ class _SettingsState extends State<Settings> {
                             InkWell(
                               onTap: () async {
                                 var status = await logoutAll();
+                                await dbHelper.deleteTable("userInfo");
                                 status == true
                                     ? Navigator.push(
                                         context,

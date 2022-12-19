@@ -243,7 +243,6 @@ class _RegisterState extends State<Register> {
                               "0000000000",
                               _passwordController.text,
                               _emailController.text,
-                              "https://domestics.com",
                             );
 
                             switch (createStatus) {

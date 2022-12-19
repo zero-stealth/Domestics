@@ -480,7 +480,7 @@ class _EditState extends State<Edit> {
                     ),
                     const SizedBox(height: 15.0),
                     Text(
-                      "Status",
+                      "Account type",
                       style: TextStyle(
                         fontFamily: 'AR',
                         color: Color(0xff262626),
@@ -505,7 +505,7 @@ class _EditState extends State<Edit> {
 
                         var data = {"isWorker": isWorkr};
 
-                        await updateUserInfo(data, token);
+                        await updateUserInfo(data);
                         await getInfo();
 
                         Navigator.pop(context);
@@ -525,7 +525,7 @@ class _EditState extends State<Edit> {
 
                         var data = {"isWorker": isWorkr};
 
-                        await updateUserInfo(data, token);
+                        await updateUserInfo(data);
                         await getInfo();
 
                         Navigator.pop(context);
@@ -655,7 +655,7 @@ class _EditState extends State<Edit> {
                               "lname": _lnameController.text.toLowerCase()
                             };
 
-                            var updated = await updateUserInfo(data, token);
+                            var updated = await updateUserInfo(data);
 
                             if (updated == false) {
                               return setState(() {
@@ -801,7 +801,7 @@ class _EditState extends State<Edit> {
                                 }
 
                                 var status = await checkphone(
-                                    "254${_myController.text}", token);
+                                    "254${_myController.text}");
 
                                 if (status == false) {
                                   return setState(() {
@@ -815,8 +815,7 @@ class _EditState extends State<Edit> {
                                     "phone": "254${_myController.text}",
                                   };
 
-                                  var updated =
-                                      await updateUserInfo(data, token);
+                                  var updated = await updateUserInfo(data);
 
                                   if (updated == false) {
                                     return setState(() {
@@ -852,8 +851,7 @@ class _EditState extends State<Edit> {
                                     "email": _myController.text,
                                   };
 
-                                  var updated =
-                                      await updateUserInfo(data, token);
+                                  var updated = await updateUserInfo(data);
 
                                   if (updated == false) {
                                     return setState(() {
@@ -881,7 +879,7 @@ class _EditState extends State<Edit> {
                                   "location": _myController.text,
                                 };
 
-                                var updated = await updateUserInfo(data, token);
+                                var updated = await updateUserInfo(data);
 
                                 if (updated == false) {
                                   return setState(() {
@@ -910,7 +908,7 @@ class _EditState extends State<Edit> {
                                   "bio": _myController.text,
                                 };
 
-                                var updated = await updateUserInfo(data, token);
+                                var updated = await updateUserInfo(data);
 
                                 if (updated == false) {
                                   return setState(() {
@@ -1094,7 +1092,7 @@ class _EditState extends State<Edit> {
                                           onTap: () async {
                                             // upload image to server and pop user
                                             // off of this page
-
+                                            log("TOKEN: ${controller.user[0]['token']}");
                                             var status =
                                                 await uploadImageRequest(
                                                     image!.path,

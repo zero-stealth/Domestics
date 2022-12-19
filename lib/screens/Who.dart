@@ -11,7 +11,6 @@ class Who extends StatefulWidget {
 }
 
 class _WhoState extends State<Who> {
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -20,7 +19,7 @@ class _WhoState extends State<Who> {
 
   var workerStatus = false;
 
-  statusHandler(){
+  statusHandler() {
     switch (workerStatus) {
       case false:
         setState(() {
@@ -55,7 +54,7 @@ class _WhoState extends State<Who> {
                 Icon(CupertinoIcons.person, color: dGreyFaded, size: 100.0),
                 SizedBox(height: 10.0),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     statusHandler();
                   },
                   child: WhoTab(
@@ -65,7 +64,7 @@ class _WhoState extends State<Who> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     statusHandler();
                   },
                   child: WhoTab(
@@ -128,9 +127,7 @@ class _WhoTabState extends State<WhoTab> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        top: 15.0
-      ),
+      margin: EdgeInsets.only(top: 15.0),
       padding: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         color: widget.selected == false ? dGreyFadedPlus : dBlueBackground,

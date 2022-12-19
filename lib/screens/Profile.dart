@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
                                                   image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: NetworkImage(
-                                                      "$baseUrl/users/profileImage?id=${i['prod_id']}",
+                                                      "$baseUrl/users/profileImage?imageCode=${i['imageUrl']}",
                                                     ),
                                                   ),
                                                 ),
