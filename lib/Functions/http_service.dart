@@ -45,7 +45,7 @@ Future createAccount(
       parsed['token'],
     );
 
-    await populateData(parsed['token']);
+    await populateData();
 
     return true;
   } else {
@@ -54,7 +54,8 @@ Future createAccount(
   }
 }
 
-Future populateData(token) async {
+Future populateData() async {
+  var token = await _getToken();
   final _controller = Get.put(UserController());
   final _dbHelper = DatabaseHelper.instance;
   var response = await getRequest(token, "/users/me");
@@ -153,7 +154,7 @@ Future login(email, password) async {
       parsed['token'],
     );
 
-    await populateData(parsed['token']);
+    await populateData();
 
     return true;
   } else {
@@ -216,7 +217,7 @@ Future uploadClientTags(tags, token) async {
   var response = await postRequest(encoded, token, '/addClientTags');
 
   if (response.statusCode == 201) {
-    await populateData(token);
+    await populateData();
     return true;
   } else {
     return false;
@@ -232,7 +233,7 @@ Future uploadWorkerTags(tags, token) async {
   var response = await postRequest(encoded, token, '/addWorkerTags');
 
   if (response.statusCode == 201) {
-    await populateData(token);
+    await populateData();
     return true;
   } else {
     return false;
@@ -335,7 +336,7 @@ Future updateUserInfo(data, token) async {
   var response = await patchRequest(encoded, token, "/users/me");
 
   if (response.statusCode == 200) {
-    await populateData(token);
+    await populateData();
     return true;
   } else {
     return false;
@@ -357,7 +358,8 @@ Future logout(token) async {
   }
 }
 
-Future logoutAll(token) async {
+Future logoutAll() async {
+  var token = await _getToken();
   var data = {};
 
   var encoded = jsonEncode(data);

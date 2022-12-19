@@ -179,19 +179,11 @@ class _DashboardState extends State<Dashboard> {
             return Future.delayed(
               Duration(seconds: 1),
               () async {
-                /// adding elements in list after [1 seconds] delay
-                /// to mimic network call
-                ///
-                /// Remember: [setState] is necessary so that
-                /// build method will run again otherwise
-                /// list will not show all elements
-                // setState(() {
-                //   _demoData.addAll(["Ionic", "Xamarin"]);
-                // });
+                await populateData();
                 await getWorkers();
+                await getAllUsers();
                 // setState(() {});
                 // showing snackbar
-                log("RELOADED");
               },
             );
           },
@@ -200,7 +192,8 @@ class _DashboardState extends State<Dashboard> {
               // List Item
               return SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
-                child: controller.workers.length == 0
+                child: controller.workers.length == 0 ||
+                        controller.workers.length == null
                     ? Container(
                         margin: EdgeInsets.symmetric(horizontal: 20.0),
                         child: Column(

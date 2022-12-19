@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:domestics/Functions/Utility.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/screens/Profile.dart';
@@ -77,12 +78,12 @@ class UserTab extends StatelessWidget {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            "$baseUrl/users/profileImage?id=$userId",
+                            "$baseUrl/users/profileImage?imageCode=$url",
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 18.0),
+                    const SizedBox(width: 15.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

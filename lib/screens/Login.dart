@@ -188,7 +188,8 @@ class _LoginState extends State<Login> {
 
                         switch (createStatus) {
                           case true:
-                            log('[+] Logged in successfully.');
+                            await getWorkers();
+                            await getAllUsers();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

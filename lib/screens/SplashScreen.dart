@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var response = await getRequest(info[0]['token'], "/users/me");
 
     if (response.statusCode == 200) {
-      await populateData(info[0]['token']);
+      await populateData();
       await getWorkers();
       await getAllUsers();
       return Future.delayed(const Duration(seconds: 4), () {

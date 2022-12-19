@@ -43,6 +43,7 @@ class _EditState extends State<Edit> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     getInfo();
   }
 
@@ -225,7 +226,7 @@ class _EditState extends State<Edit> {
                             log("Failed to delete: $_toAdd");
                           }
 
-                          await populateData(token);
+                          await populateData();
                           await getInfo();
 
                           setState(() {
@@ -415,7 +416,7 @@ class _EditState extends State<Edit> {
                             log("Failed to delete: $_toAdd");
                           }
 
-                          await populateData(token);
+                          await populateData();
                           await getInfo();
 
                           setState(() {
@@ -1049,7 +1050,7 @@ class _EditState extends State<Edit> {
                                           image: NetworkImage(
                                             data.length == 0
                                                 ? "https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjB3YWxsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                                                : "$baseUrl/users/profileImage?id=${data[0]['prod_id']}",
+                                                : "$baseUrl/users/profileImage?imageCode=${data[0]['imageUrl']}",
                                           ),
                                         ),
                                       ),
@@ -1072,11 +1073,13 @@ class _EditState extends State<Edit> {
                                                         ['token']);
                                             log("STATUS: $status");
 
-                                            await updateUserInfo({
-                                              "imageUrl": controller.user[0]
-                                                  ['prod_id'],
-                                            }, controller.user[0]['token']);
-
+                                            // await updateUserInfo({
+                                            //   "imageUrl": controller.user[0]
+                                            //       ['prod_id'],
+                                            // }, controller.user[0]['token']);
+                                            await populateData();
+                                            await getWorkers();
+                                            await getAllUsers();
                                             Navigator.pop(context);
                                           },
                                           child: Container(

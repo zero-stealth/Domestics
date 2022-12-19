@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:domestics/Functions/SettingsFuncs.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Edit.dart';
+import 'package:domestics/screens/Login.dart';
 import 'package:domestics/widgets/TopControl.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:flutter/cupertino.dart';
@@ -131,11 +134,23 @@ class _SettingsState extends State<Settings> {
                               ),
                             ),
                             MyDivider(),
-                            SettingsItem(
-                              icon: CupertinoIcons.bag_badge_minus,
-                              color: Colors.redAccent,
-                              name: 'Logout',
-                              trailing: false,
+                            InkWell(
+                              onTap: () async {
+                                var status = await logoutAll();
+                                status == true
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()),
+                                      )
+                                    : log("Failed");
+                              },
+                              child: SettingsItem(
+                                icon: CupertinoIcons.bag_badge_minus,
+                                color: Colors.redAccent,
+                                name: 'Logout',
+                                trailing: false,
+                              ),
                             ),
                           ],
                         ),
