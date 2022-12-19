@@ -12,6 +12,7 @@ import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:domestics/widgets/TagsView.dart';
 import 'package:domestics/widgets/TopControl.dart';
+import 'package:mime/mime.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:domestics/widgets/settings/StatusPill.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,6 +39,7 @@ class _EditState extends State<Edit> {
   var clientTags = [];
   ImagePicker picker = ImagePicker();
   XFile? image;
+  var error = "";
 
   @override
   void initState() {
@@ -1083,7 +1085,7 @@ class _EditState extends State<Edit> {
                                       ),
                                     ),
                               SizedBox(height: 20.0),
-                              image != null
+                              image != null && error.length <= 0
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -1149,15 +1151,51 @@ class _EditState extends State<Edit> {
                                       ],
                                     )
                                   : Container(),
-                              image != null
+                              image != null && error.length <= 0
                                   ? SizedBox(
                                       height: 20.0,
                                     )
                                   : Container(),
+                              error.length > 0
+                                  ? Text(
+                                      "$error",
+                                      style: TextStyle(
+                                        fontFamily: "SFNSR",
+                                        color: Colors.red,
+                                        fontSize: 14.0,
+                                      ),
+                                    )
+                                  : Container(),
+                              error.length > 0
+                                  ? SizedBox(height: 10.0)
+                                  : Container(),
                               InkWell(
                                 onTap: () async {
+                                  setState(() {
+                                    error = "";
+                                  });
                                   image = await picker.pickImage(
                                       source: ImageSource.gallery);
+
+                                  print(image!.path);
+                                  final mimeType = lookupMimeType(image!.path);
+
+                                  switch (mimeType) {
+                                    case "image/webp":
+                                      setState(() {
+                                        image = null;
+                                        error = "Image format not supported";
+                                      });
+                                      break;
+
+                                    default:
+                                      setState(() {
+                                        error = "";
+                                      });
+                                      break;
+                                  }
+
+                                  print(mimeType);
                                   setState(() {});
                                 },
                                 child: Text(
