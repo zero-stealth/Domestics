@@ -200,43 +200,15 @@ class _DashboardState extends State<Dashboard> {
               // List Item
               return SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
-                child: 1 != 1
+                child: controller.workers.length == 0
                     ? Container(
                         margin: EdgeInsets.symmetric(horizontal: 20.0),
                         child: Column(
                           children: [
-                            SkeletonItem(
-                              child: Column(
-                                children: [
-                                  SkeletonParagraph(
-                                    style: SkeletonParagraphStyle(
-                                      lines: 2,
-                                      spacing: 5.0,
-                                      lineStyle: SkeletonLineStyle(
-                                          randomLength: true,
-                                          height: 10.0,
-                                          borderRadius:
-                                              BorderRadius.circular(50.0),
-                                          maxLength: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              150),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10.0),
-                                  SkeletonItem(
-                                    child: SkeletonAvatar(
-                                      style: SkeletonAvatarStyle(
-                                        width: double.infinity,
-                                        borderRadius:
-                                            BorderRadius.circular(6.0),
-                                        height: 100.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            Loader(),
+                            Loader(),
+                            Loader(),
+                            Loader(),
                           ],
                         ),
                       )
@@ -354,6 +326,44 @@ class _DashboardState extends State<Dashboard> {
             physics: const AlwaysScrollableScrollPhysics(),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Loader extends StatelessWidget {
+  const Loader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SkeletonItem(
+      child: Column(
+        children: [
+          SkeletonParagraph(
+            style: SkeletonParagraphStyle(
+              lines: 2,
+              spacing: 5.0,
+              lineStyle: SkeletonLineStyle(
+                  randomLength: true,
+                  height: 10.0,
+                  borderRadius: BorderRadius.circular(50.0),
+                  maxLength: MediaQuery.of(context).size.width - 150),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          SkeletonItem(
+            child: SkeletonAvatar(
+              style: SkeletonAvatarStyle(
+                width: double.infinity,
+                borderRadius: BorderRadius.circular(6.0),
+                height: 100.0,
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
+        ],
       ),
     );
   }
