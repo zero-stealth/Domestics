@@ -897,6 +897,11 @@ reviewModal(context, userId) {
                                   color: Colors.blueAccent,
                                   child: buttonStatus(_buttonState, 'Review'),
                                   onPressed: () async {
+                                    setState(() {
+                                      _buttonState = "loading";
+                                      _errorStatus = false;
+                                    });
+
                                     log("Rating $_ratingCount -- ${_myController.text}");
                                     var status = await uploadReview(
                                       userId,
@@ -908,6 +913,11 @@ reviewModal(context, userId) {
                                     await populateData();
                                     await getWorkers();
                                     await getAllUsers();
+
+                                    setState(() {
+                                      _buttonState = "notloading";
+                                      _errorStatus = false;
+                                    });
 
                                     status == false
                                         ? Navigator.pop(context)

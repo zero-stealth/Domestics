@@ -399,46 +399,46 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10.0),
-                      Container(
-                        width: (MediaQuery.of(context).size.width - 40),
-                        child: CupertinoButton(
-                          padding: const EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0,
-                            left: 0.0,
-                            right: 0.0,
-                          ),
-                          color: dBackgroundWhite,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Icon(
-                              //   CupertinoIcons.bookmark,
-                              //   color: dBlack,
-                              //   size: 18.0,
-                              // ),
-                              // const SizedBox(width: 15.0),
-                              Text(
-                                'Refer me to someone',
-                                style: TextStyle(
-                                  fontFamily: 'SFNSR',
-                                  color: dBlueBackground,
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => Selections()),
-                            // );
-                            _referalModal(context, widget.username);
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
+                      // const SizedBox(height: 10.0),
+                      // Container(
+                      //   width: (MediaQuery.of(context).size.width - 40),
+                      //   child: CupertinoButton(
+                      //     padding: const EdgeInsets.only(
+                      //       top: 10.0,
+                      //       bottom: 10.0,
+                      //       left: 0.0,
+                      //       right: 0.0,
+                      //     ),
+                      //     color: dBackgroundWhite,
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         // Icon(
+                      //         //   CupertinoIcons.bookmark,
+                      //         //   color: dBlack,
+                      //         //   size: 18.0,
+                      //         // ),
+                      //         // const SizedBox(width: 15.0),
+                      //         Text(
+                      //           'Refer me to someone',
+                      //           style: TextStyle(
+                      //             fontFamily: 'SFNSR',
+                      //             color: dBlueBackground,
+                      //             fontSize: 16.0,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     onPressed: () {
+                      //       // Navigator.push(
+                      //       //   context,
+                      //       //   MaterialPageRoute(builder: (context) => Selections()),
+                      //       // );
+                      //       _referalModal(context, widget.username);
+                      //     },
+                      //   ),
+                      // ),
+                      const SizedBox(height: 25.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
