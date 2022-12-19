@@ -5,9 +5,10 @@ class UserController extends GetxController {
 
   void addUser(data) {
     user.add(data);
+    print("Added: $data");
   }
 
-  void deleteWorkers() {
+  void deleteUser() {
     user.clear();
   }
 }

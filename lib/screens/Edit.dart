@@ -1097,9 +1097,7 @@ class _EditState extends State<Edit> {
                                             log("TOKEN: ${controller.user[0]['token']}");
                                             var status =
                                                 await uploadImageRequest(
-                                                    image!.path,
-                                                    controller.user[0]
-                                                        ['token']);
+                                                    image!.path);
                                             log("STATUS: $status");
 
                                             // await updateUserInfo({

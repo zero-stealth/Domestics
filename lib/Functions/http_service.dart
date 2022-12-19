@@ -56,6 +56,7 @@ Future createAccount(fname, lname, bio, phone, password, email) async {
 Future populateData() async {
   var token = await _getToken();
   final _controller = Get.put(UserController());
+  _controller.deleteUser();
   final _dbHelper = DatabaseHelper.instance;
   var response = await getRequest(token, "/users/me");
 
@@ -95,7 +96,8 @@ Future populateData() async {
       "email": parsed['email'],
       "imageUrl": parsed['imageUrl'],
       "token": token,
-      "location": parsed['location']
+      "location": parsed['location'],
+      "notifications": parsed['notifications']
     });
 
     if (workerTags.length > 0) {

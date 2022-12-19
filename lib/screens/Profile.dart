@@ -320,13 +320,27 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                       const SizedBox(height: 10.0),
-                      Text(
-                        widget.username,
-                        style: TextStyle(
-                          fontFamily: 'AR',
-                          color: Color(0xff262626),
-                          fontSize: 22.0,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            widget.username,
+                            style: TextStyle(
+                              fontFamily: 'AR',
+                              color: Color(0xff262626),
+                              fontSize: 22.0,
+                            ),
+                          ),
+                          SizedBox(width: 10.0),
+                          widget.username == "Lewis .n"
+                              ? Icon(
+                                  CupertinoIcons.checkmark_seal_fill,
+                                  size: 20.0,
+                                  color: Colors.green,
+                                )
+                              : Container(),
+                        ],
                       ),
                       const SizedBox(height: 10.0),
                       Text(
@@ -396,35 +410,31 @@ class _ProfileState extends State<Profile> {
                             right: 0.0,
                           ),
                           color: dBackgroundWhite,
-                          child: InkWell(
-                            onTap: () {
-                              _referalModal(context, widget.username);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Icon(
-                                //   CupertinoIcons.bookmark,
-                                //   color: dBlack,
-                                //   size: 18.0,
-                                // ),
-                                // const SizedBox(width: 15.0),
-                                Text(
-                                  'Refer me to someone',
-                                  style: TextStyle(
-                                    fontFamily: 'SFNSR',
-                                    color: dBlueBackground,
-                                    fontSize: 16.0,
-                                  ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Icon(
+                              //   CupertinoIcons.bookmark,
+                              //   color: dBlack,
+                              //   size: 18.0,
+                              // ),
+                              // const SizedBox(width: 15.0),
+                              Text(
+                                'Refer me to someone',
+                                style: TextStyle(
+                                  fontFamily: 'SFNSR',
+                                  color: dBlueBackground,
+                                  fontSize: 16.0,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                           onPressed: () {
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(builder: (context) => Selections()),
                             // );
+                            _referalModal(context, widget.username);
                           },
                         ),
                       ),

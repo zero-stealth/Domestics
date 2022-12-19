@@ -85,6 +85,26 @@ class UserTab extends StatelessWidget {
                           ),
                         ),
                       ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          fname == "lewis" && lname == ".n"
+                              ? Container(
+                                  padding: EdgeInsets.all(2.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    color: dBackgroundWhite,
+                                  ),
+                                  child: Icon(
+                                    CupertinoIcons.checkmark_seal_fill,
+                                    size: 16.0,
+                                    color: Colors.green,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
                     ),
                     const SizedBox(width: 15.0),
                     Column(

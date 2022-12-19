@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:domestics/Functions/http_service.dart';
+import 'package:domestics/controllers/user_controller.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
 import 'package:domestics/screens/Notifications.dart';
@@ -23,6 +24,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var controller = Get.put(WorkersController());
+  var userController = Get.put(UserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
@@ -43,6 +45,16 @@ class _DashboardState extends State<Dashboard> {
     _workers();
     super.initState();
     // _workers();
+  }
+
+  notifyBell() {
+    for (var i = 0; i < userController.user[0]['notifications'].length; i++) {
+      if (userController.user[0]['notifications'][i]['read'] == false) {
+        return dBlueBackground;
+      }
+    }
+
+    return dBlack;
   }
 
   // stuff() async {
@@ -78,7 +90,10 @@ class _DashboardState extends State<Dashboard> {
           // padding: EdgeInsets.only(left: 20.0, right: 20.0),
           height: 240.0,
           child: controller.workers.length == 0
-              ? Text("Notinh")
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Loader(),
+                )
               : Obx(
                   () => ListView.builder(
                       physics: BouncingScrollPhysics(),
@@ -146,12 +161,15 @@ class _DashboardState extends State<Dashboard> {
                 },
                 child: Icon(
                   CupertinoIcons.bell,
+                  // notifyBell() == dBlack
+                  //     ? CupertinoIcons.bell
+                  //     : CupertinoIcons.bell_fill,
                   color: dBlack,
                   size: 25.0,
                 ),
               ),
             ),
-            const SizedBox(width: 32.0),
+            const SizedBox(width: 28.0),
             Padding(
               padding: const EdgeInsets.only(
                 top: 0.0,
@@ -285,7 +303,11 @@ class _DashboardState extends State<Dashboard> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: controller.workers.length == 0
-                                ? Text("None")
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0),
+                                    child: Loader(),
+                                  )
                                 : Obx(
                                     () => Column(
                                       crossAxisAlignment:
