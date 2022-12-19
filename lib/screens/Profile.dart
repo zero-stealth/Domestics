@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Functions/SettingsFuncs.dart';
 
@@ -26,6 +27,7 @@ class Profile extends StatefulWidget {
   final reviews;
   final String location;
   final String userId;
+  final String phone;
 
   Profile({
     required this.username,
@@ -37,6 +39,7 @@ class Profile extends StatefulWidget {
     required this.reviews,
     required this.location,
     required this.userId,
+    required this.phone,
   });
 
   @override
@@ -375,10 +378,7 @@ class _ProfileState extends State<Profile> {
                                   ],
                                 ),
                                 onPressed: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(builder: (context) => Selections()),
-                                  // );
+                                  launchUrl(Uri.parse("tel:+${widget.phone}"));
                                 },
                               ),
                             ),

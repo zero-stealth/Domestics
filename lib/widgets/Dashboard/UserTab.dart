@@ -19,6 +19,7 @@ class UserTab extends StatelessWidget {
   final reviews;
   final String location;
   final String userId;
+  final String phone;
 
   UserTab({
     required this.fname,
@@ -31,6 +32,7 @@ class UserTab extends StatelessWidget {
     required this.reviews,
     required this.location,
     required this.userId,
+    required this.phone,
   });
 
   @override
@@ -50,6 +52,7 @@ class UserTab extends StatelessWidget {
               reviews: reviews,
               location: location,
               userId: userId,
+              phone: phone,
             ),
           ),
         );

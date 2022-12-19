@@ -48,6 +48,7 @@ dependencies:
   skeletons: ^0.0.3
   image_picker: ^0.8.6
   cached_network_image: ^3.2.3
+  url_launcher: ^6.0.0
 
 dev_dependencies:
   flutter_test:
