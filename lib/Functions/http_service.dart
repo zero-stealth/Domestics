@@ -42,6 +42,7 @@ Future createAccount(
       parsed['user']['phone'],
       parsed['user']['email'],
       parsed['user']['imageUrl'],
+      parsed['user']['location'],
       parsed['token'],
     );
 
@@ -82,6 +83,7 @@ Future populateData() async {
       parsed['phone'],
       parsed['email'],
       parsed['imageUrl'],
+      parsed['location'],
       token,
     );
 
@@ -95,6 +97,7 @@ Future populateData() async {
       "email": parsed['email'],
       "imageUrl": parsed['imageUrl'],
       "token": token,
+      "location": parsed['location']
     });
 
     if (workerTags.length > 0) {
@@ -151,6 +154,7 @@ Future login(email, password) async {
       parsed['user']['phone'],
       parsed['user']['email'],
       parsed['user']['imageUrl'],
+      parsed['user']['location'],
       parsed['token'],
     );
 

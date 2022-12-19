@@ -4,7 +4,8 @@ import 'package:domestics/database/database_helper.dart';
 
 final dbHelper = DatabaseHelper.instance;
 
-addUserInfo(id, fname, lname, isWorker, bio, phone, email, imageUrl, token) async {
+addUserInfo(id, fname, lname, isWorker, bio, phone, email, imageUrl, location,
+    token) async {
   Map<String, dynamic> row = {
     "prod_id": id,
     "fname": fname,
@@ -14,6 +15,7 @@ addUserInfo(id, fname, lname, isWorker, bio, phone, email, imageUrl, token) asyn
     "phone": phone,
     "email": email,
     "imageUrl": imageUrl,
+    "location": location,
     "token": token,
   };
 

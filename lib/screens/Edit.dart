@@ -872,6 +872,35 @@ class _EditState extends State<Edit> {
                                   }
                                 }
 
+                              case "Location":
+                                if (_myController.text.isEmpty) {
+                                  return;
+                                }
+
+                                var data = {
+                                  "location": _myController.text,
+                                };
+
+                                var updated = await updateUserInfo(data, token);
+
+                                if (updated == false) {
+                                  return setState(() {
+                                    _buttonState = "notloading";
+                                    _errorMessage =
+                                        "Update failed. Try again later";
+                                    _errorStatus = true;
+                                  });
+                                } else {
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    getInfo();
+                                    Navigator.pop(context);
+                                    return successModal(context,
+                                        "Updated location successfully");
+                                  });
+                                  break;
+                                }
+
                               case "Bio":
                                 if (_myController.text.isEmpty) {
                                   return;
@@ -1222,6 +1251,26 @@ class _EditState extends State<Edit> {
                                 title: "Phone number",
                                 value:
                                     data.isEmpty ? "-" : "+${data[0]['phone']}",
+                              ),
+                            ),
+                            MyDivider(),
+                            InkWell(
+                              onTap: () async {
+                                await editModal(
+                                  context,
+                                  "Location",
+                                  "Juja, Nairobi",
+                                  "Change your location",
+                                  4,
+                                  "text",
+                                  data[0]['token'],
+                                );
+                              },
+                              child: InfoItem(
+                                title: "Location",
+                                value: data.isEmpty
+                                    ? "-"
+                                    : "${data[0]['location']}",
                               ),
                             ),
                             MyDivider(),
