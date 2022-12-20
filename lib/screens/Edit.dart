@@ -1400,27 +1400,30 @@ class InfoItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontFamily: 'SFNSR',
-                  color: dBlack,
-                  fontSize: 12.0,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontFamily: 'SFNSR',
+                    color: dBlack,
+                    fontSize: 12.0,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 5.0),
-              Text(
-                value,
-                style: TextStyle(
-                  fontFamily: 'SFNSR',
-                  color: dBlack,
-                  fontSize: 16.0,
+                const SizedBox(height: 5.0),
+                Text(
+                  value,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: 'SFNSR',
+                    color: dBlack,
+                    fontSize: 16.0,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Icon(
             CupertinoIcons.chevron_right,

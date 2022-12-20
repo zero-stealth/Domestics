@@ -34,6 +34,7 @@ class _DashboardState extends State<Dashboard> {
   final _dbHelper = DatabaseHelper.instance;
   var _allWorkers = [];
   var _tags = [];
+  var _loading = false;
 
   @override
   void initState() {
@@ -201,9 +202,15 @@ class _DashboardState extends State<Dashboard> {
               Duration(seconds: 1),
               () async {
                 await populateData();
+                setState(() {
+                  _loading = true;
+                });
                 await getWorkers();
                 await getAllUsers();
                 setState(() {});
+                setState(() {
+                  _loading = false;
+                });
                 // showing snackbar
               },
             );
@@ -246,15 +253,17 @@ class _DashboardState extends State<Dashboard> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Popular Nearby',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontFamily: 'AR',
-                                    color: dBlack,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
+                                _loading == false
+                                    ? Text(
+                                        'Top picks',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontFamily: 'AR',
+                                          color: dBlack,
+                                          fontSize: 14.0,
+                                        ),
+                                      )
+                                    : Container(),
                                 // Icon(
                                 //   CupertinoIcons.arrow_right,
                                 //   size: 20.0,
@@ -274,15 +283,17 @@ class _DashboardState extends State<Dashboard> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Recommended',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontFamily: 'AR',
-                                    color: dBlack,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
+                                _loading == false
+                                    ? Text(
+                                        'Recommended',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontFamily: 'AR',
+                                          color: dBlack,
+                                          fontSize: 14.0,
+                                        ),
+                                      )
+                                    : Container(),
                                 // Icon(
                                 //   CupertinoIcons.arrow_right,
                                 //   size: 20.0,

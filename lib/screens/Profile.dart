@@ -291,12 +291,16 @@ class _ProfileState extends State<Profile> {
                                 color: dBlueBackground,
                               ),
                               SizedBox(width: 5.0),
-                              Text(
-                                widget.location,
-                                style: TextStyle(
-                                  fontFamily: 'AR',
-                                  color: dBlueBackground,
-                                  fontSize: 14.0,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width - 200,
+                                child: Text(
+                                  "${widget.location}",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontFamily: 'AR',
+                                    color: dBlueBackground,
+                                    fontSize: 14.0,
+                                  ),
                                 ),
                               ),
                             ],

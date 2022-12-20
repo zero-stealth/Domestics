@@ -127,24 +127,27 @@ class PopularCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.only(
-                    top: 5.0,
-                    bottom: 5.0,
-                    left: 10.0,
-                    right: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xff278fe9),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  child: Text(
-                    capitalize(tags[0]['tag']),
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'AR',
-                      color: Colors.white,
-                      fontSize: 10.0,
+                Flexible(
+                  child: Container(
+                    margin: EdgeInsets.only(right: 20.0),
+                    padding: EdgeInsets.only(
+                      top: 5.0,
+                      bottom: 5.0,
+                      left: 10.0,
+                      right: 10.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color(0xff278fe9),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    child: Text(
+                      capitalize("${tags[0]['tag']}"),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'AR',
+                        color: Colors.white,
+                        fontSize: 10.0,
+                      ),
                     ),
                   ),
                 ),
