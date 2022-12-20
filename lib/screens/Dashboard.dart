@@ -203,7 +203,7 @@ class _DashboardState extends State<Dashboard> {
                 await populateData();
                 await getWorkers();
                 await getAllUsers();
-                // setState(() {});
+                setState(() {});
                 // showing snackbar
               },
             );

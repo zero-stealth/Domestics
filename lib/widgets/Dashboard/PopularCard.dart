@@ -71,7 +71,7 @@ class PopularCard extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                  "http://192.168.0.22:3000/users/profileImage?imageCode=${url}",
+                  "$baseUrl/users/profileImage?imageCode=${url}",
                 ),
               ),
             ),
@@ -123,7 +123,7 @@ class PopularCard extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 20.0,
             ),
-            width: 230.0,
+            width: 250.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

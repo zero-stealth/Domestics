@@ -7,11 +7,13 @@ import 'package:domestics/Functions/http_service.dart';
 import 'package:domestics/Functions/requests.dart';
 import 'package:domestics/data/colors.dart';
 import 'package:domestics/database/database_helper.dart';
+import 'package:domestics/screens/Dashboard.dart';
 import 'package:domestics/widgets/Forms/ErrorAlert.dart';
 import 'package:domestics/widgets/Forms/InputWidget.dart';
 import 'package:domestics/widgets/Forms/NumberInput.dart';
 import 'package:domestics/widgets/TagsView.dart';
 import 'package:domestics/widgets/TopControl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mime/mime.dart';
 import 'package:domestics/widgets/settings/MyDivider.dart';
 import 'package:domestics/widgets/settings/StatusPill.dart';
@@ -40,6 +42,7 @@ class _EditState extends State<Edit> {
   ImagePicker picker = ImagePicker();
   XFile? image;
   var error = "";
+  var loading = false;
 
   @override
   void initState() {
@@ -1085,7 +1088,9 @@ class _EditState extends State<Edit> {
                                       ),
                                     ),
                               SizedBox(height: 20.0),
-                              image != null && error.length <= 0
+                              image != null &&
+                                      error.length <= 0 &&
+                                      loading == false
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -1094,6 +1099,9 @@ class _EditState extends State<Edit> {
                                           onTap: () async {
                                             // upload image to server and pop user
                                             // off of this page
+                                            setState(() {
+                                              loading = true;
+                                            });
                                             log("TOKEN: ${controller.user[0]['token']}");
                                             var status =
                                                 await uploadImageRequest(
@@ -1166,6 +1174,17 @@ class _EditState extends State<Edit> {
                                   : Container(),
                               error.length > 0
                                   ? SizedBox(height: 10.0)
+                                  : Container(),
+                              loading == true
+                                  ? Container(
+                                      margin: EdgeInsets.only(bottom: 10.0),
+                                      child: Center(
+                                        child: LoadingAnimationWidget.inkDrop(
+                                          color: dBlueBackground,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                    )
                                   : Container(),
                               InkWell(
                                 onTap: () async {

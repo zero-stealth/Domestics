@@ -2,7 +2,7 @@ import 'package:domestics/data/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-const baseUrl = "http://192.168.0.22:3000";
+const baseUrl = "http://139.144.178.129:3000";
 
 buttonStatus(buttonState, text) {
   switch (buttonState) {
